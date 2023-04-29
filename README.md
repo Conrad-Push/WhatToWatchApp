@@ -4,6 +4,6 @@ Application contains infromation about best movies or TV series and the simple C
 The environment of each databse is hosted on docker container.
 
 Database types:
-- MySQL
+- PostgreSQL
 - MongoDB
 - Redis
