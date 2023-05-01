@@ -5,7 +5,7 @@ from WTW_app.models import FilmModel, AddFilmModel
 from WTW_app.repositories.films_in_memory import films_in_memory
 
 
-app = FastAPI(title='What To Watch App')
+app = FastAPI(title='What To Watch App Dupa')
 
 @app.get("/films/")
 def get_films_list() -> tp.List[FilmModel]:
