@@ -7,3 +7,11 @@ Database types:
 - PostgreSQL
 - MongoDB
 - Redis
+
+Current progress:
+- app's backend in FastAPI - 30%
+- docker setup - TODO
+- PostgreSQL - TODO
+- MongoDB - TODO
+- Redis - TODO
+- app's UI in React - 15%
