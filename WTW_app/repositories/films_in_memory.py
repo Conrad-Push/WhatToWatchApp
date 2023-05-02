@@ -3,11 +3,12 @@ import typing as tp
 
 from WTW_app.models import FilmModel
 from pydantic import HttpUrl
-
+from WTW_app.repositories.interfaces import IFilmsRepository
 
 logger = logging.getLogger()
 
-class FilmsInMemory:
+
+class FilmsInMemory(IFilmsRepository):
     def __init__(self):
         self.storage: tp.Dict[int, FilmModel] = {}
         self.films_sequence = 0
