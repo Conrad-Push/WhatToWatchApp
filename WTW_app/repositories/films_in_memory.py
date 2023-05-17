@@ -21,7 +21,7 @@ class FilmsInMemory(IFilmsRepository):
             logger.info("Retreived films.")
             _prevs: tp.List[FilmPrevModel] = []
             for film in _films:
-                _prev: tp.Optional[FilmPrevModel] = FilmPrevModel(film_id=film.film_id, title=film.title, year=film.year)
+                _prev: tp.Optional[FilmPrevModel] = FilmPrevModel(film_id=film.film_id, title=film.title, year=film.year, rate=film.rate, img_url=film.img_url)
                 _prevs.append(_prev)
         else:
             logger.info("No films found.")

@@ -73,13 +73,17 @@ class FilmPrevModel(BaseModel):
     film_id: int
     title: str
     year: int
+    rate: float
+    img_url: tp.Optional[HttpUrl] = None
     
     class Config:
         schema_extra = {
             "example": {
                 "film_id": 1,
                 "title": "Skazani na Shawshank",
-                "year": 1994
+                "year": 1994,
+                "rate": 9.2,
+                "img_url": "https://m.media-amazon.com/images/M/MV5BNDE3ODcxYzMtY2YzZC00NmNlLWJiNDMtZDViZWM2MzIxZDYwXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_UX45_CR0,0,45,67_AL_.jpg",
             }
         }
         
