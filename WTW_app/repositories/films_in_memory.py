@@ -145,8 +145,8 @@ class FilmsInMemory(IFilmsRepository):
     
     
 films_in_memory = FilmsInMemory()
-films_in_memory.add_film(title='Skazani na Shawshank', year=1994, rate=9.2, img_url="https://m.media-amazon.com/images/M/MV5BNDE3ODcxYzMtY2YzZC00NmNlLWJiNDMtZDViZWM2MzIxZDYwXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_UX45_CR0,0,45,67_AL_.jpg", director_id=1)
-films_in_memory.add_film(title='Ojciec chrzestny', year=1972, rate=9.2, img_url="https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_UY67_CR1,0,45,67_AL_.jpg", director_id=2)
-films_in_memory.add_film(title='Mroczny rycerz', year=2008, rate=9.0, img_url="https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_UY67_CR0,0,45,67_AL_.jpg", director_id=3)
-films_in_memory.add_film(title='Ojciec chrzestny II', year=1974, rate=9.0, img_url="https://m.media-amazon.com/images/M/MV5BMWMwMGQzZTItY2JlNC00OWZiLWIyMDctNDk2ZDQ2YjRjMWQ0XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_UY67_CR1,0,45,67_AL_.jpg", director_id=2)
-films_in_memory.add_film(title='Dwunastu gniewnych ludzi', year=1957, rate=9.0, img_url="https://m.media-amazon.com/images/M/MV5BMWU4N2FjNzYtNTVkNC00NzQ0LTg0MjAtYTJlMjFhNGUxZDFmXkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_UX45_CR0,0,45,67_AL_.jpg", director_id=4)
+# films_in_memory.add_film(title='Skazani na Shawshank', year=1994, rate=9.2, img_url="https://m.media-amazon.com/images/M/MV5BNDE3ODcxYzMtY2YzZC00NmNlLWJiNDMtZDViZWM2MzIxZDYwXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_UX45_CR0,0,45,67_AL_.jpg", director_id=1)
+# films_in_memory.add_film(title='Ojciec chrzestny', year=1972, rate=9.2, img_url="https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_UY67_CR1,0,45,67_AL_.jpg", director_id=2)
+# films_in_memory.add_film(title='Mroczny rycerz', year=2008, rate=9.0, img_url="https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_UY67_CR0,0,45,67_AL_.jpg", director_id=3)
+# films_in_memory.add_film(title='Ojciec chrzestny II', year=1974, rate=9.0, img_url="https://m.media-amazon.com/images/M/MV5BMWMwMGQzZTItY2JlNC00OWZiLWIyMDctNDk2ZDQ2YjRjMWQ0XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_UY67_CR1,0,45,67_AL_.jpg", director_id=2)
+# films_in_memory.add_film(title='Dwunastu gniewnych ludzi', year=1957, rate=9.0, img_url="https://m.media-amazon.com/images/M/MV5BMWU4N2FjNzYtNTVkNC00NzQ0LTg0MjAtYTJlMjFhNGUxZDFmXkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_UX45_CR0,0,45,67_AL_.jpg", director_id=4)
