@@ -96,13 +96,6 @@ async def scrap_data():
             img_url = img_url_element['src']
         else:
             img_url = None
-            
-        # print(title)
-        # print(year)
-        # print(rate)
-        # print(description)
-        # print(img_url)
-        # print('------------------------------------\n')
         
         films_repository: IFilmsRepository = films_in_memory
         
