@@ -29,7 +29,7 @@ const App = () => {
       <h1>Films list</h1>
       <ul>
         {films.map((film) => (
-          <li id={film.film_id}>
+          <li key={film.film_id}>
             <h2>{film.title}</h2>
             <p>Year: {film.year}</p>
             <p>Rating: {film.rate.toFixed(1)}</p>
