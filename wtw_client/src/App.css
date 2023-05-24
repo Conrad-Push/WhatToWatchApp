@@ -1,0 +1,132 @@
+.App {
+    text-align: center;
+  }
+  body {
+    background-color: #475785;
+  }
+  .navBox {
+    background-color: white;
+    /* display: flex; */
+    /* flex:1; */
+
+  }
+  
+  .App-header {
+    /* background-color: #282c34; */
+    /* background-color: #475785; */
+    /* min-height: 100vh; */
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    justify-content: center;
+    /* font-size: calc(10px + 2vmin); */
+    color: white;
+  }
+  
+  .title {
+    padding-bottom: 100px;
+    font-size: xx-large;
+    font-weight: bold;
+  }
+  
+  
+  .navv {
+    padding-left: 5%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 70%;
+    font-size: large;
+    font-weight: bold;
+  }
+  /* .navContainer{
+    display: flex;
+    justify-content: space-around;
+
+  } */
+  
+  a {
+    cursor: pointer;
+  }
+  
+  .box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    z-index: 10;
+  }
+  
+  .list {
+    padding: 30px;
+    backdrop-filter: blur(5px);
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(8, 7, 16, 0.6);
+    width: 400px;
+    word-wrap: break-word;
+  }
+  
+  .card-looks {
+    
+    display: flex;
+  }
+  
+  .photo {
+    /* height: 200px; */
+    display: flex;
+    justify-content: left;
+  }
+  
+  .card-title {
+    /* text-align: center;
+    display: flex;
+    justify-content: right;
+    align-items: center; */
+    font-size: medium;
+    font-weight: bold;
+    padding-left: 10px;;
+  }
+  .movie-info {
+    font-size: medium;
+    text-align: left;
+    padding-left: 10px;
+  }
+  .photo-details {
+    width: 200px;
+    display: flex;
+    justify-content: left;
+  }
+
+  .photo-frame {
+    padding:30px;
+  }
+
+  .film-details {
+    padding: 20px;
+    backdrop-filter: blur(5px);
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(8, 7, 16, 0.6);
+    width: 600px;
+    word-wrap: break-word;
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .film-description {
+    display: flex;
+    flex:1;
+    justify-content: start;
+    align-items: center;
+    padding-top: 20px;
+  }
+
+  #film-title {
+    padding-bottom: 30px;
+    font-weight:700;
+    font-size:xx-large
+  }
+  .description {
+    word-wrap: break-word;
+  }
+  
