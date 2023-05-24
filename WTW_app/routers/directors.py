@@ -1,7 +1,7 @@
 import typing as tp
 
 from fastapi import APIRouter, HTTPException, status
-from WTW_app.models import DirectorModel, AddDirectorModel, PatchDirectorModel
+from WTW_app.models.models import DirectorModel, AddDirectorModel, PatchDirectorModel
 from WTW_app.repositories.interfaces import IDirectorsRepository
 from WTW_app.repositories.directors_in_memory import DIRECTORS_REPOSITORY
 

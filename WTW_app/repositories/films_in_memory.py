@@ -1,7 +1,7 @@
 import logging
 import typing as tp
 
-from WTW_app.models import FilmModel, FilmPrevModel
+from WTW_app.models.models import FilmModel, FilmPrevModel
 from pydantic import HttpUrl
 from WTW_app.repositories.interfaces import IFilmsRepository
 from WTW_app.repositories.directors_in_memory import DIRECTORS_REPOSITORY

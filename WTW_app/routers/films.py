@@ -1,7 +1,7 @@
 import typing as tp
 
 from fastapi import APIRouter, HTTPException, status
-from WTW_app.models import FilmModel, FilmPrevModel, AddFilmModel, PatchFilmModel
+from WTW_app.models.models import FilmModel, FilmPrevModel, AddFilmModel, PatchFilmModel
 from WTW_app.repositories.interfaces import IFilmsRepository
 from WTW_app.repositories.films_in_memory import FILMS_REPOSITORY
 

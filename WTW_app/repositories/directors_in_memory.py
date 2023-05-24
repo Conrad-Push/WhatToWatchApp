@@ -1,7 +1,7 @@
 import logging
 import typing as tp
 
-from WTW_app.models import DirectorModel
+from WTW_app.models.models import DirectorModel
 from WTW_app.repositories.interfaces import IDirectorsRepository
 
 logger = logging.getLogger()

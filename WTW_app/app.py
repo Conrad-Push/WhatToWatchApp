@@ -2,18 +2,18 @@ import logging
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from WTW_app.settings import SETTINGS
+from WTW_app.settings.app_settings import APP_SETTINGS
 from WTW_app.routers.films import films_router
 from WTW_app.routers.directors import directors_router
 
 logger = logging.getLogger()
 
 
-app = FastAPI(title=SETTINGS.app_name)
+app = FastAPI(title=APP_SETTINGS.app_name)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=SETTINGS.origins,
+    allow_origins=APP_SETTINGS.origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -32,7 +32,7 @@ async def scrap_data():
 
     responses = []
 
-    for url in SETTINGS.scrap_data_urls:
+    for url in APP_SETTINGS.scrap_data_urls:
         partial_list_response = requests.get(url)
         responses.append(partial_list_response)
 

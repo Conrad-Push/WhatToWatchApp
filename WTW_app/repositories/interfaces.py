@@ -1,7 +1,7 @@
 import typing as tp
 
 from abc import ABC, abstractmethod
-from WTW_app.models import FilmModel, FilmPrevModel, DirectorModel
+from WTW_app.models.models import FilmModel, FilmPrevModel, DirectorModel
 from pydantic import HttpUrl
 
 
