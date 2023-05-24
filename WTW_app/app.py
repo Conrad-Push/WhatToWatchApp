@@ -20,6 +20,30 @@ app.add_middleware(
 )
 
 
+# async def startup_db():
+#     from WTW_app.db import Base, engine, get_db_session
+#     from WTW_app.models.db_models import FilmDBModel, DirectorDBModel
+
+#     Base.metadata.drop_all(bind=engine)
+#     Base.metadata.create_all(bind=engine)
+#     db_session_cm = get_db_session()
+
+#     with db_session_cm as db_session:
+#         directors = [
+#             DirectorDBModel(name="Frank Darabont"),
+#             DirectorDBModel(name="Francis Ford Coppola"),
+#             DirectorDBModel(name="Christopher Nolan"),
+#             DirectorDBModel(name="Steven Spielberg"),
+#             DirectorDBModel(name="Sidney Lumet"),
+#         ]
+#         for director in directors:
+#             db_session.add(director)
+
+#         db_session.commit()
+
+#     print("Database created")
+
+
 async def scrap_data():
     import requests
     from bs4 import BeautifulSoup
@@ -107,6 +131,7 @@ async def scrap_data():
         )
 
 
+# app.add_event_handler("startup", startup_db)
 app.add_event_handler("startup", scrap_data)
 
 app.include_router(films_router)
