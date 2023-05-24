@@ -1,9 +1,4 @@
 function Redis() {
-
-    return(
-        <div className="App-header">
-            Redis
-        </div>
-    )
+  return <div className="App-header">Redis</div>;
 }
 export default Redis;
