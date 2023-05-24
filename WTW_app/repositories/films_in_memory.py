@@ -4,7 +4,7 @@ import typing as tp
 from WTW_app.models import FilmModel, FilmPrevModel
 from pydantic import HttpUrl
 from WTW_app.repositories.interfaces import IFilmsRepository
-from WTW_app.repositories.directors_in_memory import directors_in_memory
+from WTW_app.repositories.directors_in_memory import DIRECTORS_REPOSITORY
 
 logger = logging.getLogger()
 
@@ -77,7 +77,7 @@ class FilmsInMemory(IFilmsRepository):
             rate=rate,
             img_url=img_url,
             director_id=director_id,
-            director=directors_in_memory.storage[director_id],
+            director=DIRECTORS_REPOSITORY.storage[director_id],
         )
         self.storage[_film_id] = _film
 
@@ -131,7 +131,7 @@ class FilmsInMemory(IFilmsRepository):
                 f"Changing film's director id from '{_film.director_id}' to '{director_id}' for film id: '{film_id}'"
             )
             _film.director_id = director_id
-            _film.director = directors_in_memory.storage[director_id]
+            _film.director = DIRECTORS_REPOSITORY.storage[director_id]
 
         return _film
 
@@ -149,4 +149,4 @@ class FilmsInMemory(IFilmsRepository):
         return _film
 
 
-films_in_memory = FilmsInMemory()
+FILMS_REPOSITORY = FilmsInMemory()

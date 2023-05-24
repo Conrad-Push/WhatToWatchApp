@@ -3,7 +3,7 @@ import typing as tp
 from fastapi import APIRouter, HTTPException, status
 from WTW_app.models import DirectorModel, AddDirectorModel, PatchDirectorModel
 from WTW_app.repositories.interfaces import IDirectorsRepository
-from WTW_app.repositories.directors_in_memory import directors_in_memory
+from WTW_app.repositories.directors_in_memory import DIRECTORS_REPOSITORY
 
 directors_router = APIRouter(
     prefix="/directors",
@@ -13,7 +13,7 @@ directors_router = APIRouter(
 
 @directors_router.get("/", response_model=tp.List[DirectorModel])
 def get_directors_list() -> tp.List[DirectorModel]:
-    directors_repository: IDirectorsRepository = directors_in_memory
+    directors_repository: IDirectorsRepository = DIRECTORS_REPOSITORY
 
     _directors = directors_repository.get_directors()
     return _directors
@@ -21,7 +21,7 @@ def get_directors_list() -> tp.List[DirectorModel]:
 
 @directors_router.get("/{director_id:int}", response_model=tp.Optional[DirectorModel])
 def get_director_details(director_id: int) -> tp.Optional[DirectorModel]:
-    directors_repository: IDirectorsRepository = directors_in_memory
+    directors_repository: IDirectorsRepository = DIRECTORS_REPOSITORY
 
     _director_details: tp.Optional[
         DirectorModel
@@ -40,7 +40,7 @@ def get_director_details(director_id: int) -> tp.Optional[DirectorModel]:
     "/", response_model=DirectorModel, status_code=status.HTTP_201_CREATED
 )
 def add_director(director_payload: AddDirectorModel) -> tp.Optional[DirectorModel]:
-    directors_repository: IDirectorsRepository = directors_in_memory
+    directors_repository: IDirectorsRepository = DIRECTORS_REPOSITORY
 
     _director: tp.Optional[DirectorModel] = directors_repository.add_director(
         name=director_payload.name
@@ -59,7 +59,7 @@ def add_director(director_payload: AddDirectorModel) -> tp.Optional[DirectorMode
 def modify_director_details(
     director_id: int, director_payload: PatchDirectorModel
 ) -> tp.Optional[DirectorModel]:
-    directors_repository: IDirectorsRepository = directors_in_memory
+    directors_repository: IDirectorsRepository = DIRECTORS_REPOSITORY
 
     _director: tp.Optional[DirectorModel] = directors_repository.modify_director(
         director_id=director_id, name=director_payload.name
@@ -80,7 +80,7 @@ def modify_director_details(
     responses={404: {"description": "Director for given director id not found."}},
 )
 async def delete_director(director_id: int) -> tp.Optional[DirectorModel]:
-    directors_repository: IDirectorsRepository = directors_in_memory
+    directors_repository: IDirectorsRepository = DIRECTORS_REPOSITORY
 
     _director: tp.Optional[DirectorModel] = directors_repository.remove_director(
         director_id == director_id

@@ -23,9 +23,9 @@ app.add_middleware(
 async def scrap_data():
     import requests
     from bs4 import BeautifulSoup
-    from progressbar import progressbar
+    from tqdm import tqdm
     from WTW_app.repositories.interfaces import IFilmsRepository
-    from WTW_app.repositories.films_in_memory import films_in_memory
+    from WTW_app.repositories.films_in_memory import FILMS_REPOSITORY
 
     print("Data scrapping started...")
     print("Getting the data responses...")
@@ -49,7 +49,7 @@ async def scrap_data():
 
     print("Scrapping movies' data:")
 
-    for movie in progressbar(movies_list, redirect_stdout=True):
+    for movie in tqdm(movies_list):
         # Get the movie's title
         title_element = movie.find("h3").find("a")
         if title_element is not None:
@@ -100,7 +100,7 @@ async def scrap_data():
         else:
             img_url = None
 
-        films_repository: IFilmsRepository = films_in_memory
+        films_repository: IFilmsRepository = FILMS_REPOSITORY
 
         films_repository.add_film(
             title=title, year=year, rate=rate, img_url=img_url, director_id=1

@@ -35,7 +35,8 @@ uvicorn==0.20.0
 watchfiles==0.18.1
 websockets==10.4
 urllib3==1.26.6
+psycopg2-binary==2.9.6
 requests
 bs4
-progressbar
-progressbar2
+tqdm
+SQLAlchemy

@@ -85,8 +85,8 @@ class DirectorsInMemory(IDirectorsRepository):
         return _director
 
 
-directors_in_memory = DirectorsInMemory()
-directors_in_memory.add_director(name="Frank Darabont")
-directors_in_memory.add_director(name="Francis Ford Coppola")
-directors_in_memory.add_director(name="Christopher Nolan")
-directors_in_memory.add_director(name="Sidney Lumet")
+DIRECTORS_REPOSITORY = DirectorsInMemory()
+DIRECTORS_REPOSITORY.add_director(name="Frank Darabont")
+DIRECTORS_REPOSITORY.add_director(name="Francis Ford Coppola")
+DIRECTORS_REPOSITORY.add_director(name="Christopher Nolan")
+DIRECTORS_REPOSITORY.add_director(name="Sidney Lumet")
