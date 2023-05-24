@@ -5,44 +5,30 @@ import typing as tp
 class DirectorModel(BaseModel):
     director_id: int
     name: str
-    
+
     class Config:
-        schema_extra = {
-            "example": {
-                "director_id": 1,
-                "name": "Frank Darabont"
-            }
-        }
-        
+        schema_extra = {"example": {"director_id": 1, "name": "Frank Darabont"}}
+
+
 class AddDirectorModel(BaseModel):
     name: str
-    
+
     class Config:
-        schema_extra = {
-            "example": {
-                "name": "Elon Musk"
-            }
-        }
-        
+        schema_extra = {"example": {"name": "Elon Musk"}}
+
+
 class PatchDirectorModel(BaseModel):
     name: str
-    
+
     @root_validator(pre=True)
     def not_empty(cls, values):
-        if (
-            not values.get("name")
-        ):
-            raise ValueError(
-                "Name property is required to be not empty!"
-            )
+        if not values.get("name"):
+            raise ValueError("Name property is required to be not empty!")
         return values
-    
+
     class Config:
-        schema_extra = {
-            "example": {
-                "name": "John Smith"
-            }
-        }
+        schema_extra = {"example": {"name": "John Smith"}}
+
 
 class FilmModel(BaseModel):
     film_id: int
@@ -52,7 +38,7 @@ class FilmModel(BaseModel):
     img_url: tp.Optional[HttpUrl] = None
     director_id: int
     director: tp.Optional[DirectorModel] = None
-    
+
     class Config:
         schema_extra = {
             "example": {
@@ -68,14 +54,15 @@ class FilmModel(BaseModel):
                 },
             }
         }
-        
+
+
 class FilmPrevModel(BaseModel):
     film_id: int
     title: str
     year: int
     rate: float
     img_url: tp.Optional[HttpUrl] = None
-    
+
     class Config:
         schema_extra = {
             "example": {
@@ -86,14 +73,15 @@ class FilmPrevModel(BaseModel):
                 "img_url": "https://m.media-amazon.com/images/M/MV5BNDE3ODcxYzMtY2YzZC00NmNlLWJiNDMtZDViZWM2MzIxZDYwXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_UX45_CR0,0,45,67_AL_.jpg",
             }
         }
-        
+
+
 class AddFilmModel(BaseModel):
     title: str
     year: int
-    rate: float 
+    rate: float
     img_url: tp.Optional[HttpUrl] = None
     director_id: int
-    
+
     class Config:
         schema_extra = {
             "example": {
@@ -101,17 +89,18 @@ class AddFilmModel(BaseModel):
                 "year": 1995,
                 "rate": 8.6,
                 "img_url": "https://m.media-amazon.com/images/M/MV5BOTUwODM5MTctZjczMi00OTk4LTg3NWUtNmVhMTAzNTNjYjcyXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_UX45_CR0,0,45,67_AL_.jpg",
-                "director_id": 1
+                "director_id": 1,
             }
         }
-        
+
+
 class PatchFilmModel(BaseModel):
     title: tp.Optional[str] = None
     year: tp.Optional[int] = None
     rate: tp.Optional[float] = None
     img_url: tp.Optional[HttpUrl] = None
     director_id: tp.Optional[int] = None
-    
+
     @root_validator(pre=True)
     def at_least_one_not_empty(cls, values):
         if (
@@ -121,11 +110,9 @@ class PatchFilmModel(BaseModel):
             and not values.get("img_url")
             and not values.get("director_id")
         ):
-            raise ValueError(
-                "At least one of changed properties should not be empty."
-            )
+            raise ValueError("At least one of changed properties should not be empty.")
         return values
-    
+
     class Config:
         schema_extra = {
             "example": {
@@ -133,6 +120,6 @@ class PatchFilmModel(BaseModel):
                 "year": 2023,
                 "rate": 3.7,
                 "img_url": "https://m.media-amazon.com/images/M/MV5BN2EyZjM3NzUtNWUzMi00MTgxLWI0NTctMzY4M2VlOTdjZWRiXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_UY67_CR0,0,45,67_AL_.jpg",
-                "director_id": 1
+                "director_id": 1,
             }
         }
