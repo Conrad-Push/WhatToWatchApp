@@ -22,7 +22,7 @@ function PostgreSQL() {
     };
 
     fetchFilms();
-  }, []);
+  }, [films]);
 
   if (loading) {
     return <div className="loading">Loading...</div>;

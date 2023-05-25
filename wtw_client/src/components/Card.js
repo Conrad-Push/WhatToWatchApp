@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import deleteFilm from "../functions/deleteFilm";
 
 function Card(props) {
   const navigate = useNavigate();
@@ -12,23 +13,31 @@ function Card(props) {
           <div key={film.film_id}>
             <div className="box">
               <div className="list">
-                {/* <div onClick={() => { navigate(`/details/${films.film_id}`); }}> */}
                 <div
+                  className="card-looks"
                   onClick={() => {
                     navigate(`/details/${film.film_id}`);
                   }}
                 >
-                  <div className="card-looks">
-                    <img src={film.img_url} alt={film.title} />
-                    <div>
-                      <div className="card-title">
-                        {film.title} ({film.year})
-                      </div>
-                      <div className="film-info">
-                        <p>Rating: {film.rate.toFixed(1)}</p>
-                      </div>
+                  <img src={film.img_url} alt={film.title} />
+                  <div>
+                    <div className="card-title">
+                      {film.title} ({film.year})
+                    </div>
+                    <div className="film-info">
+                      <p>Rating: {film.rate.toFixed(1)}</p>
                     </div>
                   </div>
+                </div>
+                <div>
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => {
+                      deleteFilm({ film_id: film.film_id });
+                    }}
+                  >
+                    Remove
+                  </button>
                 </div>
               </div>
             </div>

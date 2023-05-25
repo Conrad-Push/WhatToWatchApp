@@ -135,3 +135,7 @@ a {
 .description {
   word-wrap: break-word;
 }
+
+.remove-btn {
+  z-index: 100;
+}
