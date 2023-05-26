@@ -40,3 +40,4 @@ requests
 bs4
 tqdm
 SQLAlchemy
+SQLAlchemy-Utils==0.38.3

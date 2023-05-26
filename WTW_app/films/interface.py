@@ -1,7 +1,7 @@
 import typing as tp
 
 from abc import ABC, abstractmethod
-from WTW_app.models.models import FilmModel, FilmPrevModel, DirectorModel
+from WTW_app.films.schema import FilmModel, FilmPrevModel
 from pydantic import HttpUrl
 
 
@@ -11,7 +11,7 @@ class IFilmsRepository(ABC):
         pass
 
     @abstractmethod
-    def get_film_details(self, *, film_id: int) -> tp.Optional[FilmModel]:
+    def get_film_details(self, *, film_id: int) -> FilmModel:
         pass
 
     @abstractmethod
@@ -23,7 +23,7 @@ class IFilmsRepository(ABC):
         rate: float,
         img_url: tp.Optional[HttpUrl] = None,
         director_id: int
-    ) -> tp.Optional[FilmModel]:
+    ) -> FilmModel:
         pass
 
     @abstractmethod
@@ -36,29 +36,9 @@ class IFilmsRepository(ABC):
         rate: tp.Optional[float] = None,
         img_url: tp.Optional[HttpUrl] = None,
         director_id: tp.Optional[int] = None
-    ) -> tp.Optional[FilmModel]:
+    ) -> FilmModel:
         pass
 
     @abstractmethod
-    def remove_film(self, *, film_id: int) -> tp.Optional[FilmModel]:
-        pass
-
-
-class IDirectorsRepository(ABC):
-    @abstractmethod
-    def get_directors(self) -> tp.List[DirectorModel]:
-        pass
-
-    @abstractmethod
-    def add_director(self, *, name: str) -> tp.Optional[DirectorModel]:
-        pass
-
-    @abstractmethod
-    def modify_director(
-        self, *, director_id: int, name: str
-    ) -> tp.Optional[DirectorModel]:
-        pass
-
-    @abstractmethod
-    def remove_director(self, *, director_id: int) -> tp.Optional[DirectorModel]:
+    def remove_film(self, *, film_id: int) -> FilmModel:
         pass
