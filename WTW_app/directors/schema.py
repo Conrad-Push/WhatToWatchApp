@@ -6,6 +6,7 @@ class DirectorModel(BaseModel):
     name: str
 
     class Config:
+        orm_mode = True
         schema_extra = {"example": {"director_id": 1, "name": "Frank Darabont"}}
 
 
@@ -13,6 +14,7 @@ class AddDirectorModel(BaseModel):
     name: str
 
     class Config:
+        orm_mode = True
         schema_extra = {"example": {"name": "Elon Musk"}}
 
 
@@ -26,4 +28,5 @@ class PatchDirectorModel(BaseModel):
         return values
 
     class Config:
+        orm_mode = True
         schema_extra = {"example": {"name": "John Smith"}}

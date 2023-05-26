@@ -14,6 +14,7 @@ class FilmModel(BaseModel):
     director: tp.Optional[DirectorModel] = None
 
     class Config:
+        orm_mode = True
         schema_extra = {
             "example": {
                 "film_id": 1,
@@ -38,6 +39,7 @@ class FilmPrevModel(BaseModel):
     img_url: tp.Optional[HttpUrl] = None
 
     class Config:
+        orm_mode = True
         schema_extra = {
             "example": {
                 "film_id": 1,
@@ -57,6 +59,7 @@ class AddFilmModel(BaseModel):
     director_id: int
 
     class Config:
+        orm_mode = True
         schema_extra = {
             "example": {
                 "title": "Siedem",
@@ -88,6 +91,7 @@ class PatchFilmModel(BaseModel):
         return values
 
     class Config:
+        orm_mode = True
         schema_extra = {
             "example": {
                 "title": "Osiem",

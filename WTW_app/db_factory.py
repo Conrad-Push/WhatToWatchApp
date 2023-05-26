@@ -3,7 +3,7 @@ import logging
 from sqlalchemy.orm import Session
 
 from WTW_app.db import Base, SessionLocal, engine
-from WTW_app.models import FilmDBModel, DirectorDBModel  # noqa: F401
+from WTW_app.models import FilmDBModel, DirectorDBModel
 
 logger = logging.getLogger()
 
@@ -29,12 +29,14 @@ def init_db() -> None:
             year=2000,
             rate=9.7,
             img_url="https://m.media-amazon.com/images/M/MV5BYmZlZTMzZTAtZGM5OS00MWU0LTg5YmMtZDJkMDBlMjAxNjViXkEyXkFqcGdeQXVyNDY2NDU1MzA@._V1_QL75_UX140_CR0,0,140,207_.jpg",
+            director_id=1,
         ),
         FilmDBModel(
             title="Draw my life",
             year=2023,
             rate=6.9,
             img_url="https://m.media-amazon.com/images/M/MV5BNTA4Yzc4ZTItMTgyOC00MDk2LWE2MzgtZWIwNmY3YjU5YjhjXkEyXkFqcGdeQXVyMTE5MTkxMjAx._V1_QL75_UX140_CR0,0,140,207_.jpg",
+            director_id=3,
         ),
     ]
     for film in films:
