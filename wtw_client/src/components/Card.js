@@ -8,10 +8,10 @@ function Card(props) {
   return (
     <div>
       <h1>Films list</h1>
-      <ul>
+      <div>
         {films.map((film) => (
           <div key={film.film_id}>
-            <div className="box">
+            <div className="box-padding">
               <div className="list">
                 <div
                   className="card-looks"
@@ -19,7 +19,11 @@ function Card(props) {
                     navigate(`/details/${film.film_id}`);
                   }}
                 >
-                  <img src={film.img_url} alt={film.title} />
+                  <img
+                    className="photo-card"
+                    src={film.img_url}
+                    alt={film.title}
+                  />
                   <div>
                     <div className="card-title">
                       {film.title} ({film.year})
@@ -43,7 +47,7 @@ function Card(props) {
             </div>
           </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }

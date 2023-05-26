@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Card from "./Card";
+import AddFilm from "./AddFilm";
 
 function PostgreSQL() {
   const [films, setFilms] = useState(null);
@@ -31,7 +32,14 @@ function PostgreSQL() {
   return (
     <div className="App-header">
       <div className="title">PostgreSQL</div>
-      <Card films={films} />
+      <div className="page-design">
+        <div>
+          <Card films={films} />
+        </div>
+        <div>
+          <AddFilm />
+        </div>
+      </div>
     </div>
   );
 }
