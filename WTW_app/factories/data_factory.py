@@ -7,7 +7,9 @@ from bs4 import BeautifulSoup
 from WTW_app.settings.data_settings import DATA_SETTINGS
 from WTW_app.db import SessionLocal
 from WTW_app.films.films_repository import FilmsRepository
+from WTW_app.directors.directors_repository import DirectorsRepository
 from WTW_app.films.interface import IFilmsRepository
+from WTW_app.directors.interface import IDirectorsRepository
 
 logger = logging.getLogger()
 
@@ -21,6 +23,7 @@ def scrap_data():
         logger.error("Connection with postgreSQL database failed")
 
     films_repository: IFilmsRepository = FilmsRepository(session)
+    directors_repository: IDirectorsRepository = DirectorsRepository(session)
 
     logger.info("Data scrapping started...")
     logger.info("Getting the data responses...")
@@ -76,9 +79,17 @@ def scrap_data():
         else:
             rate = 6.6
 
+        # Get the movie's director
+        dir_paragraphs = movie.find("div", class_="lister-item-content").find_all("p")
+        director_element = dir_paragraphs[2].find("a")
+        if director_element is not None:
+            director = director_element.text
+        else:
+            director = "Director not found"
+
         # Get the movie's description
-        paragraphs = movie.find_all("p", class_="text-muted")
-        description_element = paragraphs[1]
+        desc_paragraphs = movie.find_all("p", class_="text-muted")
+        description_element = desc_paragraphs[1]
         if description_element is not None:
             description = description_element.text.strip()
         else:
@@ -95,8 +106,15 @@ def scrap_data():
         else:
             img_url = None
 
+        _director = directors_repository.add_director(name=director)
+
         films_repository.add_film(
-            title=title, year=year, rate=rate, img_url=img_url, director_id=1
+            title=title,
+            description=description,
+            year=year,
+            rate=rate,
+            img_url=img_url,
+            director_id=_director.director_id,
         )
 
     logger.info("All data added to database")

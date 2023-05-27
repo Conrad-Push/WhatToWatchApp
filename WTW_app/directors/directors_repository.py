@@ -47,6 +47,19 @@ class DirectorsRepository(IDirectorsRepository):
         _director: DirectorResponse
 
         try:
+            existing_director = (
+                self.session.query(DirectorDBModel)
+                .filter(DirectorDBModel.name == name)
+                .one_or_none()
+            )
+
+            if existing_director:
+                logger.warning(
+                    f"Director with name '{name}' already exists in the database"
+                )
+                _director = DirectorResponse.from_orm(existing_director)
+                return _director
+
             _director_db: DirectorDBModel = DirectorDBModel(
                 name=name,
             )
@@ -54,15 +67,16 @@ class DirectorsRepository(IDirectorsRepository):
             if _director_db:
                 self.session.add(_director_db)
                 self.session.commit()
+                logger.info(
+                    f"A director '{name}' was added with id: {_director_db.director_id}"
+                )
                 _director = DirectorResponse.from_orm(_director_db)
 
         except IntegrityError as e:
-            logger.error(str(e))
+            logger.error(
+                f"Failed to add director '{name}' to the database. Error: {str(e)}"
+            )
             return None
-
-        logger.info(
-            f"A director '{name}' was added with id: {_director_db.director_id}"
-        )
 
         if not _director_db:
             _director = None

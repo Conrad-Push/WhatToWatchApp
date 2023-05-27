@@ -29,7 +29,7 @@ function Details() {
     return <div className="loading">Loading...</div>;
   }
 
-  const { title, img_url, rate, director } = film;
+  const { title, description, img_url, rate, director } = film;
 
   return (
     <div className="App-header">
@@ -49,15 +49,7 @@ function Details() {
                   <b>Director:</b> {director.name}
                 </p>
                 <div className="description">
-                  <b>Description:</b> Lorem ipsum dolor sit amet, consectetur
-                  adipiscing elit. Vestibulum euismod risus turpis, at lobortis
-                  turpis rhoncus non. Proin enim nisl, vehicula et purus nec,
-                  tempor blandit dui. Donec eget augue enim. Quisque semper nisi
-                  gravida tempor sagittis. Phasellus convallis ut ligula a
-                  elementum. Etiam nec neque a nisl rutrum blandit. Proin vel
-                  felis eget ligula lobortis lacinia. Nullam interdum ipsum a
-                  leo dignissim elementum. Cras scelerisque neque eget imperdiet
-                  tincidunt. Aliquam maximus eu odio sed pharetra.
+                  <b>Description:</b> {description}
                 </div>
               </div>
             </div>

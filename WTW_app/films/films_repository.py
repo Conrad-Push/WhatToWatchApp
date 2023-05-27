@@ -44,6 +44,7 @@ class FilmsRepository(IFilmsRepository):
         self,
         *,
         title: str,
+        description: str,
         year: str,
         rate: float,
         img_url: tp.Optional[HttpUrl] = None,
@@ -54,6 +55,7 @@ class FilmsRepository(IFilmsRepository):
         try:
             _film_db: FilmDBModel = FilmDBModel(
                 title=title,
+                description=description,
                 year=year,
                 rate=rate,
                 img_url=img_url,
@@ -81,6 +83,7 @@ class FilmsRepository(IFilmsRepository):
         *,
         film_id: int,
         title: tp.Optional[str] = None,
+        description: tp.Optional[str] = None,
         year: tp.Optional[int] = None,
         rate: tp.Optional[float] = None,
         img_url: tp.Optional[HttpUrl] = None,
@@ -96,6 +99,8 @@ class FilmsRepository(IFilmsRepository):
         else:
             if title and _film_db.title != title:
                 _film_db.title = title
+            if description and _film_db.description != description:
+                _film_db.description = description
             if year and _film_db.year != year:
                 _film_db.year = year
             if rate and _film_db.rate != rate:
