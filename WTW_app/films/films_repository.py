@@ -2,7 +2,7 @@ import logging
 import typing as tp
 
 from WTW_app.models import FilmDBModel
-from WTW_app.films.schema import FilmModel, FilmPrevModel
+from WTW_app.films.schema import FilmResponse, FilmPrevResponse
 from WTW_app.films.interface import IFilmsRepository
 
 from sqlalchemy.exc import IntegrityError
@@ -16,25 +16,25 @@ class FilmsRepository(IFilmsRepository):
     def __init__(self, session: Session) -> None:
         self.session = session
 
-    def get_films(self) -> tp.List[FilmPrevModel]:
-        _films: tp.List[FilmPrevModel] = []
+    def get_films(self) -> tp.List[FilmPrevResponse]:
+        _films: tp.List[FilmPrevResponse] = []
 
         query_films = self.session.query(FilmDBModel)
 
         _films_db: tp.List[FilmDBModel] = query_films.all()
 
-        _films = [FilmPrevModel.from_orm(x) for x in _films_db]
+        _films = [FilmPrevResponse.from_orm(x) for x in _films_db]
 
         return _films
 
-    def get_film_details(self, *, film_id: int) -> FilmModel:
-        _film: FilmModel
+    def get_film_details(self, *, film_id: int) -> FilmResponse:
+        _film: FilmResponse
 
         query_films = self.session.query(FilmDBModel)
         _film_db = query_films.get(film_id)
 
         if _film_db:
-            _film = FilmModel.from_orm(_film_db)
+            _film = FilmResponse.from_orm(_film_db)
         else:
             _film = None
 
@@ -48,8 +48,8 @@ class FilmsRepository(IFilmsRepository):
         rate: float,
         img_url: tp.Optional[HttpUrl] = None,
         director_id: int,
-    ) -> FilmModel:
-        _film: FilmModel
+    ) -> FilmResponse:
+        _film: FilmResponse
 
         try:
             _film_db: FilmDBModel = FilmDBModel(
@@ -63,7 +63,7 @@ class FilmsRepository(IFilmsRepository):
             if _film_db:
                 self.session.add(_film_db)
                 self.session.commit()
-                _film = FilmModel.from_orm(_film_db)
+                _film = FilmResponse.from_orm(_film_db)
 
         except IntegrityError as e:
             logger.error(str(e))
@@ -85,8 +85,8 @@ class FilmsRepository(IFilmsRepository):
         rate: tp.Optional[float] = None,
         img_url: tp.Optional[HttpUrl] = None,
         director_id: tp.Optional[int] = None,
-    ) -> FilmModel:
-        _film: FilmModel
+    ) -> FilmResponse:
+        _film: FilmResponse
 
         query_films = self.session.query(FilmDBModel)
         _film_db = query_films.get(film_id)
@@ -106,18 +106,18 @@ class FilmsRepository(IFilmsRepository):
                 _film_db.director_id = director_id
 
         self.session.commit()
-        _film = FilmModel.from_orm(_film_db)
+        _film = FilmResponse.from_orm(_film_db)
 
         return _film
 
-    def remove_film(self, *, film_id: int) -> FilmModel:
-        _film: FilmModel
+    def remove_film(self, *, film_id: int) -> FilmResponse:
+        _film: FilmResponse
 
         query_films = self.session.query(FilmDBModel)
         _film_db = query_films.get(film_id)
 
         if _film_db:
-            _film = FilmModel.from_orm(_film_db)
+            _film = FilmResponse.from_orm(_film_db)
 
             self.session.delete(_film_db)
             self.session.commit()

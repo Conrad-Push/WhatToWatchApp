@@ -1,7 +1,7 @@
 from pydantic import BaseModel, root_validator
 
 
-class DirectorModel(BaseModel):
+class DirectorResponse(BaseModel):
     director_id: int
     name: str
 
@@ -10,7 +10,7 @@ class DirectorModel(BaseModel):
         schema_extra = {"example": {"director_id": 1, "name": "Frank Darabont"}}
 
 
-class AddDirectorModel(BaseModel):
+class DirectorRequest(BaseModel):
     name: str
 
     class Config:
@@ -18,7 +18,7 @@ class AddDirectorModel(BaseModel):
         schema_extra = {"example": {"name": "Elon Musk"}}
 
 
-class PatchDirectorModel(BaseModel):
+class PatchDirectorRequest(BaseModel):
     name: str
 
     @root_validator(pre=True)

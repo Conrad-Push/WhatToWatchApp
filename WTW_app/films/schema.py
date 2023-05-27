@@ -1,17 +1,16 @@
 import typing as tp
 
 from pydantic import BaseModel, HttpUrl, root_validator
-from WTW_app.directors.schema import DirectorModel
+from WTW_app.directors.schema import DirectorResponse
 
 
-class FilmModel(BaseModel):
+class FilmResponse(BaseModel):
     film_id: int
     title: str
     year: int
     rate: float
     img_url: tp.Optional[HttpUrl] = None
-    director_id: int
-    director: tp.Optional[DirectorModel] = None
+    director: DirectorResponse
 
     class Config:
         orm_mode = True
@@ -22,7 +21,6 @@ class FilmModel(BaseModel):
                 "year": 1994,
                 "rate": 9.2,
                 "img_url": "https://m.media-amazon.com/images/M/MV5BNDE3ODcxYzMtY2YzZC00NmNlLWJiNDMtZDViZWM2MzIxZDYwXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_UX45_CR0,0,45,67_AL_.jpg",
-                "director_id": 1,
                 "director": {
                     "director_id": 1,
                     "name": "Frank Darabont",
@@ -31,7 +29,7 @@ class FilmModel(BaseModel):
         }
 
 
-class FilmPrevModel(BaseModel):
+class FilmPrevResponse(BaseModel):
     film_id: int
     title: str
     year: int
@@ -51,7 +49,7 @@ class FilmPrevModel(BaseModel):
         }
 
 
-class AddFilmModel(BaseModel):
+class FilmRequest(BaseModel):
     title: str
     year: int
     rate: float
@@ -59,7 +57,6 @@ class AddFilmModel(BaseModel):
     director_id: int
 
     class Config:
-        orm_mode = True
         schema_extra = {
             "example": {
                 "title": "Siedem",
@@ -71,7 +68,7 @@ class AddFilmModel(BaseModel):
         }
 
 
-class PatchFilmModel(BaseModel):
+class PatchFilmRequest(BaseModel):
     title: tp.Optional[str] = None
     year: tp.Optional[int] = None
     rate: tp.Optional[float] = None
@@ -91,7 +88,6 @@ class PatchFilmModel(BaseModel):
         return values
 
     class Config:
-        orm_mode = True
         schema_extra = {
             "example": {
                 "title": "Osiem",

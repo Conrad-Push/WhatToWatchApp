@@ -2,10 +2,10 @@ import typing as tp
 
 from fastapi import APIRouter, HTTPException, status, Depends
 from WTW_app.films.schema import (
-    FilmModel,
-    FilmPrevModel,
-    AddFilmModel,
-    PatchFilmModel,
+    FilmResponse,
+    FilmPrevResponse,
+    FilmRequest,
+    PatchFilmRequest,
 )
 from WTW_app.films.interface import IFilmsRepository
 from WTW_app.dependencies import get_films_repository
@@ -16,20 +16,20 @@ films_router = APIRouter(
 )
 
 
-@films_router.get("/", response_model=tp.List[FilmPrevModel])
+@films_router.get("/", response_model=tp.List[FilmPrevResponse])
 def get_films_list(
     films_repository: IFilmsRepository = Depends(get_films_repository),
-) -> tp.List[FilmPrevModel]:
+) -> tp.List[FilmPrevResponse]:
     _films = films_repository.get_films()
     return _films
 
 
-@films_router.get("/{film_id:int}", response_model=FilmModel)
+@films_router.get("/{film_id:int}", response_model=FilmResponse)
 def get_film_details(
     film_id: int,
     films_repository: IFilmsRepository = Depends(get_films_repository),
-) -> FilmModel:
-    _film_details: FilmModel = films_repository.get_film_details(film_id=film_id)
+) -> FilmResponse:
+    _film_details: FilmResponse = films_repository.get_film_details(film_id=film_id)
 
     if not _film_details:
         raise HTTPException(
@@ -40,12 +40,14 @@ def get_film_details(
     return _film_details
 
 
-@films_router.post("/", response_model=FilmModel, status_code=status.HTTP_201_CREATED)
+@films_router.post(
+    "/", response_model=FilmResponse, status_code=status.HTTP_201_CREATED
+)
 def add_film(
-    film_payload: AddFilmModel,
+    film_payload: FilmRequest,
     films_repository: IFilmsRepository = Depends(get_films_repository),
-) -> FilmModel:
-    _film: FilmModel = films_repository.add_film(
+) -> FilmResponse:
+    _film: FilmResponse = films_repository.add_film(
         title=film_payload.title,
         year=film_payload.year,
         rate=film_payload.rate,
@@ -62,13 +64,13 @@ def add_film(
     return _film
 
 
-@films_router.patch("/{film_id:int}", response_model=FilmModel)
+@films_router.patch("/{film_id:int}", response_model=FilmResponse)
 def modify_film_details(
     film_id: int,
-    film_payload: PatchFilmModel,
+    film_payload: PatchFilmRequest,
     films_repository: IFilmsRepository = Depends(get_films_repository),
-) -> FilmModel:
-    _film: FilmModel = films_repository.modify_film(
+) -> FilmResponse:
+    _film: FilmResponse = films_repository.modify_film(
         film_id=film_id,
         title=film_payload.title,
         year=film_payload.year,
@@ -88,14 +90,14 @@ def modify_film_details(
 
 @films_router.delete(
     "/{film_id:int}",
-    response_model=FilmModel,
+    response_model=FilmResponse,
     responses={404: {"description": "Film for given film_id not found."}},
 )
 async def delete_film(
     film_id: int,
     films_repository: IFilmsRepository = Depends(get_films_repository),
-) -> FilmModel:
-    _film: FilmModel = films_repository.remove_film(film_id=film_id)
+) -> FilmResponse:
+    _film: FilmResponse = films_repository.remove_film(film_id=film_id)
 
     if not _film:
         raise HTTPException(

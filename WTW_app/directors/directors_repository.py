@@ -2,7 +2,7 @@ import logging
 import typing as tp
 
 from WTW_app.models import DirectorDBModel
-from WTW_app.directors.schema import DirectorModel
+from WTW_app.directors.schema import DirectorResponse
 from WTW_app.directors.interface import IDirectorsRepository
 
 from sqlalchemy.exc import IntegrityError
@@ -15,25 +15,25 @@ class DirectorsRepository(IDirectorsRepository):
     def __init__(self, session: Session) -> None:
         self.session = session
 
-    def get_directors(self) -> tp.List[DirectorModel]:
-        _directors: tp.List[DirectorModel] = []
+    def get_directors(self) -> tp.List[DirectorResponse]:
+        _directors: tp.List[DirectorResponse] = []
 
         query_directors = self.session.query(DirectorDBModel)
 
         _directors_db: tp.List[DirectorDBModel] = query_directors.all()
 
-        _directors = [DirectorModel.from_orm(x) for x in _directors_db]
+        _directors = [DirectorResponse.from_orm(x) for x in _directors_db]
 
         return _directors
 
-    def get_director_details(self, *, director_id: int) -> DirectorModel:
-        _director: DirectorModel
+    def get_director_details(self, *, director_id: int) -> DirectorResponse:
+        _director: DirectorResponse
 
         query_directors = self.session.query(DirectorDBModel)
         _director_db = query_directors.get(director_id)
 
         if _director_db:
-            _director = DirectorModel.from_orm(_director_db)
+            _director = DirectorResponse.from_orm(_director_db)
         else:
             _director = None
 
@@ -43,8 +43,8 @@ class DirectorsRepository(IDirectorsRepository):
         self,
         *,
         name: str,
-    ) -> DirectorModel:
-        _director: DirectorModel
+    ) -> DirectorResponse:
+        _director: DirectorResponse
 
         try:
             _director_db: DirectorDBModel = DirectorDBModel(
@@ -54,7 +54,7 @@ class DirectorsRepository(IDirectorsRepository):
             if _director_db:
                 self.session.add(_director_db)
                 self.session.commit()
-                _director = DirectorModel.from_orm(_director_db)
+                _director = DirectorResponse.from_orm(_director_db)
 
         except IntegrityError as e:
             logger.error(str(e))
@@ -74,8 +74,8 @@ class DirectorsRepository(IDirectorsRepository):
         *,
         director_id: int,
         name: str,
-    ) -> DirectorModel:
-        _director: DirectorModel
+    ) -> DirectorResponse:
+        _director: DirectorResponse
 
         query_directors = self.session.query(DirectorDBModel)
         _director_db = query_directors.get(director_id)
@@ -87,18 +87,18 @@ class DirectorsRepository(IDirectorsRepository):
                 _director_db.name = name
 
         self.session.commit()
-        _director = DirectorModel.from_orm(_director_db)
+        _director = DirectorResponse.from_orm(_director_db)
 
         return _director
 
-    def remove_director(self, *, director_id: int) -> DirectorModel:
-        _director: DirectorModel
+    def remove_director(self, *, director_id: int) -> DirectorResponse:
+        _director: DirectorResponse
 
         query_directors = self.session.query(DirectorDBModel)
         _director_db = query_directors.get(director_id)
 
         if _director_db:
-            _director = DirectorModel.from_orm(_director_db)
+            _director = DirectorResponse.from_orm(_director_db)
 
             self.session.delete(_director_db)
             self.session.commit()

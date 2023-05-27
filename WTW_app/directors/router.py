@@ -1,7 +1,11 @@
 import typing as tp
 
 from fastapi import APIRouter, HTTPException, status, Depends
-from WTW_app.directors.schema import DirectorModel, AddDirectorModel, PatchDirectorModel
+from WTW_app.directors.schema import (
+    DirectorResponse,
+    DirectorRequest,
+    PatchDirectorRequest,
+)
 from WTW_app.directors.interface import IDirectorsRepository
 from WTW_app.dependencies import get_directors_repository
 
@@ -11,20 +15,20 @@ directors_router = APIRouter(
 )
 
 
-@directors_router.get("/", response_model=tp.List[DirectorModel])
+@directors_router.get("/", response_model=tp.List[DirectorResponse])
 def get_directors_list(
     directors_repository: IDirectorsRepository = Depends(get_directors_repository),
-) -> tp.List[DirectorModel]:
+) -> tp.List[DirectorResponse]:
     _directors = directors_repository.get_directors()
     return _directors
 
 
-@directors_router.get("/{director_id:int}", response_model=DirectorModel)
+@directors_router.get("/{director_id:int}", response_model=DirectorResponse)
 def get_director_details(
     director_id: int,
     directors_repository: IDirectorsRepository = Depends(get_directors_repository),
-) -> DirectorModel:
-    _director_details: DirectorModel = directors_repository.get_director_details(
+) -> DirectorResponse:
+    _director_details: DirectorResponse = directors_repository.get_director_details(
         director_id=director_id,
     )
 
@@ -38,13 +42,13 @@ def get_director_details(
 
 
 @directors_router.post(
-    "/", response_model=DirectorModel, status_code=status.HTTP_201_CREATED
+    "/", response_model=DirectorResponse, status_code=status.HTTP_201_CREATED
 )
 def add_director(
-    director_payload: AddDirectorModel,
+    director_payload: DirectorRequest,
     directors_repository: IDirectorsRepository = Depends(get_directors_repository),
-) -> DirectorModel:
-    _director: DirectorModel = directors_repository.add_director(
+) -> DirectorResponse:
+    _director: DirectorResponse = directors_repository.add_director(
         name=director_payload.name
     )
 
@@ -57,13 +61,13 @@ def add_director(
     return _director
 
 
-@directors_router.patch("/{director_id:int}", response_model=DirectorModel)
+@directors_router.patch("/{director_id:int}", response_model=DirectorResponse)
 def modify_director_details(
     director_id: int,
-    director_payload: PatchDirectorModel,
+    director_payload: PatchDirectorRequest,
     directors_repository: IDirectorsRepository = Depends(get_directors_repository),
-) -> DirectorModel:
-    _director: DirectorModel = directors_repository.modify_director(
+) -> DirectorResponse:
+    _director: DirectorResponse = directors_repository.modify_director(
         director_id=director_id,
         name=director_payload.name,
     )
@@ -79,14 +83,14 @@ def modify_director_details(
 
 @directors_router.delete(
     "/{director_id:int}",
-    response_model=DirectorModel,
+    response_model=DirectorResponse,
     responses={404: {"description": "Director for given director id not found."}},
 )
 async def delete_director(
     director_id: int,
     directors_repository: IDirectorsRepository = Depends(get_directors_repository),
-) -> DirectorModel:
-    _director: DirectorModel = directors_repository.remove_director(
+) -> DirectorResponse:
+    _director: DirectorResponse = directors_repository.remove_director(
         director_id == director_id
     )
 
