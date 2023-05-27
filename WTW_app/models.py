@@ -4,6 +4,8 @@ from WTW_app.db import Base
 
 
 class FilmDBModel(Base):
+    """Class that holds metadata for films."""
+
     __tablename__ = "films"
 
     film_id = Column(Integer, primary_key=True, index=True)
@@ -17,6 +19,8 @@ class FilmDBModel(Base):
 
 
 class DirectorDBModel(Base):
+    """Class that holds metadata for directors."""
+
     __tablename__ = "directors"
 
     director_id = Column(Integer, primary_key=True, index=True)

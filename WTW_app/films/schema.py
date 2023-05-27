@@ -1,45 +1,19 @@
-from pydantic import BaseModel, HttpUrl, root_validator
 import typing as tp
 
-
-class DirectorModel(BaseModel):
-    director_id: int
-    name: str
-
-    class Config:
-        schema_extra = {"example": {"director_id": 1, "name": "Frank Darabont"}}
+from pydantic import BaseModel, HttpUrl, root_validator
+from WTW_app.directors.schema import DirectorResponse
 
 
-class AddDirectorModel(BaseModel):
-    name: str
-
-    class Config:
-        schema_extra = {"example": {"name": "Elon Musk"}}
-
-
-class PatchDirectorModel(BaseModel):
-    name: str
-
-    @root_validator(pre=True)
-    def not_empty(cls, values):
-        if not values.get("name"):
-            raise ValueError("Name property is required to be not empty!")
-        return values
-
-    class Config:
-        schema_extra = {"example": {"name": "John Smith"}}
-
-
-class FilmModel(BaseModel):
+class FilmResponse(BaseModel):
     film_id: int
     title: str
     year: int
     rate: float
     img_url: tp.Optional[HttpUrl] = None
-    director_id: int
-    director: tp.Optional[DirectorModel] = None
+    director: DirectorResponse
 
     class Config:
+        orm_mode = True
         schema_extra = {
             "example": {
                 "film_id": 1,
@@ -47,7 +21,6 @@ class FilmModel(BaseModel):
                 "year": 1994,
                 "rate": 9.2,
                 "img_url": "https://m.media-amazon.com/images/M/MV5BNDE3ODcxYzMtY2YzZC00NmNlLWJiNDMtZDViZWM2MzIxZDYwXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_UX45_CR0,0,45,67_AL_.jpg",
-                "director_id": 1,
                 "director": {
                     "director_id": 1,
                     "name": "Frank Darabont",
@@ -56,7 +29,7 @@ class FilmModel(BaseModel):
         }
 
 
-class FilmPrevModel(BaseModel):
+class FilmPrevResponse(BaseModel):
     film_id: int
     title: str
     year: int
@@ -64,6 +37,7 @@ class FilmPrevModel(BaseModel):
     img_url: tp.Optional[HttpUrl] = None
 
     class Config:
+        orm_mode = True
         schema_extra = {
             "example": {
                 "film_id": 1,
@@ -75,7 +49,7 @@ class FilmPrevModel(BaseModel):
         }
 
 
-class AddFilmModel(BaseModel):
+class FilmRequest(BaseModel):
     title: str
     year: int
     rate: float
@@ -88,13 +62,13 @@ class AddFilmModel(BaseModel):
                 "title": "Siedem",
                 "year": 1995,
                 "rate": 8.6,
-                "img_url": "https://m.media-amazon.com/images/M/MV5BOTUwODM5MTctZjczMi00OTk4LTg3NWUtNmVhMTAzNTNjYjcyXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_UX45_CR0,0,45,67_AL_.jpg",
+                "img_url": "https://m.media-amazon.com/images/M/MV5BOTUwODM5MTctZjczMi00OTk4LTg3NWUtNmVhMTAzNTNjYjcyXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_UX67_CR0,0,67,98_AL_.jpg",
                 "director_id": 1,
             }
         }
 
 
-class PatchFilmModel(BaseModel):
+class PatchFilmRequest(BaseModel):
     title: tp.Optional[str] = None
     year: tp.Optional[int] = None
     rate: tp.Optional[float] = None
