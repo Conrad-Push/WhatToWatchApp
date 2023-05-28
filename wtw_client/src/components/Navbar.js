@@ -17,17 +17,18 @@ function Navbar() {
         </button>
         <SlidingPane
           className="topSlider"
-          overlayClassName="topSlider"
+          overlayClassName="topSlider-overlay"
           isOpen={state.isPaneOpen}
-          title={
-            <a
-              className="navbar-brand logo"
-              onClick={() => {
-                navigate("/");
-                setState({ isPaneOpen: false });
-              }}
-            ></a>
-          }
+          title="Options"
+          // {
+          //   <a
+          //     className="navbar-brand logo"
+          //     onClick={() => {
+          //       navigate("/");
+          //       setState({ isPaneOpen: false });
+          //     }}
+          //   ></a>
+          // }
           width="300px"
           from="left"
           onRequestClose={() => {
@@ -42,7 +43,7 @@ function Navbar() {
                   setState({ isPaneOpen: false });
                 }}
               >
-                PostgreSQL
+                Statistics
               </a>
             </li>
             <li>
