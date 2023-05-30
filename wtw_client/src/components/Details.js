@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Details() {
   const [film, setFilm] = useState(null);
   const [loading, setLoading] = useState(true);
   const { film_id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchFilmDetails = async () => {
@@ -31,6 +32,10 @@ function Details() {
 
   const { title, description, img_url, rate, director } = film;
 
+  const handleGoBack = () => {
+    navigate("/postgresql");
+  };
+
   return (
     <div className="App-header">
       <div className="box">
@@ -55,6 +60,11 @@ function Details() {
             </div>
           </div>
         </div>
+      </div>
+      <div className="back-button-container">
+        <button className="back-button" onClick={handleGoBack}>
+          Back
+        </button>
       </div>
     </div>
   );

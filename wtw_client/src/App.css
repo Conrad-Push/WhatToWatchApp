@@ -23,7 +23,7 @@ body {
 }
 
 .title {
-  padding-bottom: 100px;
+  padding-bottom: 20px;
   font-size: xx-large;
   font-weight: bold;
 }
@@ -37,11 +37,6 @@ body {
   font-size: large;
   font-weight: bold;
 }
-/* .navContainer{
-    display: flex;
-    justify-content: space-around;
-
-  } */
 
 a {
   cursor: pointer;
@@ -56,6 +51,43 @@ a {
   z-index: 10;
 }
 
+.filters {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.sort-dropdown {
+  margin-bottom: 10px;
+}
+
+.sort-dropdown label {
+  font-size: large;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.sort-dropdown select {
+  padding: 5px;
+  font-size: large;
+}
+
+.search-bar {
+  margin-top: 20px;
+}
+
+.search-bar input {
+  padding: 5px;
+  font-size: large;
+  margin-right: 5px;
+}
+
+.search-bar button {
+  padding: 5px 10px;
+  font-size: large;
+}
+
 .list {
   padding: 30px;
   backdrop-filter: blur(5px);
@@ -63,6 +95,13 @@ a {
   box-shadow: 0 0 30px rgba(8, 7, 16, 0.6);
   width: 400px;
   word-wrap: break-word;
+}
+
+.no-films {
+  margin-top: 20px;
+  font-size: x-large;
+  font-weight: bold;
+  color: white;
 }
 
 .card-looks {
@@ -97,6 +136,27 @@ a {
 
 .photo-frame {
   padding: 30px;
+}
+
+.back-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.back-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #0e1e4e;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100px;
+}
+
+.back-button:hover {
+  background-color: #3b466f;
 }
 
 .loading {
