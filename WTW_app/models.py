@@ -3,7 +3,7 @@ from sqlalchemy.orm import relationship
 from WTW_app.db import Base
 
 
-class FilmDBModel(Base):
+class Film(Base):
     """Class that holds metadata for films."""
 
     __tablename__ = "films"
@@ -16,10 +16,10 @@ class FilmDBModel(Base):
     img_url = Column(String, nullable=True)
 
     director_id = Column(Integer, ForeignKey("directors.director_id"), nullable=False)
-    director = relationship("DirectorDBModel")
+    director = relationship("Director")
 
 
-class DirectorDBModel(Base):
+class Director(Base):
     """Class that holds metadata for directors."""
 
     __tablename__ = "directors"

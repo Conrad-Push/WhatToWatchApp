@@ -2,8 +2,7 @@ import logging
 
 from sqlalchemy.orm import Session
 
-from WTW_app.db import Base, SessionLocal, engine
-from WTW_app.models import DirectorDBModel
+from WTW_app.db import Base, engine
 
 logger = logging.getLogger()
 

@@ -1,7 +1,7 @@
 import logging
 import typing as tp
 
-from WTW_app.models import DirectorDBModel
+from WTW_app.models import Director
 from WTW_app.directors.schema import DirectorResponse
 from WTW_app.directors.interface import IDirectorsRepository
 
@@ -18,9 +18,9 @@ class DirectorsRepository(IDirectorsRepository):
     def get_directors(self) -> tp.List[DirectorResponse]:
         _directors: tp.List[DirectorResponse] = []
 
-        query_directors = self.session.query(DirectorDBModel)
+        query_directors = self.session.query(Director)
 
-        _directors_db: tp.List[DirectorDBModel] = query_directors.all()
+        _directors_db: tp.List[Director] = query_directors.all()
 
         _directors = [DirectorResponse.from_orm(x) for x in _directors_db]
 
@@ -29,7 +29,7 @@ class DirectorsRepository(IDirectorsRepository):
     def get_director_details(self, *, director_id: int) -> DirectorResponse:
         _director: DirectorResponse
 
-        query_directors = self.session.query(DirectorDBModel)
+        query_directors = self.session.query(Director)
         _director_db = query_directors.get(director_id)
 
         if _director_db:
@@ -48,9 +48,7 @@ class DirectorsRepository(IDirectorsRepository):
 
         try:
             existing_director = (
-                self.session.query(DirectorDBModel)
-                .filter(DirectorDBModel.name == name)
-                .one_or_none()
+                self.session.query(Director).filter(Director.name == name).one_or_none()
             )
 
             if existing_director:
@@ -60,7 +58,7 @@ class DirectorsRepository(IDirectorsRepository):
                 _director = DirectorResponse.from_orm(existing_director)
                 return _director
 
-            _director_db: DirectorDBModel = DirectorDBModel(
+            _director_db: Director = Director(
                 name=name,
             )
 
@@ -91,7 +89,7 @@ class DirectorsRepository(IDirectorsRepository):
     ) -> DirectorResponse:
         _director: DirectorResponse
 
-        query_directors = self.session.query(DirectorDBModel)
+        query_directors = self.session.query(Director)
         _director_db = query_directors.get(director_id)
 
         if not _director_db:
@@ -108,7 +106,7 @@ class DirectorsRepository(IDirectorsRepository):
     def remove_director(self, *, director_id: int) -> DirectorResponse:
         _director: DirectorResponse
 
-        query_directors = self.session.query(DirectorDBModel)
+        query_directors = self.session.query(Director)
         _director_db = query_directors.get(director_id)
 
         if _director_db:

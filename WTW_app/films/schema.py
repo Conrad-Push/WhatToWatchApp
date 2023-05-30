@@ -1,7 +1,18 @@
 import typing as tp
 
+from enum import Enum
 from pydantic import BaseModel, HttpUrl, root_validator
 from WTW_app.directors.schema import DirectorResponse
+
+
+class AvailableSortParamsFilms(Enum):
+    title = "title"
+    year = "year"
+    rate = "rate"
+
+
+class AvailableFilterParamsFilms(Enum):
+    title = "title"
 
 
 class FilmResponse(BaseModel):

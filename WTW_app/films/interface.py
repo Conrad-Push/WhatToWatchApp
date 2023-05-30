@@ -1,13 +1,23 @@
 import typing as tp
 
 from abc import ABC, abstractmethod
-from WTW_app.films.schema import FilmResponse, FilmPrevResponse
+from WTW_app.films.schema import (
+    FilmResponse,
+    FilmPrevResponse,
+    AvailableSortParamsFilms,
+    AvailableFilterParamsFilms,
+)
 from pydantic import HttpUrl
 
 
 class IFilmsRepository(ABC):
     @abstractmethod
-    def get_films(self) -> tp.List[FilmPrevResponse]:
+    def get_films(
+        self,
+        sort_by: tp.Optional[AvailableSortParamsFilms] = None,
+        filter_by: tp.Optional[AvailableFilterParamsFilms] = None,
+        filter_value: tp.Optional[str] = None,
+    ) -> tp.List[FilmPrevResponse]:
         pass
 
     @abstractmethod

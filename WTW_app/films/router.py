@@ -6,6 +6,8 @@ from WTW_app.films.schema import (
     FilmPrevResponse,
     FilmRequest,
     PatchFilmRequest,
+    AvailableSortParamsFilms,
+    AvailableFilterParamsFilms,
 )
 from WTW_app.films.interface import IFilmsRepository
 from WTW_app.dependencies import get_films_repository
@@ -19,8 +21,11 @@ films_router = APIRouter(
 @films_router.get("/", response_model=tp.List[FilmPrevResponse])
 def get_films_list(
     films_repository: IFilmsRepository = Depends(get_films_repository),
+    sort_by: tp.Optional[AvailableSortParamsFilms] = None,
+    filter_by: tp.Optional[AvailableFilterParamsFilms] = None,
+    filter_value: tp.Optional[str] = None,
 ) -> tp.List[FilmPrevResponse]:
-    _films = films_repository.get_films()
+    _films = films_repository.get_films(sort_by, filter_by, filter_value)
     return _films
 
 
