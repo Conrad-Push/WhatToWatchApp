@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import deleteFilm from "../functions/deleteFilm";
 
 function Card(props) {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ function Card(props) {
         <ul>
           {films.map((film) => (
             <div key={film.film_id}>
-              <div className="box">
+              <div className="box-padding">
                 <div className="list">
                   <div
                     onClick={() => {
@@ -30,6 +31,16 @@ function Card(props) {
                       </div>
                     </div>
                   </div>
+                </div>
+                <div>
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => {
+                      deleteFilm({ film_id: film.film_id });
+                    }}
+                  >
+                    Remove
+                  </button>
                 </div>
               </div>
             </div>

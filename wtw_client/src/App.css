@@ -5,9 +5,8 @@ body {
   background-color: #475785;
 }
 .navBox {
-  background-color: white;
-  /* display: flex; */
-  /* flex:1; */
+  /* background-color: white; */
+  padding-bottom: 72px;
 }
 
 .App-header {
@@ -51,6 +50,11 @@ a {
   z-index: 10;
 }
 
+.box-padding {
+  padding: 30px;
+  z-index: 10;
+}
+
 .filters {
   display: flex;
   flex-direction: column;
@@ -86,7 +90,8 @@ a {
 .search-bar button {
   padding: 5px 10px;
   font-size: large;
-}
+=======
+
 
 .list {
   padding: 30px;
@@ -132,6 +137,9 @@ a {
   width: 200px;
   display: flex;
   justify-content: left;
+}
+.photo-card {
+  width: 150px;
 }
 
 .photo-frame {
@@ -194,4 +202,80 @@ a {
 }
 .description {
   word-wrap: break-word;
+}
+
+.remove-btn {
+  z-index: 100;
+}
+.navCss {
+  backdrop-filter: blur(5px);
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(8, 7, 16, 0.6);
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  left: 10px;
+  z-index: 12;
+}
+
+.add-film {
+  /* display: flex; */
+  justify-content: end;
+  padding: 30px;
+  backdrop-filter: blur(5px);
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(8, 7, 16, 0.6);
+}
+
+.add-film-container {
+  /* backdrop-filter: blur(5px);
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(8, 7, 16, 0.6); */
+  position: fixed;
+  width: 300px;
+  /* top: 10px; */
+  right: 110px;
+  /* left: 10px; */
+  z-index: 10;
+}
+
+.page-design {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.form-group {
+  padding: 4px;
+}
+
+.pad {
+  padding-top: 30px;
+}
+
+.topSlider {
+  z-index: 100;
+  padding-top: 20px;
+  /* backdrop-filter: blur(5px); */
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(8, 7, 16, 0.6);
+}
+.topSlider-overlay {
+  z-index: 100;
+  padding: 20px;
+  backdrop-filter: blur(5px);
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(8, 7, 16, 0.6);
+}
+
+.edits {
+  display: flex;
+  justify-content: center;
+}
+.edit-box {
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  padding-top: 30px;
+  padding-bottom: 30px;
+  z-index: 10;
 }
