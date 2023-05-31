@@ -1,8 +1,13 @@
 import logging
 import typing as tp
 
-from WTW_app.models import FilmDBModel
-from WTW_app.films.schema import FilmResponse, FilmPrevResponse
+from WTW_app.models import Film
+from WTW_app.films.schema import (
+    FilmResponse,
+    FilmPrevResponse,
+    AvailableSortParamsFilms,
+    AvailableFilterParamsFilms,
+)
 from WTW_app.films.interface import IFilmsRepository
 
 from sqlalchemy.exc import IntegrityError
@@ -16,12 +21,25 @@ class FilmsRepository(IFilmsRepository):
     def __init__(self, session: Session) -> None:
         self.session = session
 
-    def get_films(self) -> tp.List[FilmPrevResponse]:
+    def get_films(
+        self,
+        sort_by: tp.Optional[AvailableSortParamsFilms] = None,
+        filter_by: tp.Optional[AvailableFilterParamsFilms] = None,
+        filter_value: tp.Optional[str] = None,
+    ) -> tp.List[FilmPrevResponse]:
         _films: tp.List[FilmPrevResponse] = []
+        sort_by_val = getattr(Film, sort_by.value) if sort_by else None
+        filter_by_val = getattr(Film, filter_by.value) if filter_by else None
 
-        query_films = self.session.query(FilmDBModel)
+        query_films = self.session.query(Film)
 
-        _films_db: tp.List[FilmDBModel] = query_films.all()
+        if sort_by_val:
+            query_films = query_films.order_by(sort_by_val)
+
+        if filter_by_val and filter_value is not None:
+            query_films = query_films.filter(filter_by_val.ilike(f"%{filter_value}%"))
+
+        _films_db: tp.List[Film] = query_films.all()
 
         _films = [FilmPrevResponse.from_orm(x) for x in _films_db]
 
@@ -30,7 +48,7 @@ class FilmsRepository(IFilmsRepository):
     def get_film_details(self, *, film_id: int) -> FilmResponse:
         _film: FilmResponse
 
-        query_films = self.session.query(FilmDBModel)
+        query_films = self.session.query(Film)
         _film_db = query_films.get(film_id)
 
         if _film_db:
@@ -44,6 +62,7 @@ class FilmsRepository(IFilmsRepository):
         self,
         *,
         title: str,
+        description: str,
         year: str,
         rate: float,
         img_url: tp.Optional[HttpUrl] = None,
@@ -52,8 +71,9 @@ class FilmsRepository(IFilmsRepository):
         _film: FilmResponse
 
         try:
-            _film_db: FilmDBModel = FilmDBModel(
+            _film_db: Film = Film(
                 title=title,
+                description=description,
                 year=year,
                 rate=rate,
                 img_url=img_url,
@@ -81,6 +101,7 @@ class FilmsRepository(IFilmsRepository):
         *,
         film_id: int,
         title: tp.Optional[str] = None,
+        description: tp.Optional[str] = None,
         year: tp.Optional[int] = None,
         rate: tp.Optional[float] = None,
         img_url: tp.Optional[HttpUrl] = None,
@@ -88,7 +109,7 @@ class FilmsRepository(IFilmsRepository):
     ) -> FilmResponse:
         _film: FilmResponse
 
-        query_films = self.session.query(FilmDBModel)
+        query_films = self.session.query(Film)
         _film_db = query_films.get(film_id)
 
         if not _film_db:
@@ -96,6 +117,8 @@ class FilmsRepository(IFilmsRepository):
         else:
             if title and _film_db.title != title:
                 _film_db.title = title
+            if description and _film_db.description != description:
+                _film_db.description = description
             if year and _film_db.year != year:
                 _film_db.year = year
             if rate and _film_db.rate != rate:
@@ -113,7 +136,7 @@ class FilmsRepository(IFilmsRepository):
     def remove_film(self, *, film_id: int) -> FilmResponse:
         _film: FilmResponse
 
-        query_films = self.session.query(FilmDBModel)
+        query_films = self.session.query(Film)
         _film_db = query_films.get(film_id)
 
         if _film_db:
