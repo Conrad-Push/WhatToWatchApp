@@ -5,6 +5,7 @@ function AddFilm() {
   const [title, setTitle] = useState("");
   const [year, setYear] = useState("");
   const [rate, setRate] = useState("");
+  const [description, setDescription] = useState("");
   const [director_id, setDirectorID] = useState("");
   const [img_url, setImg] = useState(
     "https://yt3.googleusercontent.com/weD7WfgxB3sjFX7Yr4RBk3oAYKYLT4yjb9N3yK10VwF1Pmusidh7xqk1tAP23QpW1rur2Gst0s4=s900-c-k-c0x00ffffff-no-rj"
@@ -18,6 +19,7 @@ function AddFilm() {
         title,
         year,
         rate,
+        description,
         director_id,
         img_url,
       })
@@ -61,6 +63,16 @@ function AddFilm() {
               placeholder="Rating"
               value={rate}
               onChange={(e) => setRate(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
               required
             />
           </div>

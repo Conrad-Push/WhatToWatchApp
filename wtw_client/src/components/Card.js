@@ -20,7 +20,11 @@ function Card(props) {
                     }}
                   >
                     <div className="card-looks">
-                      <img src={film.img_url} alt={film.title} />
+                      <img
+                        className="photo-card"
+                        src={film.img_url}
+                        alt={film.title}
+                      />
                       <div>
                         <div className="card-title">
                           {film.title} ({film.year})
