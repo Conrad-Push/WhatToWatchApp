@@ -53,6 +53,19 @@ function PostgreSQL() {
     setFilterValue(event.target.value);
   };
 
+  const handleRemove = async (filmId) => {
+    try {
+      const response = await axios.delete(`/films/${filmId}`);
+      if (response.status === 200) {
+        setFilms((prevFilms) =>
+          prevFilms.filter((film) => film.film_id !== filmId)
+        );
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   if (loading) {
     return <div className="loading">Loading...</div>;
   }
@@ -80,7 +93,7 @@ function PostgreSQL() {
           <button onClick={handleSearchClick}>Search</button>
         </div>
       </div>
-      <Card films={films} />
+      <Card films={films} setFilms={setFilms} handleRemove={handleRemove} />
     </div>
   );
 }

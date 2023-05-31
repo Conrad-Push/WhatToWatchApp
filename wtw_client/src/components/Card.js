@@ -1,8 +1,11 @@
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Card(props) {
   const navigate = useNavigate();
   const films = props.films;
+  const setFilms = props.setFilms;
+  const handleRemove = props.handleRemove;
 
   return (
     <div>
@@ -30,13 +33,19 @@ function Card(props) {
                       </div>
                     </div>
                   </div>
+                  <button
+                    className="remove-button"
+                    onClick={() => handleRemove(film.film_id)}
+                  >
+                    Remove
+                  </button>
                 </div>
               </div>
             </div>
           ))}
         </ul>
       ) : (
-        <div className="no-films">No films available</div>
+        <div className="no-films">No films founded</div>
       )}
     </div>
   );
