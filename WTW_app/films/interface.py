@@ -1,13 +1,23 @@
 import typing as tp
 
 from abc import ABC, abstractmethod
-from WTW_app.films.schema import FilmResponse, FilmPrevResponse
+from WTW_app.films.schema import (
+    FilmResponse,
+    FilmPrevResponse,
+    AvailableSortParamsFilms,
+    AvailableFilterParamsFilms,
+)
 from pydantic import HttpUrl
 
 
 class IFilmsRepository(ABC):
     @abstractmethod
-    def get_films(self) -> tp.List[FilmPrevResponse]:
+    def get_films(
+        self,
+        sort_by: tp.Optional[AvailableSortParamsFilms] = None,
+        filter_by: tp.Optional[AvailableFilterParamsFilms] = None,
+        filter_value: tp.Optional[str] = None,
+    ) -> tp.List[FilmPrevResponse]:
         pass
 
     @abstractmethod
@@ -19,6 +29,7 @@ class IFilmsRepository(ABC):
         self,
         *,
         title: str,
+        description: str,
         year: str,
         rate: float,
         img_url: tp.Optional[HttpUrl] = None,
@@ -32,6 +43,7 @@ class IFilmsRepository(ABC):
         *,
         film_id: int,
         title: tp.Optional[str] = None,
+        description: tp.Optional[str] = None,
         year: tp.Optional[int] = None,
         rate: tp.Optional[float] = None,
         img_url: tp.Optional[HttpUrl] = None,

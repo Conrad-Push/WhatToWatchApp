@@ -1,12 +1,24 @@
 import typing as tp
 
+from enum import Enum
 from pydantic import BaseModel, HttpUrl, root_validator
 from WTW_app.directors.schema import DirectorResponse
+
+
+class AvailableSortParamsFilms(Enum):
+    title = "title"
+    year = "year"
+    rate = "rate"
+
+
+class AvailableFilterParamsFilms(Enum):
+    title = "title"
 
 
 class FilmResponse(BaseModel):
     film_id: int
     title: str
+    description: str
     year: int
     rate: float
     img_url: tp.Optional[HttpUrl] = None
@@ -18,6 +30,7 @@ class FilmResponse(BaseModel):
             "example": {
                 "film_id": 1,
                 "title": "Skazani na Shawshank",
+                "description": "Over the course of several years, two convicts form a friendship, seeking consolation and, eventually, redemption through basic compassion.",
                 "year": 1994,
                 "rate": 9.2,
                 "img_url": "https://m.media-amazon.com/images/M/MV5BNDE3ODcxYzMtY2YzZC00NmNlLWJiNDMtZDViZWM2MzIxZDYwXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_UX45_CR0,0,45,67_AL_.jpg",
@@ -51,6 +64,7 @@ class FilmPrevResponse(BaseModel):
 
 class FilmRequest(BaseModel):
     title: str
+    description: str
     year: int
     rate: float
     img_url: tp.Optional[HttpUrl] = None
@@ -60,6 +74,7 @@ class FilmRequest(BaseModel):
         schema_extra = {
             "example": {
                 "title": "Siedem",
+                "description": "Two detectives, a rookie and a veteran, hunt a serial killer who uses the seven deadly sins as his motives.",
                 "year": 1995,
                 "rate": 8.6,
                 "img_url": "https://m.media-amazon.com/images/M/MV5BOTUwODM5MTctZjczMi00OTk4LTg3NWUtNmVhMTAzNTNjYjcyXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_UX67_CR0,0,67,98_AL_.jpg",
@@ -70,6 +85,7 @@ class FilmRequest(BaseModel):
 
 class PatchFilmRequest(BaseModel):
     title: tp.Optional[str] = None
+    description: tp.Optional[str] = None
     year: tp.Optional[int] = None
     rate: tp.Optional[float] = None
     img_url: tp.Optional[HttpUrl] = None
@@ -91,6 +107,7 @@ class PatchFilmRequest(BaseModel):
         schema_extra = {
             "example": {
                 "title": "Osiem",
+                "description": "New description text here",
                 "year": 2023,
                 "rate": 3.7,
                 "img_url": "https://m.media-amazon.com/images/M/MV5BN2EyZjM3NzUtNWUzMi00MTgxLWI0NTctMzY4M2VlOTdjZWRiXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_UY67_CR0,0,45,67_AL_.jpg",
