@@ -1,9 +1,11 @@
 .App {
   text-align: center;
 }
+
 body {
   background-color: #475785;
 }
+
 .navBox {
   background-color: white;
 }
@@ -35,20 +37,11 @@ a {
   cursor: pointer;
 }
 
-.box {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-top: 30px;
-  padding-bottom: 30px;
-  z-index: 10;
-}
-
 .filters {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 35px;
 }
 
 .sort-dropdown {
@@ -81,9 +74,49 @@ a {
   font-size: large;
 }
 
+.films-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.add-film-card {
+  width: 500px;
+  box-shadow: 0 0 30px rgba(8, 7, 16, 0.6);
+  border-radius: 20px;
+  padding: 30px;
+}
+
+.add-film-card h2 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.add-button {
+  background-color: #bb8e10;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.add-button:hover {
+  background-color: #d1a428;
+}
+
+.box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
 .list {
   padding: 30px;
-  backdrop-filter: blur(5px);
   border-radius: 20px;
   box-shadow: 0 0 30px rgba(8, 7, 16, 0.6);
   width: 400px;
@@ -97,33 +130,32 @@ a {
   color: white;
 }
 
-.card-looks {
-  display: flex-start;
+.card-content {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
-.photo {
-  display: flex-start;
-  justify-content: left;
+.card-content img {
+  width: 70px;
+}
+
+.card-content input {
+  margin: 5px;
+  padding: 5px;
+  width: 300px;
 }
 
 .card-title {
   font-size: medium;
   font-weight: bold;
-  padding-left: 10px;
+  padding: 5px;
 }
+
 .movie-info {
   font-size: medium;
   text-align: left;
   padding-left: 10px;
-}
-.photo-details {
-  width: 200px;
-  display: flex;
-  justify-content: left;
-}
-
-.photo-frame {
-  padding: 30px;
 }
 
 .remove-button {
@@ -138,7 +170,7 @@ a {
 }
 
 .remove-button:hover {
-  background-color: #ff5252;
+  background-color: #b13636;
 }
 
 .loading {
@@ -159,6 +191,16 @@ a {
   word-wrap: break-word;
   display: flex;
   justify-content: space-evenly;
+}
+
+.photo-details {
+  width: 200px;
+  display: flex;
+  justify-content: left;
+}
+
+.photo-frame {
+  padding: 30px;
 }
 
 #film-title {

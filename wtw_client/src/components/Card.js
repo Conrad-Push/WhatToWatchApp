@@ -3,16 +3,26 @@ import axios from "axios";
 
 function Card(props) {
   const navigate = useNavigate();
-  const films = props.films;
-  const setFilms = props.setFilms;
-  const handleRemove = props.handleRemove;
+
+  const handleRemove = async (filmId) => {
+    try {
+      const response = await axios.delete(`/films/${filmId}`);
+      if (response.status === 200) {
+        props.setFilms((prevFilms) =>
+          prevFilms.filter((film) => film.film_id !== filmId)
+        );
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div>
       <h1>Films list</h1>
-      {films.length > 0 ? (
+      {props.films.length > 0 ? (
         <ul>
-          {films.map((film) => (
+          {props.films.map((film) => (
             <div key={film.film_id}>
               <div className="box">
                 <div className="list">
@@ -21,7 +31,7 @@ function Card(props) {
                       navigate(`/details/${film.film_id}`);
                     }}
                   >
-                    <div className="card-looks">
+                    <div className="card-content">
                       <img src={film.img_url} alt={film.title} />
                       <div>
                         <div className="card-title">
