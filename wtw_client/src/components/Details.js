@@ -30,7 +30,7 @@ function Details() {
     return <div className="loading">Loading...</div>;
   }
 
-  const { title, year, rate, description, img_url, director } = film;
+  const { title, year, rate, description, img_url, details } = film;
 
   const handleGoBack = () => {
     navigate("/postgresql");
@@ -54,7 +54,7 @@ function Details() {
                   <b>Year of production:</b> {year}
                 </div>
                 <div>
-                  <b>Director:</b> {director.name}
+                  <b>Director:</b> {details.director}
                 </div>
                 <div className="description">
                   <b>Description:</b> {description}
