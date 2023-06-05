@@ -2,7 +2,7 @@ import typing as tp
 
 from enum import Enum
 from pydantic import BaseModel, HttpUrl, root_validator
-from WTW_app.directors.schema import DirectorResponse
+from WTW_app.details.schema import DetailsResponse
 
 
 class AvailableSortParamsFilms(Enum):
@@ -18,11 +18,10 @@ class AvailableFilterParamsFilms(Enum):
 class FilmResponse(BaseModel):
     film_id: int
     title: str
-    description: str
     year: int
     rate: float
     img_url: tp.Optional[HttpUrl] = None
-    director: DirectorResponse
+    details: DetailsResponse
 
     class Config:
         orm_mode = True
@@ -30,13 +29,13 @@ class FilmResponse(BaseModel):
             "example": {
                 "film_id": 1,
                 "title": "Skazani na Shawshank",
-                "description": "Over the course of several years, two convicts form a friendship, seeking consolation and, eventually, redemption through basic compassion.",
                 "year": 1994,
                 "rate": 9.2,
                 "img_url": "https://m.media-amazon.com/images/M/MV5BNDE3ODcxYzMtY2YzZC00NmNlLWJiNDMtZDViZWM2MzIxZDYwXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_UX45_CR0,0,45,67_AL_.jpg",
-                "director": {
-                    "director_id": 1,
-                    "name": "Frank Darabont",
+                "details": {
+                    "details_id": 1,
+                    "director": "Frank Darabont",
+                    "description": "Over the course of several years, two convicts form a friendship, seeking consolation and, eventually, redemption through basic compassion.",
                 },
             }
         }
@@ -64,32 +63,29 @@ class FilmPrevResponse(BaseModel):
 
 class FilmRequest(BaseModel):
     title: str
-    description: str
     year: int
     rate: float
     img_url: tp.Optional[HttpUrl] = None
-    director_id: int
+    details_id: int
 
     class Config:
         schema_extra = {
             "example": {
                 "title": "Siedem",
-                "description": "Two detectives, a rookie and a veteran, hunt a serial killer who uses the seven deadly sins as his motives.",
                 "year": 1995,
                 "rate": 8.6,
                 "img_url": "https://m.media-amazon.com/images/M/MV5BOTUwODM5MTctZjczMi00OTk4LTg3NWUtNmVhMTAzNTNjYjcyXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_UX67_CR0,0,67,98_AL_.jpg",
-                "director_id": 1,
+                "details_id": 1,
             }
         }
 
 
 class PatchFilmRequest(BaseModel):
     title: tp.Optional[str] = None
-    description: tp.Optional[str] = None
     year: tp.Optional[int] = None
     rate: tp.Optional[float] = None
     img_url: tp.Optional[HttpUrl] = None
-    director_id: tp.Optional[int] = None
+    details_id: tp.Optional[int] = None
 
     @root_validator(pre=True)
     def at_least_one_not_empty(cls, values):
@@ -98,7 +94,7 @@ class PatchFilmRequest(BaseModel):
             and not values.get("year")
             and not values.get("rate")
             and not values.get("img_url")
-            and not values.get("director_id")
+            and not values.get("details_id")
         ):
             raise ValueError("At least one of changed properties should not be empty.")
         return values
@@ -107,10 +103,9 @@ class PatchFilmRequest(BaseModel):
         schema_extra = {
             "example": {
                 "title": "Osiem",
-                "description": "New description text here",
                 "year": 2023,
                 "rate": 3.7,
                 "img_url": "https://m.media-amazon.com/images/M/MV5BN2EyZjM3NzUtNWUzMi00MTgxLWI0NTctMzY4M2VlOTdjZWRiXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_UY67_CR0,0,45,67_AL_.jpg",
-                "director_id": 1,
+                "details_id": 1,
             }
         }

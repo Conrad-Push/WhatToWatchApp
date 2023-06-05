@@ -29,11 +29,10 @@ class IFilmsRepository(ABC):
         self,
         *,
         title: str,
-        description: str,
         year: str,
         rate: float,
         img_url: tp.Optional[HttpUrl] = None,
-        director_id: int
+        details_id: int
     ) -> FilmResponse:
         pass
 
@@ -43,11 +42,10 @@ class IFilmsRepository(ABC):
         *,
         film_id: int,
         title: tp.Optional[str] = None,
-        description: tp.Optional[str] = None,
         year: tp.Optional[int] = None,
         rate: tp.Optional[float] = None,
         img_url: tp.Optional[HttpUrl] = None,
-        director_id: tp.Optional[int] = None
+        details_id: tp.Optional[int] = None
     ) -> FilmResponse:
         pass
 

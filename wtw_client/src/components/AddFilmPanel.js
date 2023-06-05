@@ -4,25 +4,22 @@ import axios from "axios";
 function AddFilmPanel(props) {
   const [newFilm, setNewFilm] = useState({
     title: "",
-    description: "",
     year: "",
     rate: "",
     img_url: "",
-    director_id: "",
+    details_id: "",
   });
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleAddFilm = async (e) => {
     e.preventDefault();
 
-    if (newFilm.title && newFilm.year && newFilm.rate && newFilm.director_id) {
+    if (newFilm.title && newFilm.year && newFilm.rate && newFilm.details_id) {
       setErrorMessage("");
 
       try {
-        // Provide default values for description and img_url if they are not filled
         const filmData = {
           ...newFilm,
-          description: newFilm.description || "Default description",
           img_url:
             newFilm.img_url ||
             "https://icdn.2cda.pl/obr/oryginalne/171cdd9bc97c7c886071fa43d55709e9.jpg",
@@ -42,11 +39,10 @@ function AddFilmPanel(props) {
 
       setNewFilm({
         title: "",
-        description: "",
         year: "",
         rate: "",
         img_url: "",
-        director_id: "",
+        details_id: "",
       });
     } else {
       setErrorMessage("Please fill in all required fields");
@@ -96,23 +92,15 @@ function AddFilmPanel(props) {
             />
             <input
               type="number"
-              placeholder="Enter director ID..."
-              value={newFilm.director_id}
+              placeholder="Enter details ID..."
+              value={newFilm.details_id}
               onChange={(e) =>
                 setNewFilm({
                   ...newFilm,
-                  director_id: parseInt(e.target.value),
+                  details_id: parseInt(e.target.value),
                 })
               }
               required
-            />
-            <input
-              type="text"
-              placeholder="Enter film description... (optional)"
-              value={newFilm.description}
-              onChange={(e) =>
-                setNewFilm({ ...newFilm, description: e.target.value })
-              }
             />
             <input
               type="text"

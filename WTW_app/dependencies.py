@@ -4,8 +4,8 @@ from sqlalchemy.orm import Session
 from WTW_app.db import SessionLocal
 from WTW_app.films.interface import IFilmsRepository
 from WTW_app.films.films_repository import FilmsRepository
-from WTW_app.directors.interface import IDirectorsRepository
-from WTW_app.directors.directors_repository import DirectorsRepository
+from WTW_app.details.interface import IDetailsRepository
+from WTW_app.details.directors_repository import DetailsRepository
 
 
 def get_db() -> Session:
@@ -23,8 +23,8 @@ def get_films_repository(
     yield repository
 
 
-def get_directors_repository(
+def get_details_repository(
     session: Session = Depends(get_db),
 ):
-    repository: IDirectorsRepository = DirectorsRepository(session)
+    repository: IDetailsRepository = DetailsRepository(session)
     yield repository

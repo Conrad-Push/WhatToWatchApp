@@ -184,7 +184,6 @@ a {
 
 .film-details {
   padding: 20px;
-  backdrop-filter: blur(5px);
   border-radius: 20px;
   box-shadow: 0 0 30px rgba(8, 7, 16, 0.6);
   width: 600px;

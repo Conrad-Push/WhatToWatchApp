@@ -6,10 +6,10 @@ from bs4 import BeautifulSoup
 
 from WTW_app.settings.data_settings import DATA_SETTINGS
 from WTW_app.db import SessionLocal
-from WTW_app.films.films_repository import FilmsRepository
-from WTW_app.directors.directors_repository import DirectorsRepository
 from WTW_app.films.interface import IFilmsRepository
-from WTW_app.directors.interface import IDirectorsRepository
+from WTW_app.films.films_repository import FilmsRepository
+from WTW_app.details.interface import IDetailsRepository
+from WTW_app.details.directors_repository import DetailsRepository
 
 logger = logging.getLogger()
 
@@ -23,7 +23,7 @@ def scrap_data():
         logger.error("Connection with postgreSQL database failed")
 
     films_repository: IFilmsRepository = FilmsRepository(session)
-    directors_repository: IDirectorsRepository = DirectorsRepository(session)
+    details_repository: IDetailsRepository = DetailsRepository(session)
 
     logger.info("Data scrapping started...")
     logger.info("Getting the data responses...")
@@ -106,15 +106,17 @@ def scrap_data():
         else:
             img_url = None
 
-        _director = directors_repository.add_director(name=director)
+        _details = details_repository.add_details(
+            director=director,
+            description=description,
+        )
 
         films_repository.add_film(
             title=title,
-            description=description,
             year=year,
             rate=rate,
             img_url=img_url,
-            director_id=_director.director_id,
+            details_id=_details.details_id,
         )
 
     logger.info("All data added to database")
