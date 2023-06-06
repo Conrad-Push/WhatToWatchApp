@@ -92,9 +92,7 @@ async def delete_details(
     details_id: int,
     details_repository: IDetailsRepository = Depends(get_details_repository),
 ) -> DetailsResponse:
-    _details: DetailsResponse = details_repository.remove_details(
-        details_id == details_id
-    )
+    _details: DetailsResponse = details_repository.remove_details(details_id=details_id)
 
     if not _details:
         raise HTTPException(

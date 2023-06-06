@@ -5,7 +5,7 @@ from WTW_app.db import SessionLocal
 from WTW_app.films.interface import IFilmsRepository
 from WTW_app.films.films_repository import FilmsRepository
 from WTW_app.details.interface import IDetailsRepository
-from WTW_app.details.directors_repository import DetailsRepository
+from WTW_app.details.details_repository import DetailsRepository
 
 
 def get_db() -> Session:

@@ -14,8 +14,10 @@ class Films(Base):
     rate = Column(Float, nullable=False)
     img_url = Column(String, nullable=True)
 
-    details_id = Column(Integer, ForeignKey("details.details_id"), nullable=False)
-    details = relationship("Details")
+    details_id = Column(
+        Integer, ForeignKey("details.details_id", ondelete="CASCADE"), nullable=False
+    )
+    details = relationship("Details", cascade="all, delete")
 
 
 class Details(Base):
