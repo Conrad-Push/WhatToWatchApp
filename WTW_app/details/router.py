@@ -10,8 +10,8 @@ from WTW_app.details.interface import IDetailsRepository
 from WTW_app.dependencies import get_details_repository
 
 details_router = APIRouter(
-    prefix="/details",
-    tags=["Details"],
+    prefix="/postgresql/details",
+    tags=["Details - PostgreSQL"],
 )
 
 

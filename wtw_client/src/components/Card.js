@@ -6,7 +6,7 @@ function Card(props) {
 
   const handleRemove = async (filmId) => {
     try {
-      const response = await axios.delete(`/films/${filmId}`);
+      const response = await axios.delete(`/postgresql/films/${filmId}`);
       if (response.status === 200) {
         props.setFilms((prevFilms) =>
           prevFilms.filter((film) => film.film_id !== filmId)

@@ -11,7 +11,7 @@ function Details() {
   useEffect(() => {
     const fetchFilmDetails = async () => {
       try {
-        const response = await axios.get(`/films/${film_id}`);
+        const response = await axios.get(`/postgresql/films/${film_id}`);
         if (response.status !== 200) {
           throw new Error("Network response was not ok");
         }

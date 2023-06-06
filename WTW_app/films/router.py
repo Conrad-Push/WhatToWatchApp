@@ -13,8 +13,8 @@ from WTW_app.films.interface import IFilmsRepository
 from WTW_app.dependencies import get_films_repository
 
 films_router = APIRouter(
-    prefix="/films",
-    tags=["Films"],
+    prefix="/postgresql/films",
+    tags=["Films - PostgreSQL"],
 )
 
 

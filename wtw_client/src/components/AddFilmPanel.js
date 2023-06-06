@@ -25,7 +25,7 @@ function AddFilmPanel(props) {
             "https://icdn.2cda.pl/obr/oryginalne/171cdd9bc97c7c886071fa43d55709e9.jpg",
         };
 
-        const response = await axios.post("/films", filmData);
+        const response = await axios.post("/postgresql/films", filmData);
 
         if (response.status === 200) {
           const addedFilm = response.data;

@@ -13,7 +13,7 @@ function PostgreSQL() {
   useEffect(() => {
     const fetchFilms = async () => {
       try {
-        let url = "/films/";
+        let url = "/postgresql/films/";
 
         if (sortOption !== "None") {
           url += `?sort_by=${sortOption}`;

@@ -1,3 +1,6 @@
+import psycopg2
+
+
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -27,3 +30,34 @@ def drop_db() -> None:
 
 def create_db() -> None:
     return create_database(engine.url)
+
+
+def get_table_sizes():
+    conn = psycopg2.connect(
+        host=DB_SETTINGS.db_host,
+        port=DB_SETTINGS.db_port,
+        database=DB_SETTINGS.db_name,
+        user=DB_SETTINGS.db_username,
+        password=DB_SETTINGS.db_password,
+    )
+    cursor = conn.cursor()
+
+    # Query the size of each table
+    cursor.execute(
+        """
+        SELECT
+            relname AS table_name,
+            pg_size_pretty(pg_total_relation_size(relid)) AS total_size
+        FROM
+            pg_catalog.pg_statio_user_tables
+        ORDER BY
+            pg_total_relation_size(relid) DESC;
+    """
+    )
+
+    table_sizes = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return table_sizes
