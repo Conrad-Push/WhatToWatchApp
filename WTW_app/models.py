@@ -3,26 +3,28 @@ from sqlalchemy.orm import relationship
 from WTW_app.db import Base
 
 
-class Film(Base):
-    """Class that holds metadata for films."""
+class Films(Base):
+    """Class that holds general data for films."""
 
     __tablename__ = "films"
 
     film_id = Column(Integer, primary_key=True, index=True)
     title = Column(String, unique=True, nullable=False)
-    description = Column(String, unique=True, nullable=False)
     year = Column(Integer, nullable=False)
     rate = Column(Float, nullable=False)
     img_url = Column(String, nullable=True)
 
-    director_id = Column(Integer, ForeignKey("directors.director_id"), nullable=False)
-    director = relationship("Director")
+    details_id = Column(
+        Integer, ForeignKey("details.details_id", ondelete="CASCADE"), nullable=False
+    )
+    details = relationship("Details", cascade="all, delete")
 
 
-class Director(Base):
-    """Class that holds metadata for directors."""
+class Details(Base):
+    """Class that holds detailed data for films."""
 
-    __tablename__ = "directors"
+    __tablename__ = "details"
 
-    director_id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, unique=True, nullable=False)
+    details_id = Column(Integer, primary_key=True, index=True)
+    director = Column(String, nullable=False)
+    description = Column(String, nullable=False)

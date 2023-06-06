@@ -1,7 +1,7 @@
 import logging
 import typing as tp
 
-from WTW_app.models import Film
+from WTW_app.models import Films
 from WTW_app.films.schema import (
     FilmResponse,
     FilmPrevResponse,
@@ -28,10 +28,10 @@ class FilmsRepository(IFilmsRepository):
         filter_value: tp.Optional[str] = None,
     ) -> tp.List[FilmPrevResponse]:
         _films: tp.List[FilmPrevResponse] = []
-        sort_by_val = getattr(Film, sort_by.value) if sort_by else None
-        filter_by_val = getattr(Film, filter_by.value) if filter_by else None
+        sort_by_val = getattr(Films, sort_by.value) if sort_by else None
+        filter_by_val = getattr(Films, filter_by.value) if filter_by else None
 
-        query_films = self.session.query(Film)
+        query_films = self.session.query(Films)
 
         if sort_by_val:
             query_films = query_films.order_by(sort_by_val)
@@ -39,7 +39,7 @@ class FilmsRepository(IFilmsRepository):
         if filter_by_val and filter_value is not None:
             query_films = query_films.filter(filter_by_val.ilike(f"%{filter_value}%"))
 
-        _films_db: tp.List[Film] = query_films.all()
+        _films_db: tp.List[Films] = query_films.all()
 
         _films = [FilmPrevResponse.from_orm(x) for x in _films_db]
 
@@ -48,7 +48,7 @@ class FilmsRepository(IFilmsRepository):
     def get_film_details(self, *, film_id: int) -> FilmResponse:
         _film: FilmResponse
 
-        query_films = self.session.query(Film)
+        query_films = self.session.query(Films)
         _film_db = query_films.get(film_id)
 
         if _film_db:
@@ -62,22 +62,20 @@ class FilmsRepository(IFilmsRepository):
         self,
         *,
         title: str,
-        description: str,
         year: str,
         rate: float,
         img_url: tp.Optional[HttpUrl] = None,
-        director_id: int,
+        details_id: int,
     ) -> FilmResponse:
         _film: FilmResponse
 
         try:
-            _film_db: Film = Film(
+            _film_db: Films = Films(
                 title=title,
-                description=description,
                 year=year,
                 rate=rate,
                 img_url=img_url,
-                director_id=director_id,
+                details_id=details_id,
             )
 
             if _film_db:
@@ -101,15 +99,14 @@ class FilmsRepository(IFilmsRepository):
         *,
         film_id: int,
         title: tp.Optional[str] = None,
-        description: tp.Optional[str] = None,
         year: tp.Optional[int] = None,
         rate: tp.Optional[float] = None,
         img_url: tp.Optional[HttpUrl] = None,
-        director_id: tp.Optional[int] = None,
+        details_id: tp.Optional[int] = None,
     ) -> FilmResponse:
         _film: FilmResponse
 
-        query_films = self.session.query(Film)
+        query_films = self.session.query(Films)
         _film_db = query_films.get(film_id)
 
         if not _film_db:
@@ -117,16 +114,14 @@ class FilmsRepository(IFilmsRepository):
         else:
             if title and _film_db.title != title:
                 _film_db.title = title
-            if description and _film_db.description != description:
-                _film_db.description = description
             if year and _film_db.year != year:
                 _film_db.year = year
             if rate and _film_db.rate != rate:
                 _film_db.rate = rate
             if img_url and _film_db.img_url != img_url:
                 _film_db.img_url = img_url
-            if director_id and _film_db.director_id != director_id:
-                _film_db.director_id = director_id
+            if details_id and _film_db.details_id != details_id:
+                _film_db.details_id = details_id
 
         self.session.commit()
         _film = FilmResponse.from_orm(_film_db)
@@ -136,7 +131,7 @@ class FilmsRepository(IFilmsRepository):
     def remove_film(self, *, film_id: int) -> FilmResponse:
         _film: FilmResponse
 
-        query_films = self.session.query(Film)
+        query_films = self.session.query(Films)
         _film_db = query_films.get(film_id)
 
         if _film_db:

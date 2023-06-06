@@ -13,8 +13,8 @@ from WTW_app.films.interface import IFilmsRepository
 from WTW_app.dependencies import get_films_repository
 
 films_router = APIRouter(
-    prefix="/films",
-    tags=["Films"],
+    prefix="/postgresql/films",
+    tags=["Films - PostgreSQL"],
 )
 
 
@@ -54,11 +54,10 @@ def add_film(
 ) -> FilmResponse:
     _film: FilmResponse = films_repository.add_film(
         title=film_payload.title,
-        description=film_payload.description,
         year=film_payload.year,
         rate=film_payload.rate,
         img_url=film_payload.img_url,
-        director_id=film_payload.director_id,
+        details_id=film_payload.details_id,
     )
 
     if not _film:
@@ -79,11 +78,10 @@ def modify_film_details(
     _film: FilmResponse = films_repository.modify_film(
         film_id=film_id,
         title=film_payload.title,
-        description=film_payload.description,
         year=film_payload.year,
         rate=film_payload.rate,
         img_url=film_payload.img_url,
-        director_id=film_payload.director_id,
+        details_id=film_payload.details_id,
     )
 
     if not _film:

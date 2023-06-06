@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Card from "./Card";
+import AddFilmPanel from "./AddFilmPanel";
 
 function PostgreSQL() {
   const [films, setFilms] = useState(null);
@@ -12,7 +13,7 @@ function PostgreSQL() {
   useEffect(() => {
     const fetchFilms = async () => {
       try {
-        let url = "/films/";
+        let url = "/postgresql/films/";
 
         if (sortOption !== "None") {
           url += `?sort_by=${sortOption}`;
@@ -45,12 +46,12 @@ function PostgreSQL() {
     setSortOption(event.target.value);
   };
 
-  const handleSearchClick = () => {
-    setSearchValue(filterValue);
-  };
-
   const handleSearchChange = (event) => {
     setFilterValue(event.target.value);
+  };
+
+  const handleSearchClick = () => {
+    setSearchValue(filterValue);
   };
 
   if (loading) {
@@ -80,7 +81,10 @@ function PostgreSQL() {
           <button onClick={handleSearchClick}>Search</button>
         </div>
       </div>
-      <Card films={films} />
+      <div className="films-container">
+        <Card films={films} setFilms={setFilms} />
+        <AddFilmPanel setFilms={setFilms} />
+      </div>
     </div>
   );
 }

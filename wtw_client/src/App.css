@@ -1,24 +1,19 @@
 .App {
   text-align: center;
 }
+
 body {
   background-color: #475785;
 }
+
 .navBox {
   background-color: white;
-  /* display: flex; */
-  /* flex:1; */
 }
 
 .App-header {
-  /* background-color: #282c34; */
-  /* background-color: #475785; */
-  /* min-height: 100vh; */
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
   justify-content: center;
-  /* font-size: calc(10px + 2vmin); */
   color: white;
 }
 
@@ -42,20 +37,11 @@ a {
   cursor: pointer;
 }
 
-.box {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-top: 30px;
-  padding-bottom: 30px;
-  z-index: 10;
-}
-
 .filters {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 35px;
 }
 
 .sort-dropdown {
@@ -88,9 +74,50 @@ a {
   font-size: large;
 }
 
+.films-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.add-film-card {
+  width: 500px;
+  box-shadow: 0 0 30px rgba(8, 7, 16, 0.6);
+  border-radius: 20px;
+  padding: 30px;
+}
+
+.add-film-card h2 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.add-button {
+  background-color: #bb8e10;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.add-button:hover {
+  background-color: #d1a428;
+}
+
+.box {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  gap: 30px;
+}
+
 .list {
   padding: 30px;
-  backdrop-filter: blur(5px);
   border-radius: 20px;
   box-shadow: 0 0 30px rgba(8, 7, 16, 0.6);
   width: 400px;
@@ -104,30 +131,68 @@ a {
   color: white;
 }
 
-.card-looks {
-  display: flex-start;
+.card-content {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
-.photo {
-  /* height: 200px; */
-  display: flex-start;
-  justify-content: left;
+.card-content img {
+  width: 70px;
+}
+
+.card-content input {
+  margin: 5px;
+  padding: 5px;
+  width: 300px;
 }
 
 .card-title {
-  /* text-align: center;
-    display: flex;
-    justify-content: right;
-    align-items: center; */
   font-size: medium;
   font-weight: bold;
-  padding-left: 10px;
+  padding: 5px;
 }
+
 .movie-info {
   font-size: medium;
   text-align: left;
   padding-left: 10px;
 }
+
+.remove-button {
+  background-color: #9e2424;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.remove-button:hover {
+  background-color: #b13636;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  font-size: 100px;
+  color: #333;
+}
+
+.film-details {
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(8, 7, 16, 0.6);
+  width: 600px;
+  word-wrap: break-word;
+  display: flex;
+  justify-content: space-evenly;
+}
+
 .photo-details {
   width: 200px;
   display: flex;
@@ -138,10 +203,34 @@ a {
   padding: 30px;
 }
 
+.details-frame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#film-title {
+  padding-bottom: 30px;
+  font-weight: 700;
+  font-size: xx-large;
+}
+
+.details-content {
+  display: flex;
+  flex: 0 1;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.description {
+  word-wrap: break-word;
+  padding-top: 15px;
+}
+
 .back-button-container {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin: 20px;
 }
 
 .back-button {
@@ -159,39 +248,17 @@ a {
   background-color: #3b466f;
 }
 
-.loading {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 200px;
-  font-size: 100px;
-  color: #333;
+.edit-button {
+  background-color: #6a7f0a;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-weight: bold;
+  display: inline-block;
 }
 
-.film-details {
-  padding: 20px;
-  backdrop-filter: blur(5px);
-  border-radius: 20px;
-  box-shadow: 0 0 30px rgba(8, 7, 16, 0.6);
-  width: 600px;
-  word-wrap: break-word;
-  display: flex;
-  justify-content: space-evenly;
-}
-
-.film-description {
-  display: flex;
-  flex: 1;
-  justify-content: flex-start;
-  align-items: center;
-  padding-top: 20px;
-}
-
-#film-title {
-  padding-bottom: 30px;
-  font-weight: 700;
-  font-size: xx-large;
-}
-.description {
-  word-wrap: break-word;
+.edit-button:hover {
+  background-color: #7a930a;
 }
