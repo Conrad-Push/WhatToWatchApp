@@ -71,7 +71,7 @@ class FilmRequest(BaseModel):
     class Config:
         schema_extra = {
             "example": {
-                "title": "Siedem",
+                "title": "Osiem",
                 "year": 1995,
                 "rate": 8.6,
                 "img_url": "https://m.media-amazon.com/images/M/MV5BOTUwODM5MTctZjczMi00OTk4LTg3NWUtNmVhMTAzNTNjYjcyXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_UX67_CR0,0,67,98_AL_.jpg",
@@ -102,7 +102,7 @@ class PatchFilmRequest(BaseModel):
     class Config:
         schema_extra = {
             "example": {
-                "title": "Osiem",
+                "title": "Dziewięć",
                 "year": 2023,
                 "rate": 3.7,
                 "img_url": "https://m.media-amazon.com/images/M/MV5BN2EyZjM3NzUtNWUzMi00MTgxLWI0NTctMzY4M2VlOTdjZWRiXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_UY67_CR0,0,45,67_AL_.jpg",
