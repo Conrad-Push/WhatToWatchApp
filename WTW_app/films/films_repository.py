@@ -13,6 +13,7 @@ from WTW_app.films.interface import IFilmsRepository
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 from pydantic import HttpUrl
+from math import ceil
 
 logger = logging.getLogger()
 
@@ -23,9 +24,11 @@ class FilmsRepository(IFilmsRepository):
 
     def get_films(
         self,
+        limit: int = 50,
         sort_by: tp.Optional[AvailableSortParamsFilms] = None,
         filter_by: tp.Optional[AvailableFilterParamsFilms] = None,
         filter_value: tp.Optional[str] = None,
+        offset: int = 0,
     ) -> tp.List[FilmPrevResponse]:
         _films: tp.List[FilmPrevResponse] = []
         sort_by_val = getattr(Films, sort_by.value) if sort_by else None
@@ -39,11 +42,17 @@ class FilmsRepository(IFilmsRepository):
         if filter_by_val and filter_value is not None:
             query_films = query_films.filter(filter_by_val.ilike(f"%{filter_value}%"))
 
+        total_count = query_films.count()
+
+        query_films = query_films.offset(offset).limit(limit)
+
         _films_db: tp.List[Films] = query_films.all()
 
         _films = [FilmPrevResponse.from_orm(x) for x in _films_db]
 
-        return _films
+        total_pages = ceil(total_count / limit)
+
+        return _films, total_pages
 
     def get_film_details(self, *, film_id: int) -> FilmResponse:
         _film: FilmResponse

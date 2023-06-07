@@ -1,9 +1,10 @@
 import typing as tp
 
-from fastapi import APIRouter, HTTPException, status, Depends
+from fastapi import APIRouter, HTTPException, status, Depends, Query
 from WTW_app.films.schema import (
     FilmResponse,
     FilmPrevResponse,
+    FilmsListResponse,
     FilmRequest,
     PatchFilmRequest,
     AvailableSortParamsFilms,
@@ -18,15 +19,28 @@ films_router = APIRouter(
 )
 
 
-@films_router.get("/", response_model=tp.List[FilmPrevResponse])
+@films_router.get("/", response_model=FilmsListResponse)
 def get_films_list(
     films_repository: IFilmsRepository = Depends(get_films_repository),
+    page: int = Query(1, ge=1),
     sort_by: tp.Optional[AvailableSortParamsFilms] = None,
     filter_by: tp.Optional[AvailableFilterParamsFilms] = None,
     filter_value: tp.Optional[str] = None,
-) -> tp.List[FilmPrevResponse]:
-    _films = films_repository.get_films(sort_by, filter_by, filter_value)
-    return _films
+) -> FilmsListResponse:
+    limit = 50
+    offset = (page - 1) * limit
+
+    _films, total_pages = films_repository.get_films(
+        sort_by=sort_by,
+        filter_by=filter_by,
+        filter_value=filter_value,
+        offset=offset,
+        limit=limit,
+    )
+
+    _films_list = FilmsListResponse(films=_films, total_pages=total_pages)
+
+    return _films_list
 
 
 @films_router.get("/{film_id:int}", response_model=FilmResponse)

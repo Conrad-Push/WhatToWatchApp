@@ -17,8 +17,20 @@ function Card(props) {
     }
   };
 
+  const handlePrevPage = () => {
+    if (props.page > 1) {
+      props.setPage((prevPage) => prevPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (props.page < props.totalPages) {
+      props.setPage((prevPage) => prevPage + 1);
+    }
+  };
+
   return (
-    <div>
+    <div className="films-list-frame">
       <h1>Films list</h1>
       {props.films.length > 0 ? (
         <ul>
@@ -57,6 +69,18 @@ function Card(props) {
       ) : (
         <div className="no-films">No films founded</div>
       )}
+      <div className="back-button-container">
+        {props.page > 1 && (
+          <button className="page-button" onClick={handlePrevPage}>
+            Previous Page
+          </button>
+        )}
+        {props.page < props.totalPages && (
+          <button className="page-button" onClick={handleNextPage}>
+            Next Page
+          </button>
+        )}
+      </div>
     </div>
   );
 }

@@ -59,3 +59,4 @@ bs4
 tqdm
 SQLAlchemy==1.4.41
 SQLAlchemy-Utils==0.38.3
+faker

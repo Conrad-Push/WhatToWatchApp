@@ -1,10 +1,16 @@
 import logging
 import requests
+import json
+import random
+import psycopg2
 
 from sqlalchemy.orm import Session
 from bs4 import BeautifulSoup
 
+from faker import Faker
+
 from WTW_app.settings.data_settings import DATA_SETTINGS
+from WTW_app.settings.db_settings import DB_SETTINGS
 from WTW_app.db import SessionLocal
 from WTW_app.films.interface import IFilmsRepository
 from WTW_app.films.films_repository import FilmsRepository
@@ -120,3 +126,70 @@ def scrap_data():
         )
 
     logger.info("All data added to database")
+
+
+def generate_data(num_of_records):
+    faker = Faker()
+
+    data = []
+    counter = 0
+
+    for _ in range(num_of_records):
+        film = {
+            "title": faker.text(max_nb_chars=50)[:-1],
+            "year": faker.random_int(min=1900, max=2023),
+            "rate": faker.pyfloat(left_digits=1, right_digits=1, positive=True),
+            "img_url": random.choice(DATA_SETTINGS.img_urls),
+            "details": {
+                "director": faker.name(),
+                "description": faker.paragraph(),
+            },
+        }
+
+        data.append(film)
+        counter += 1
+        logger.info(f"{counter}")
+
+    conn = psycopg2.connect(
+        host=DB_SETTINGS.db_host,
+        port=DB_SETTINGS.db_port,
+        dbname=DB_SETTINGS.db_name,
+        user=DB_SETTINGS.db_username,
+        password=DB_SETTINGS.db_password,
+    )
+
+    cur = conn.cursor()
+
+    for film in data:
+        details_values = (film["details"]["director"], film["details"]["description"])
+        cur.execute(
+            """
+            INSERT INTO details (director, description)
+            VALUES (%s, %s)
+            RETURNING details_id
+            """,
+            details_values,
+        )
+        details_id = cur.fetchone()[0]
+
+        film_values = (
+            film["title"],
+            film["year"],
+            film["rate"],
+            film["img_url"],
+            details_id,
+        )
+        cur.execute(
+            """
+            INSERT INTO films (title, year, rate, img_url, details_id)
+            VALUES (%s, %s, %s, %s, %s)
+            """,
+            film_values,
+        )
+
+    conn.commit()
+
+    cur.close()
+    conn.close()
+
+    logger.info("Data generation completed")

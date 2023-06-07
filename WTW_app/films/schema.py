@@ -61,6 +61,42 @@ class FilmPrevResponse(BaseModel):
         }
 
 
+class FilmsListResponse(BaseModel):
+    films: tp.List[FilmPrevResponse]
+    total_pages: int
+
+    class Config:
+        orm_mode = True
+        schema_extra = {
+            "example": {
+                "films": [
+                    {
+                        "film_id": 1,
+                        "title": "Your traditional open term rich will",
+                        "year": 2020,
+                        "rate": 2.0,
+                        "img_url": "https://m.media-amazon.com/images/M/MV5BMjA4NDI0MTIxNF5BMl5BanBnXkFtZTYwNTM0MzY2._V1_UX67_CR0,0,67,98_AL_.jpg",
+                    },
+                    {
+                        "film_id": 2,
+                        "title": "Recently bed support between industry",
+                        "year": 2011,
+                        "rate": 3.9,
+                        "img_url": "https://m.media-amazon.com/images/M/MV5BMTY2MTAzODI5NV5BMl5BanBnXkFtZTgwMjM4NzQ0MjE@._V1_UX67_CR0,0,67,98_AL_.jpg",
+                    },
+                    {
+                        "film_id": 3,
+                        "title": "Several color well natural pick",
+                        "year": 1950,
+                        "rate": 9.9,
+                        "img_url": "https://m.media-amazon.com/images/M/MV5BNTQwNDM1YzItNDAxZC00NWY2LTk0M2UtNDIwNWI5OGUyNWUxXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_UX67_CR0,0,67,98_AL_.jpg",
+                    },
+                ],
+                "total_pages": 2060,
+            }
+        }
+
+
 class FilmRequest(BaseModel):
     title: str
     year: int

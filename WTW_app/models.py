@@ -9,7 +9,7 @@ class Films(Base):
     __tablename__ = "films"
 
     film_id = Column(Integer, primary_key=True, index=True)
-    title = Column(String, unique=True, nullable=False)
+    title = Column(String, nullable=False)
     year = Column(Integer, nullable=False)
     rate = Column(Float, nullable=False)
     img_url = Column(String, nullable=True)
