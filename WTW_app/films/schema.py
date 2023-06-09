@@ -22,6 +22,7 @@ class FilmResponse(BaseModel):
     rate: float
     img_url: tp.Optional[HttpUrl] = None
     details: DetailsResponse
+    execution_time: tp.Optional[float] = None
 
     class Config:
         orm_mode = True
@@ -37,6 +38,7 @@ class FilmResponse(BaseModel):
                     "director": "Frank Darabont",
                     "description": "Over the course of several years, two convicts form a friendship, seeking consolation and, eventually, redemption through basic compassion.",
                 },
+                "execution_time": 2.345,
             }
         }
 
@@ -64,6 +66,7 @@ class FilmPrevResponse(BaseModel):
 class FilmsListResponse(BaseModel):
     films: tp.List[FilmPrevResponse]
     total_pages: int
+    execution_time: tp.Optional[float] = None
 
     class Config:
         orm_mode = True
@@ -93,6 +96,7 @@ class FilmsListResponse(BaseModel):
                     },
                 ],
                 "total_pages": 2060,
+                "execution_time": 2.345,
             }
         }
 

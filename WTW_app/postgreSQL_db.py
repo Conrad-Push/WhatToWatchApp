@@ -40,6 +40,7 @@ def init_db():
     if len(tables) == 0:
         Base.metadata.drop_all(bind=engine)
         Base.metadata.create_all(bind=engine)
+        logger.info("Tables created")
 
     logger.info("Database started")
 

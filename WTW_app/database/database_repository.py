@@ -25,6 +25,8 @@ logging.getLogger("faker").setLevel(logging.WARNING)
 
 class DatabaseRepository(IDatabaseRepository):
     def check_database_status(self) -> DatabaseInfoResponse:
+        start_time = time.time()
+
         if database_exists(engine.url):
             message = "Database exists"
             db_state = "Created"
@@ -32,14 +34,20 @@ class DatabaseRepository(IDatabaseRepository):
             message = "Database not exists"
             db_state = "Not created"
 
+        end_time = time.time()
+        execution_time = end_time - start_time
+
         response: DatabaseInfoResponse = DatabaseInfoResponse(
             message=message,
             db_state=db_state,
+            execution_time=execution_time,
         )
 
         return response
 
     def get_tables_info(self) -> TablesInfoResponse:
+        start_time = time.time()
+
         conn = set_db_connection()
         tables = get_table_sizes(conn)
         num_of_tables = len(tables)
@@ -59,14 +67,20 @@ class DatabaseRepository(IDatabaseRepository):
             )
             tables_details.append(table_details)
 
+        end_time = time.time()
+        execution_time = end_time - start_time
+
         response: TablesInfoResponse = TablesInfoResponse(
             message=message,
             tables_details=tables_details,
+            execution_time=execution_time,
         )
 
         return response
 
     def restart_tables(self) -> TablesInfoResponse:
+        start_time = time.time()
+
         if database_exists(engine.url):
             Base.metadata.drop_all(bind=engine)
             Base.metadata.create_all(bind=engine)
@@ -86,9 +100,13 @@ class DatabaseRepository(IDatabaseRepository):
             )
             tables_details.append(table_details)
 
+        end_time = time.time()
+        execution_time = end_time - start_time
+
         response: TablesInfoResponse = TablesInfoResponse(
             message=message,
             tables_details=tables_details,
+            execution_time=execution_time,
         )
 
         return response

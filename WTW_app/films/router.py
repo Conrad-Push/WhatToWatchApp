@@ -18,7 +18,10 @@ films_router = APIRouter(
 )
 
 
-@films_router.get("/", response_model=FilmsListResponse)
+@films_router.get(
+    "/",
+    response_model=FilmsListResponse,
+)
 def get_films_list(
     films_repository: IFilmsRepository = Depends(get_films_repository),
     page: int = Query(1, ge=1),
@@ -29,7 +32,7 @@ def get_films_list(
     limit = 50
     offset = (page - 1) * limit
 
-    _films, total_pages = films_repository.get_films(
+    _films_list: FilmsListResponse = films_repository.get_films(
         sort_by=sort_by,
         filter_by=filter_by,
         filter_value=filter_value,
@@ -37,12 +40,13 @@ def get_films_list(
         limit=limit,
     )
 
-    _films_list = FilmsListResponse(films=_films, total_pages=total_pages)
-
     return _films_list
 
 
-@films_router.get("/{film_id:int}", response_model=FilmResponse)
+@films_router.get(
+    "/{film_id:int}",
+    response_model=FilmResponse,
+)
 def get_film_details(
     film_id: int,
     films_repository: IFilmsRepository = Depends(get_films_repository),
@@ -59,7 +63,9 @@ def get_film_details(
 
 
 @films_router.post(
-    "/", response_model=FilmResponse, status_code=status.HTTP_201_CREATED
+    "/",
+    response_model=FilmResponse,
+    status_code=status.HTTP_201_CREATED,
 )
 def add_film(
     film_payload: FilmRequest,
@@ -82,7 +88,10 @@ def add_film(
     return _film
 
 
-@films_router.patch("/{film_id:int}", response_model=FilmResponse)
+@films_router.patch(
+    "/{film_id:int}",
+    response_model=FilmResponse,
+)
 def modify_film_details(
     film_id: int,
     film_payload: PatchFilmRequest,

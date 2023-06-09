@@ -54,12 +54,14 @@ class DataScrappingRequest(BaseModel):
 class DatabaseInfoResponse(BaseModel):
     message: str
     db_state: tp.Optional[str] = None
+    execution_time: tp.Optional[float] = None
 
     class Config:
         schema_extra = {
             "example": {
                 "message": "Database created",
                 "db_state": "Created",
+                "execution_time": 2.345,
             }
         }
 
@@ -79,7 +81,8 @@ class TableDetailsResponse(BaseModel):
 
 class TablesInfoResponse(BaseModel):
     message: str
-    tables_details: tp.List[TableDetailsResponse]
+    tables_details: tp.List[TableDetailsResponse] = None
+    execution_time: tp.Optional[float] = None
 
     class Config:
         schema_extra = {
@@ -95,5 +98,6 @@ class TablesInfoResponse(BaseModel):
                         "size": "997 mb",
                     },
                 ],
+                "execution_time": 2.345,
             }
         }
