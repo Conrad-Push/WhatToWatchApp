@@ -1,6 +1,6 @@
 from sqlalchemy import Column, ForeignKey, Integer, String, Float
 from sqlalchemy.orm import relationship
-from WTW_app.db import Base
+from WTW_app.postgreSQL_db import Base
 
 
 class Films(Base):

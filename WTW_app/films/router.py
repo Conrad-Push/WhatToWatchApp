@@ -3,7 +3,6 @@ import typing as tp
 from fastapi import APIRouter, HTTPException, status, Depends, Query
 from WTW_app.films.schema import (
     FilmResponse,
-    FilmPrevResponse,
     FilmsListResponse,
     FilmRequest,
     PatchFilmRequest,
