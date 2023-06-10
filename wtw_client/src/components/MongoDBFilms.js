@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-function MongoDB() {
+function MongoDBFilms() {
   return <div className="App-header">MongoDB</div>;
 }
-export default MongoDB;
+export default MongoDBFilms;

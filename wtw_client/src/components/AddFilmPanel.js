@@ -27,7 +27,7 @@ function AddFilmPanel(props) {
 
         const response = await axios.post("/postgresql/films", filmData);
 
-        if (response.status === 200) {
+        if (response.status === 201) {
           const addedFilm = response.data;
 
           props.setFilms((prevFilms) => [...prevFilms, addedFilm]);

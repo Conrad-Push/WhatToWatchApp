@@ -7,6 +7,7 @@ class DetailsResponse(BaseModel):
     details_id: int
     director: str
     description: str
+    execution_time: tp.Optional[float] = None
 
     class Config:
         orm_mode = True
@@ -15,6 +16,40 @@ class DetailsResponse(BaseModel):
                 "details_id": 1,
                 "director": "Frank Darabont",
                 "description": "Example description",
+                "execution_time": 2.345,
+            }
+        }
+
+
+class DetailsListResponse(BaseModel):
+    details: tp.List[DetailsResponse]
+    execution_time: tp.Optional[float] = None
+
+    class Config:
+        orm_mode = True
+        schema_extra = {
+            "example": {
+                "details": [
+                    {
+                        "details_id": 1,
+                        "director": "Frank Darabont",
+                        "description": "Example description",
+                        "execution_time": 2.345,
+                    },
+                    {
+                        "details_id": 2,
+                        "director": "Elon Musk",
+                        "description": "Example description",
+                        "execution_time": 1.345,
+                    },
+                    {
+                        "details_id": 3,
+                        "director": "George Lucas",
+                        "description": "Example description",
+                        "execution_time": 3.666,
+                    },
+                ],
+                "execution_time": 2.345,
             }
         }
 
