@@ -3,9 +3,11 @@ import axios from "axios";
 import Card from "./Card";
 import AddFilmPanel from "./AddFilmPanel";
 
-function PostgreSQL() {
-  const [films, setFilms] = useState(null);
+function PostgreSQLFilms() {
+  const [films, setFilms] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
   const [sortOption, setSortOption] = useState("None");
   const [filterValue, setFilterValue] = useState("");
   const [searchValue, setSearchValue] = useState("");
@@ -13,10 +15,11 @@ function PostgreSQL() {
   useEffect(() => {
     const fetchFilms = async () => {
       try {
-        let url = "/postgresql/films/";
+        let url = `/postgresql/films/?page=${page}`;
 
         if (sortOption !== "None") {
-          url += `?sort_by=${sortOption}`;
+          url += url.includes("?") ? "&" : "?";
+          url += `sort_by=${sortOption}`;
         }
 
         if (searchValue !== "") {
@@ -30,9 +33,10 @@ function PostgreSQL() {
           throw new Error("Network response was not ok");
         }
 
-        const data = response.data;
+        const { films: newFilms, total_pages: newTotalPages } = response.data;
 
-        setFilms(data);
+        setFilms(newFilms);
+        setTotalPages(newTotalPages);
         setLoading(false);
       } catch (error) {
         console.log(error);
@@ -40,10 +44,13 @@ function PostgreSQL() {
     };
 
     fetchFilms();
-  }, [sortOption, searchValue]);
+  }, [page, sortOption, searchValue]);
 
   const handleSortChange = (event) => {
     setSortOption(event.target.value);
+    setLoading(true);
+    setPage(1);
+    setFilms([]);
   };
 
   const handleSearchChange = (event) => {
@@ -51,7 +58,12 @@ function PostgreSQL() {
   };
 
   const handleSearchClick = () => {
-    setSearchValue(filterValue);
+    if (filterValue !== searchValue) {
+      setSearchValue(filterValue);
+      setLoading(true);
+      setPage(1);
+      setFilms([]);
+    }
   };
 
   if (loading) {
@@ -82,10 +94,17 @@ function PostgreSQL() {
         </div>
       </div>
       <div className="films-container">
-        <Card films={films} setFilms={setFilms} />
+        <Card
+          films={films}
+          page={page}
+          totalPages={totalPages}
+          setFilms={setFilms}
+          setPage={setPage}
+        />
+
         <AddFilmPanel setFilms={setFilms} />
       </div>
     </div>
   );
 }
-export default PostgreSQL;
+export default PostgreSQLFilms;

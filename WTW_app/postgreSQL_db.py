@@ -1,12 +1,13 @@
 import psycopg2
-
+import logging
 
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy_utils.functions import create_database, database_exists, drop_database
 
 from WTW_app.settings.db_settings import DB_SETTINGS
+
+logger = logging.getLogger()
 
 
 DATABASE_URL = (
@@ -20,19 +21,7 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base(bind=engine)
 
 
-def check_db_exsits() -> bool:
-    return database_exists(engine.url)
-
-
-def drop_db() -> None:
-    return drop_database(engine.url)
-
-
-def create_db() -> None:
-    return create_database(engine.url)
-
-
-def get_table_sizes():
+def set_db_connection():
     conn = psycopg2.connect(
         host=DB_SETTINGS.db_host,
         port=DB_SETTINGS.db_port,
@@ -40,9 +29,25 @@ def get_table_sizes():
         user=DB_SETTINGS.db_username,
         password=DB_SETTINGS.db_password,
     )
+
+    return conn
+
+
+def init_db():
+    conn = set_db_connection()
+    tables = get_table_sizes(conn)
+
+    if len(tables) == 0:
+        Base.metadata.drop_all(bind=engine)
+        Base.metadata.create_all(bind=engine)
+        logger.info("Tables created")
+
+    logger.info("Database started")
+
+
+def get_table_sizes(conn):
     cursor = conn.cursor()
 
-    # Query the size of each table
     cursor.execute(
         """
         SELECT

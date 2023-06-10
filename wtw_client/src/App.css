@@ -17,6 +17,19 @@ body {
   color: white;
 }
 
+.homepage-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px;
+  gap: 50px;
+  color: white;
+}
+
+.homepage-content {
+  width: 450px;
+}
+
 .title {
   padding-bottom: 20px;
   font-size: xx-large;
@@ -105,6 +118,17 @@ a {
 
 .add-button:hover {
   background-color: #d1a428;
+}
+
+.films-list-frame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+ul {
+  margin: 0px;
+  padding: 0px;
 }
 
 .box {
@@ -230,7 +254,8 @@ a {
 .back-button-container {
   display: flex;
   justify-content: center;
-  margin: 20px;
+  margin: 20px 0px 50px 0px;
+  gap: 20px;
 }
 
 .back-button {
@@ -261,4 +286,19 @@ a {
 
 .edit-button:hover {
   background-color: #7a930a;
+}
+
+.page-button {
+  background-color: #6110be;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.page-button:hover {
+  background-color: #6b21bf;
 }

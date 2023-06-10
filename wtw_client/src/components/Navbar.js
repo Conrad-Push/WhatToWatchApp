@@ -8,6 +8,12 @@ function Navbar() {
   const [state, setState] = useState({
     isPaneOpen: false,
   });
+  const [selectedDatabase, setSelectedDatabase] = useState("");
+
+  const handleDatabaseChange = (database) => {
+    setSelectedDatabase(database);
+    setState({ isPaneOpen: false });
+  };
 
   return (
     <div className="navBox">
@@ -24,9 +30,12 @@ function Navbar() {
               className="navbar-brand logo"
               onClick={() => {
                 navigate("/");
+                setSelectedDatabase("");
                 setState({ isPaneOpen: false });
               }}
-            ></a>
+            >
+              What to watch App
+            </a>
           }
           width="300px"
           from="left"
@@ -34,52 +43,79 @@ function Navbar() {
             setState({ isPaneOpen: false });
           }}
         >
-          <ul>
-            <li>
-              <a
-                onClick={() => {
-                  navigate("/postgresql");
-                  setState({ isPaneOpen: false });
-                }}
-              >
-                PostgreSQL
-              </a>
-            </li>
-            <li>
-              <a
-                onClick={() => {
-                  navigate("/mongodb");
-                  setState({ isPaneOpen: false });
-                }}
-              >
-                MongoDB
-              </a>
-            </li>
-            <li>
-              <a
-                onClick={() => {
-                  navigate("/redis");
-                  setState({ isPaneOpen: false });
-                }}
-              >
-                Redis
-              </a>
-            </li>
-          </ul>
+          {selectedDatabase ? (
+            <ul>
+              <li>
+                <a
+                  onClick={() => {
+                    navigate(`/${selectedDatabase}/films`);
+                    setState({ isPaneOpen: false });
+                  }}
+                >
+                  Films
+                </a>
+              </li>
+              <li>
+                <a
+                  onClick={() => {
+                    navigate(`/${selectedDatabase}/manager`);
+                    setState({ isPaneOpen: false });
+                  }}
+                >
+                  Database Manager
+                </a>
+              </li>
+            </ul>
+          ) : (
+            <ul>
+              <li>
+                <a
+                  onClick={() => {
+                    navigate("/");
+                    setState({ isPaneOpen: false });
+                  }}
+                >
+                  Home
+                </a>
+              </li>
+              <li>
+                <a
+                  onClick={() => {
+                    navigate("/technologies");
+                    setState({ isPaneOpen: false });
+                  }}
+                >
+                  Technologies
+                </a>
+              </li>
+              <li>
+                <a
+                  onClick={() => {
+                    navigate("/authors");
+                    setState({ isPaneOpen: false });
+                  }}
+                >
+                  Authors
+                </a>
+              </li>
+            </ul>
+          )}
         </SlidingPane>
 
         <a
           className="navbar-brand logo"
           onClick={() => {
             navigate("/");
+            setSelectedDatabase("");
           }}
         >
-          Bazy
+          What to watch App
         </a>
         <div className="navv">
           <a
             onClick={() => {
-              navigate("/postgresql");
+              handleDatabaseChange("postgresql");
+              navigate("/postgresql/films");
               setState({ isPaneOpen: false });
             }}
           >
@@ -87,7 +123,8 @@ function Navbar() {
           </a>
           <a
             onClick={() => {
-              navigate("/mongodb");
+              handleDatabaseChange("mongodb");
+              navigate("/mongodb/films");
               setState({ isPaneOpen: false });
             }}
           >
@@ -95,7 +132,8 @@ function Navbar() {
           </a>
           <a
             onClick={() => {
-              navigate("/redis");
+              handleDatabaseChange("redis");
+              navigate("/redis/films");
               setState({ isPaneOpen: false });
             }}
           >

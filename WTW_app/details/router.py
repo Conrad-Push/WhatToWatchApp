@@ -3,6 +3,7 @@ import typing as tp
 from fastapi import APIRouter, HTTPException, status, Depends
 from WTW_app.details.schema import (
     DetailsResponse,
+    DetailsListResponse,
     DetailsRequest,
     PatchDetailsRequest,
 )
@@ -15,15 +16,22 @@ details_router = APIRouter(
 )
 
 
-@details_router.get("/", response_model=tp.List[DetailsResponse])
+@details_router.get(
+    "/",
+    response_model=DetailsListResponse,
+)
 def get_details_list(
     details_repository: IDetailsRepository = Depends(get_details_repository),
-) -> tp.List[DetailsResponse]:
-    _details = details_repository.get_details_list()
-    return _details
+) -> DetailsListResponse:
+    _details_list = details_repository.get_details_list()
+
+    return _details_list
 
 
-@details_router.get("/{details_id:int}", response_model=DetailsResponse)
+@details_router.get(
+    "/{details_id:int}",
+    response_model=DetailsResponse,
+)
 def get_details(
     details_id: int,
     details_repository: IDetailsRepository = Depends(get_details_repository),
@@ -42,7 +50,9 @@ def get_details(
 
 
 @details_router.post(
-    "/", response_model=DetailsResponse, status_code=status.HTTP_201_CREATED
+    "/",
+    response_model=DetailsResponse,
+    status_code=status.HTTP_201_CREATED,
 )
 def add_details(
     details_payload: DetailsRequest,
@@ -62,7 +72,10 @@ def add_details(
     return _details
 
 
-@details_router.patch("/{details_id:int}", response_model=DetailsResponse)
+@details_router.patch(
+    "/{details_id:int}",
+    response_model=DetailsResponse,
+)
 def modify_details(
     details_id: int,
     details_payload: PatchDetailsRequest,
