@@ -86,7 +86,7 @@ function Details() {
   };
 
   const handleGoBack = () => {
-    navigate("/postgresql");
+    navigate("/postgresql/films");
   };
 
   return (
