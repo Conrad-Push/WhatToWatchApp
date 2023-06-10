@@ -1,4 +1,4 @@
-function Redis() {
+function RedisFilms() {
   return <div className="App-header">Redis</div>;
 }
-export default Redis;
+export default RedisFilms;

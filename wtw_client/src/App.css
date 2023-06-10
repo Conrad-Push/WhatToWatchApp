@@ -17,6 +17,19 @@ body {
   color: white;
 }
 
+.homepage-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px;
+  gap: 50px;
+  color: white;
+}
+
+.homepage-content {
+  width: 450px;
+}
+
 .title {
   padding-bottom: 20px;
   font-size: xx-large;

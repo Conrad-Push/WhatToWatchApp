@@ -3,7 +3,7 @@ import axios from "axios";
 import Card from "./Card";
 import AddFilmPanel from "./AddFilmPanel";
 
-function PostgreSQL() {
+function PostgreSQLFilms() {
   const [films, setFilms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
@@ -107,4 +107,4 @@ function PostgreSQL() {
     </div>
   );
 }
-export default PostgreSQL;
+export default PostgreSQLFilms;
