@@ -1,22 +1,49 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function PostgreSQLManager() {
   const [loading, setLoading] = useState(true);
-  const [data, setData] = useState(null);
+  const [DBState, setDBState] = useState("Not connected");
+  const [tablesDetails, setTablesDetails] = useState([]);
 
   useEffect(() => {
+    const abortController = new AbortController();
+
     const fetchData = async () => {
       try {
         let url = "/postgresql/database/status";
 
-        const response = await axios.get(url);
+        const response = await axios.get(url, {
+          signal: abortController.signal,
+        });
 
         if (response.status !== 200) {
           throw new Error("Network response was not ok");
         }
 
-        setData(response.data);
+        const {
+          message: message,
+          db_state: newDBState,
+          tables_details: newTablesDetails,
+          execution_time: execTime,
+        } = response.data;
+
+        if (!abortController.signal.aborted) {
+          setDBState(newDBState);
+          setTablesDetails(newTablesDetails);
+
+          if (message && execTime) {
+            let infoText = `${message} in ${execTime} second(s)`;
+
+            toast.info(infoText, {
+              position: toast.POSITION.BOTTOM_RIGHT,
+            });
+          }
+
+          setLoading(false);
+        }
 
         setLoading(false);
       } catch (error) {
@@ -25,6 +52,10 @@ function PostgreSQLManager() {
     };
 
     fetchData();
+
+    return () => {
+      abortController.abort();
+    };
   }, []);
 
   if (loading) {
@@ -35,13 +66,12 @@ function PostgreSQLManager() {
     <div className="App-header">
       <div className="title">DB Manager - PostgreSQL</div>
       <div>
-        <p>{data.message}</p>
-        <p>{data.db_state}</p>
-        {data.tables_details && (
+        <p>{DBState}</p>
+        {tablesDetails && (
           <div>
             <h2>Tables Details:</h2>
             <ul>
-              {data.tables_details.map((table) => (
+              {tablesDetails.map((table) => (
                 <li key={table.name}>
                   Name: {table.name}, Size: {table.size}
                 </li>
@@ -49,8 +79,9 @@ function PostgreSQLManager() {
             </ul>
           </div>
         )}
-        <p>{data.execution_time}</p>
       </div>
+
+      <ToastContainer />
     </div>
   );
 }

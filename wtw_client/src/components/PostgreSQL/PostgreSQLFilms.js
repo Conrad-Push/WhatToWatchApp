@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Card from "../Card";
 import AddFilmPanel from "../AddFilmPanel";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function PostgreSQLFilms() {
-  const [films, setFilms] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [films, setFilms] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [sortOption, setSortOption] = useState("None");
@@ -13,6 +15,8 @@ function PostgreSQLFilms() {
   const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
+    const abortController = new AbortController();
+
     const fetchFilms = async () => {
       try {
         let url = `/postgresql/films/?page=${page}`;
@@ -27,23 +31,50 @@ function PostgreSQLFilms() {
           url += `filter_by=title&filter_value=${searchValue}`;
         }
 
-        const response = await axios.get(url);
+        const response = await axios.get(url, {
+          signal: abortController.signal,
+        });
 
         if (response.status !== 200) {
           throw new Error("Network response was not ok");
         }
 
-        const { films: newFilms, total_pages: newTotalPages } = response.data;
+        const {
+          films: newFilms,
+          total_pages: newTotalPages,
+          execution_time: execTime,
+        } = response.data;
 
-        setFilms(newFilms);
-        setTotalPages(newTotalPages);
-        setLoading(false);
+        if (!abortController.signal.aborted) {
+          setFilms(newFilms);
+          setTotalPages(newTotalPages);
+
+          if (execTime) {
+            let infoText = "";
+
+            if (totalPages === 0) {
+              infoText = `Page ${page} displayed in ${execTime} second(s)`;
+            } else {
+              infoText = `Page ${page} of ${totalPages} displayed in ${execTime} second(s)`;
+            }
+
+            toast.info(infoText, {
+              position: toast.POSITION.BOTTOM_RIGHT,
+            });
+          }
+
+          setLoading(false);
+        }
       } catch (error) {
         console.log(error);
       }
     };
 
     fetchFilms();
+
+    return () => {
+      abortController.abort();
+    };
   }, [page, sortOption, searchValue]);
 
   const handleSortChange = (event) => {
@@ -104,6 +135,7 @@ function PostgreSQLFilms() {
 
         <AddFilmPanel setFilms={setFilms} />
       </div>
+      <ToastContainer />
     </div>
   );
 }
