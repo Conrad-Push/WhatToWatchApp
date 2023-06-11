@@ -3,9 +3,10 @@ import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
-import RedisFilms from "./components/RedisFilms";
-import MongoDBFilms from "./components/MongoDBFilms";
-import PostgreSQLFilms from "./components/PostgreSQLFilms";
+import RedisFilms from "./components/Redis/RedisFilms";
+import MongoDBFilms from "./components/MongoDB/MongoDBFilms";
+import PostgreSQLFilms from "./components/PostgreSQL/PostgreSQLFilms";
+import PostgreSQLManager from "./components/PostgreSQL/PostgreSQLManager";
 import Details from "./components/Details";
 
 function App() {
@@ -21,7 +22,11 @@ function App() {
         <Route exact path="/mongodb/films" element={<MongoDBFilms />} />
         <Route exact path="/mongodb/manager" element={<Home />} />
         <Route exact path="/postgresql/films" element={<PostgreSQLFilms />} />
-        <Route exact path="/postgresql/manager" element={<Home />} />
+        <Route
+          exact
+          path="/postgresql/manager"
+          element={<PostgreSQLManager />}
+        />
         <Route exact path="/details/:film_id" element={<Details />} />
       </Routes>
     </div>

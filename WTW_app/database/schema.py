@@ -51,21 +51,6 @@ class DataScrappingRequest(BaseModel):
         }
 
 
-class DatabaseInfoResponse(BaseModel):
-    message: str
-    db_state: tp.Optional[str] = None
-    execution_time: tp.Optional[float] = None
-
-    class Config:
-        schema_extra = {
-            "example": {
-                "message": "Database created",
-                "db_state": "Created",
-                "execution_time": 2.345,
-            }
-        }
-
-
 class TableDetailsResponse(BaseModel):
     name: str
     size: str
@@ -79,15 +64,17 @@ class TableDetailsResponse(BaseModel):
         }
 
 
-class TablesInfoResponse(BaseModel):
+class DatabaseInfoResponse(BaseModel):
     message: str
+    db_state: tp.Optional[str] = None
     tables_details: tp.List[TableDetailsResponse] = None
     execution_time: tp.Optional[float] = None
 
     class Config:
         schema_extra = {
             "example": {
-                "message": "Database restarted",
+                "message": "Databse exists and 2 table(s) have been founded",
+                "db_state": "Started",
                 "tables": [
                     {
                         "name": "films",

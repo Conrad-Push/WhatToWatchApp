@@ -9,7 +9,6 @@ from WTW_app.database.schema import (
     DataScrappingResponse,
     DatabaseInfoResponse,
     TableDetailsResponse,
-    TablesInfoResponse,
 )
 from WTW_app.database.interface import IDatabaseRepository
 from WTW_app.postgreSQL_db import Base, engine, set_db_connection, get_table_sizes
@@ -28,11 +27,27 @@ class DatabaseRepository(IDatabaseRepository):
         start_time = time.time()
 
         if database_exists(engine.url):
-            message = "Database exists"
-            db_state = "Created"
+            db_state = "Started"
         else:
-            message = "Database not exists"
-            db_state = "Not created"
+            message = "Database is not created"
+            db_state = "Error"
+
+        conn = set_db_connection()
+        tables = get_table_sizes(conn)
+        num_of_tables = len(tables)
+
+        if num_of_tables > 0:
+            message = f"Database exists and {num_of_tables} table(s) have been founded"
+
+        tables_details: tp.List[TableDetailsResponse] = []
+
+        for table in tables:
+            name, size = table
+            table_details: TableDetailsResponse = TableDetailsResponse(
+                name=name,
+                size=size,
+            )
+            tables_details.append(table_details)
 
         end_time = time.time()
         execution_time = end_time - start_time
@@ -40,53 +55,23 @@ class DatabaseRepository(IDatabaseRepository):
         response: DatabaseInfoResponse = DatabaseInfoResponse(
             message=message,
             db_state=db_state,
-            execution_time=execution_time,
-        )
-
-        return response
-
-    def get_tables_info(self) -> TablesInfoResponse:
-        start_time = time.time()
-
-        conn = set_db_connection()
-        tables = get_table_sizes(conn)
-        num_of_tables = len(tables)
-
-        if num_of_tables > 0:
-            message = f"{num_of_tables} table(s) founded in the database"
-        else:
-            message = "No tables founded in the database"
-
-        tables_details: tp.List[TableDetailsResponse] = []
-
-        for table in tables:
-            name, size = table
-            table_details: TableDetailsResponse = TableDetailsResponse(
-                name=name,
-                size=size,
-            )
-            tables_details.append(table_details)
-
-        end_time = time.time()
-        execution_time = end_time - start_time
-
-        response: TablesInfoResponse = TablesInfoResponse(
-            message=message,
             tables_details=tables_details,
             execution_time=execution_time,
         )
 
         return response
 
-    def restart_tables(self) -> TablesInfoResponse:
+    def restart_tables(self) -> DatabaseInfoResponse:
         start_time = time.time()
 
         if database_exists(engine.url):
             Base.metadata.drop_all(bind=engine)
             Base.metadata.create_all(bind=engine)
             message = "Tables have been restarted"
+            db_state = "Started"
         else:
             message = "Database error while clearing the tables"
+            db_state = "Error"
 
         tables_details: tp.List[TableDetailsResponse] = []
 
@@ -103,8 +88,9 @@ class DatabaseRepository(IDatabaseRepository):
         end_time = time.time()
         execution_time = end_time - start_time
 
-        response: TablesInfoResponse = TablesInfoResponse(
+        response: DatabaseInfoResponse = DatabaseInfoResponse(
             message=message,
+            db_state=db_state,
             tables_details=tables_details,
             execution_time=execution_time,
         )

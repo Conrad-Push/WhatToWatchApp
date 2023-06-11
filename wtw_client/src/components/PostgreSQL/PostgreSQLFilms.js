@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Card from "./Card";
-import AddFilmPanel from "./AddFilmPanel";
+import Card from "../Card";
+import AddFilmPanel from "../AddFilmPanel";
 
 function PostgreSQLFilms() {
   const [films, setFilms] = useState([]);
@@ -72,7 +72,7 @@ function PostgreSQLFilms() {
 
   return (
     <div className="App-header">
-      <div className="title">PostgreSQL</div>
+      <div className="title">Films - PostgreSQL</div>
       <div className="filters">
         <div className="sort-dropdown">
           <label htmlFor="sort">Sort By:</label>
