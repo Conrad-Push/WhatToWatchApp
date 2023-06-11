@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Card from "../Card";
+import Card from "../FilmCard";
 import AddFilmPanel from "../AddFilmPanel";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -50,13 +50,7 @@ function PostgreSQLFilms() {
           setTotalPages(newTotalPages);
 
           if (execTime) {
-            let infoText = "";
-
-            if (totalPages === 0) {
-              infoText = `Page ${page} displayed in ${execTime} second(s)`;
-            } else {
-              infoText = `Page ${page} of ${totalPages} displayed in ${execTime} second(s)`;
-            }
+            let infoText = `Page ${page} displayed in ${execTime} second(s)`;
 
             toast.info(infoText, {
               position: toast.POSITION.BOTTOM_RIGHT,

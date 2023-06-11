@@ -24,7 +24,7 @@ function PostgreSQLManager() {
         }
 
         const {
-          message: message,
+          message: mess,
           db_state: newDBState,
           tables_details: newTablesDetails,
           execution_time: execTime,
@@ -34,8 +34,8 @@ function PostgreSQLManager() {
           setDBState(newDBState);
           setTablesDetails(newTablesDetails);
 
-          if (message && execTime) {
-            let infoText = `${message} in ${execTime} second(s)`;
+          if (mess && execTime) {
+            let infoText = `${mess} in ${execTime} second(s)`;
 
             toast.info(infoText, {
               position: toast.POSITION.BOTTOM_RIGHT,
@@ -58,6 +58,18 @@ function PostgreSQLManager() {
     };
   }, []);
 
+  const getStatusColor = () => {
+    if (DBState.toLowerCase() === "started") {
+      return "#11de11";
+    } else {
+      return "#fc152b";
+    }
+  };
+
+  const capitalize = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
   if (loading) {
     return <div className="loading">Loading...</div>;
   }
@@ -66,7 +78,10 @@ function PostgreSQLManager() {
     <div className="App-header">
       <div className="title">DB Manager - PostgreSQL</div>
       <div>
-        <p>{DBState}</p>
+        <p>
+          Database status:{" "}
+          <span style={{ color: getStatusColor() }}>{capitalize(DBState)}</span>
+        </p>
         {tablesDetails && (
           <div>
             <h2>Tables Details:</h2>

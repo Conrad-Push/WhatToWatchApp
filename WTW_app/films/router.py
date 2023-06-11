@@ -29,7 +29,7 @@ def get_films_list(
     filter_by: tp.Optional[AvailableFilterParamsFilms] = None,
     filter_value: tp.Optional[str] = None,
 ) -> FilmsListResponse:
-    limit = 100
+    limit = 50
     offset = (page - 1) * limit
 
     _films_list: FilmsListResponse = films_repository.get_films(

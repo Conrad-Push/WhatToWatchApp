@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Details() {
   const [film, setFilm] = useState(null);
@@ -12,21 +14,49 @@ function Details() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const abortController = new AbortController();
+
     const fetchFilmDetails = async () => {
       try {
-        const response = await axios.get(`/postgresql/films/${film_id}`);
+        const response = await axios.get(`/postgresql/films/${film_id}`, {
+          signal: abortController.signal,
+        });
+
         if (response.status !== 200) {
           throw new Error("Network response was not ok");
         }
+
         const data = response.data;
-        setFilm(data);
-        setLoading(false);
+
+        const {
+          film_id: filmID,
+          title: filmTitle,
+          execution_time: execTime,
+        } = response.data;
+
+        if (!abortController.signal.aborted) {
+          setFilm(data);
+
+          if (filmID && filmTitle && execTime) {
+            let infoText = `Details for '${filmTitle}' displayed in ${execTime} second(s)`;
+
+            toast.info(infoText, {
+              position: toast.POSITION.BOTTOM_RIGHT,
+            });
+          }
+
+          setLoading(false);
+        }
       } catch (error) {
         console.log(error);
       }
     };
 
     fetchFilmDetails();
+
+    return () => {
+      abortController.abort();
+    };
   }, [film_id]);
 
   if (loading) {
@@ -142,6 +172,7 @@ function Details() {
           Back
         </button>
       </div>
+      <ToastContainer />
     </div>
   );
 }

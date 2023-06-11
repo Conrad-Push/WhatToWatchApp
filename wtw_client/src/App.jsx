@@ -7,7 +7,7 @@ import RedisFilms from "./components/Redis/RedisFilms";
 import MongoDBFilms from "./components/MongoDB/MongoDBFilms";
 import PostgreSQLFilms from "./components/PostgreSQL/PostgreSQLFilms";
 import PostgreSQLManager from "./components/PostgreSQL/PostgreSQLManager";
-import Details from "./components/Details";
+import Details from "./components/FilmDetails";
 
 function App() {
   return (
