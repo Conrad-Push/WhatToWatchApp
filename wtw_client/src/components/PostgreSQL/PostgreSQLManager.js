@@ -72,7 +72,12 @@ function PostgreSQLManager() {
       {DBState && <DatabaseStatus status={DBState} />}
       {tablesDetails && (
         <div className="db-manager-container">
-          <DatabaseDetails details={tablesDetails} />
+          <DatabaseDetails
+            details={tablesDetails}
+            setLoading={setLoading}
+            setDBState={setDBState}
+            setTablesDetails={setTablesDetails}
+          />
           <div className="data-panels-container">
             <ScrapDataPanel
               setLoading={setLoading}

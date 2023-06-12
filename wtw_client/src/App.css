@@ -122,7 +122,6 @@ a {
   color: white;
   padding: 5px 15px;
   border-radius: 4px;
-  cursor: pointer;
   margin-top: 10px;
   font-weight: bold;
   display: inline-block;
@@ -200,7 +199,6 @@ ul {
   color: white;
   padding: 5px 15px;
   border-radius: 4px;
-  cursor: pointer;
   margin-top: 10px;
   font-weight: bold;
   display: inline-block;
@@ -277,7 +275,6 @@ ul {
   color: white;
   border: none;
   border-radius: 5px;
-  cursor: pointer;
   width: 100px;
 }
 
@@ -290,7 +287,6 @@ ul {
   color: white;
   padding: 5px 15px;
   border-radius: 4px;
-  cursor: pointer;
   margin-top: 10px;
   font-weight: bold;
   display: inline-block;
@@ -305,7 +301,6 @@ ul {
   color: white;
   padding: 5px 15px;
   border-radius: 4px;
-  cursor: pointer;
   margin-top: 10px;
   font-weight: bold;
   display: inline-block;
@@ -352,6 +347,34 @@ ul {
   color: #fdbe00;
 }
 
+.reload-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #1481b9;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  width: 100px;
+}
+
+.reload-button:hover {
+  background-color: #1e8fc7;
+}
+
+.restart-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #85002e;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  width: 100px;
+}
+
+.restart-button:hover {
+  background-color: #9e0b3e;
+}
+
 .data-panels-container {
   display: flex;
   flex-direction: column;
@@ -364,7 +387,6 @@ ul {
   color: white;
   padding: 5px 15px;
   border-radius: 4px;
-  cursor: pointer;
   margin-top: 10px;
   font-weight: bold;
   display: inline-block;
@@ -379,7 +401,6 @@ ul {
   color: white;
   padding: 5px 15px;
   border-radius: 4px;
-  cursor: pointer;
   margin-top: 10px;
   font-weight: bold;
   display: inline-block;
