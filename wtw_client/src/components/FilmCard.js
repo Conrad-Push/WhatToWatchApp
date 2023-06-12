@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function Card(props) {
+function FilmCard(props) {
   const navigate = useNavigate();
 
   const handleRemove = async (filmId) => {
@@ -84,4 +84,4 @@ function Card(props) {
     </div>
   );
 }
-export default Card;
+export default FilmCard;

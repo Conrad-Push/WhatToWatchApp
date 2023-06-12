@@ -7,7 +7,7 @@ import RedisFilms from "./components/Redis/RedisFilms";
 import MongoDBFilms from "./components/MongoDB/MongoDBFilms";
 import PostgreSQLFilms from "./components/PostgreSQL/PostgreSQLFilms";
 import PostgreSQLManager from "./components/PostgreSQL/PostgreSQLManager";
-import Details from "./components/FilmDetails";
+import FilmDetails from "./components/FilmDetails";
 
 function App() {
   return (
@@ -27,7 +27,7 @@ function App() {
           path="/postgresql/manager"
           element={<PostgreSQLManager />}
         />
-        <Route exact path="/details/:film_id" element={<Details />} />
+        <Route exact path="/details/:film_id" element={<FilmDetails />} />
       </Routes>
     </div>
   );

@@ -105,7 +105,7 @@ class DatabaseRepository(IDatabaseRepository):
         faker = Faker()
         data = []
 
-        logger.info(f"Start generating data for {data_amount} films")
+        logger.info(f"Start generating data for {data_amount} film(s)")
 
         start_time = time.time()
 
@@ -123,7 +123,7 @@ class DatabaseRepository(IDatabaseRepository):
 
             data.append(film)
 
-        logger.info(f"Generating data for {data_amount} films completed")
+        logger.info(f"Generating data for {data_amount} film(s) completed")
 
         conn = set_db_connection()
         cur = conn.cursor()
@@ -166,7 +166,7 @@ class DatabaseRepository(IDatabaseRepository):
         end_time = time.time()
         execution_time = end_time - start_time
 
-        message = f"Data for {data_amount} films has been generated"
+        message = f"Data for {data_amount} film(s) has been generated"
 
         response = DataGenerationResponse(
             message=message, execution_time=execution_time
@@ -180,11 +180,11 @@ class DatabaseRepository(IDatabaseRepository):
         data_amount: int,
     ) -> DataScrappingResponse:
         if data_amount > 250:
-            message = f"Data for {data_amount} films cannot be scrapped because the limit is 250"
+            message = f"Data for {data_amount} film(s) cannot be scrapped because the limit is 250"
             response = DataScrappingResponse(message=message)
             return response
 
-        logger.info("Data scrapping started...")
+        logger.info(f"Start scrapping data for {data_amount} film(s)")
         logger.info("Getting the data responses...")
 
         responses = []
@@ -326,7 +326,7 @@ class DatabaseRepository(IDatabaseRepository):
         end_time = time.time()
         execution_time = end_time - start_time
 
-        message = f"Data for {data_amount} films has been scrapped"
+        message = f"Data for {data_amount} film(s) has been scrapped"
 
         response = DataScrappingResponse(message=message, execution_time=execution_time)
 

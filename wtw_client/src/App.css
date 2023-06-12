@@ -314,3 +314,77 @@ ul {
 .page-button:hover {
   background-color: #6b21bf;
 }
+
+.db-manager-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.db-details-card {
+  width: 500px;
+  box-shadow: 0 0 30px rgba(8, 7, 16, 0.6);
+  border-radius: 20px;
+  padding: 30px;
+}
+
+.db-details-card h2 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.table-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.table-info {
+  margin-bottom: 5px;
+}
+
+.table-name {
+  font-weight: bold;
+  color: #05c3e9;
+}
+
+.table-size {
+  color: #fdbe00;
+}
+
+.data-panels-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.scrapData-button {
+  background-color: #339d5a;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.scrapData-button:hover {
+  background-color: #0baf5c;
+}
+
+.generateData-button {
+  background-color: #339d5a;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.generateData-button:hover {
+  background-color: #0baf5c;
+}

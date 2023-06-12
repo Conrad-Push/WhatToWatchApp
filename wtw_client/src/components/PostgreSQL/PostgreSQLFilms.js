@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Card from "../FilmCard";
+import FilmCard from "../FilmCard";
 import AddFilmPanel from "../AddFilmPanel";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -119,7 +119,7 @@ function PostgreSQLFilms() {
         </div>
       </div>
       <div className="films-container">
-        <Card
+        <FilmCard
           films={films}
           page={page}
           totalPages={totalPages}

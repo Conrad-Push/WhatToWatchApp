@@ -4,7 +4,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function Details() {
+function FilmDetails() {
   const [film, setFilm] = useState(null);
   const [loading, setLoading] = useState(true);
   const [editedDirector, setEditedDirector] = useState("");
@@ -177,4 +177,4 @@ function Details() {
   );
 }
 
-export default Details;
+export default FilmDetails;
