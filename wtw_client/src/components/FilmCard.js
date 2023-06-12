@@ -1,19 +1,44 @@
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function FilmCard(props) {
   const navigate = useNavigate();
 
   const handleRemove = async (filmId) => {
+    props.setLoading(true);
+
     try {
       const response = await axios.delete(`/postgresql/films/${filmId}`);
+
       if (response.status === 200) {
+        const removedFilm = response.data;
+        const { execution_time: execTime, ...filmData } = removedFilm;
+
         props.setFilms((prevFilms) =>
           prevFilms.filter((film) => film.film_id !== filmId)
         );
+
+        if (filmData && execTime) {
+          let infoText = `The film (${filmData.title}) has been removed in ${execTime} second(s)`;
+
+          toast.warning(infoText, {
+            position: toast.POSITION.BOTTOM_RIGHT,
+          });
+        }
       }
+
+      props.setLoading(false);
     } catch (error) {
       console.log(error);
+
+      let errorText = "Error while removing a film";
+      toast.error(errorText, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+
+      props.setLoading(false);
     }
   };
 
@@ -81,6 +106,7 @@ function FilmCard(props) {
           </button>
         )}
       </div>
+      <ToastContainer />
     </div>
   );
 }

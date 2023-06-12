@@ -75,6 +75,7 @@ function FilmDetails() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     if (editedDirector || editedDescription) {
       setErrorMessage("");
@@ -96,6 +97,8 @@ function FilmDetails() {
         );
 
         if (response.status === 200) {
+          const { execution_time: execTime } = response.data;
+
           setFilm((prevFilm) => ({
             ...prevFilm,
             details: {
@@ -103,9 +106,26 @@ function FilmDetails() {
               ...updatedDetails,
             },
           }));
+
+          if (execTime) {
+            let infoText = `The film (${title}) details have been modified in ${execTime} second(s)`;
+
+            toast.warning(infoText, {
+              position: toast.POSITION.BOTTOM_RIGHT,
+            });
+          }
         }
+
+        setLoading(false);
       } catch (error) {
         console.log(error);
+
+        let errorText = "Error while editing the film's details";
+        toast.error(errorText, {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
+
+        setLoading(false);
       }
 
       setEditedDirector("");

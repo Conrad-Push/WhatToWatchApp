@@ -56,7 +56,12 @@ function GenerateDataPanel(props) {
         props.setLoading(false);
       } catch (error) {
         console.log(error);
-        setErrorMessage("Error while generating data");
+
+        let errorText = "Error while generating data";
+        toast.error(errorText, {
+          position: toast.POSITION.BOTTOM_LEFT,
+        });
+
         props.setLoading(false);
       }
 

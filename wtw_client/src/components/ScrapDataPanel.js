@@ -56,7 +56,12 @@ function ScrapDataPanel(props) {
         props.setLoading(false);
       } catch (error) {
         console.log(error);
-        setErrorMessage("Error while scrapping data");
+
+        let errorText = "Error while scrapping data";
+        toast.error(errorText, {
+          position: toast.POSITION.BOTTOM_LEFT,
+        });
+
         props.setLoading(false);
       }
 

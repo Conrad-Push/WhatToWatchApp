@@ -67,7 +67,7 @@ class DatabaseRepository(IDatabaseRepository):
         if database_exists(engine.url):
             Base.metadata.drop_all(bind=engine)
             Base.metadata.create_all(bind=engine)
-            message = "Table(s) have been restarted"
+            message = "Table(s) have been cleared and restarted"
             db_state = "Started"
         else:
             message = "Database error while clearing the tables"

@@ -68,7 +68,7 @@ function DatabaseDetails(props) {
         if (mess && execTime) {
           let infoText = `${mess} in ${execTime} second(s)`;
 
-          toast.info(infoText, {
+          toast.warning(infoText, {
             position: toast.POSITION.BOTTOM_LEFT,
           });
         }
@@ -82,6 +82,7 @@ function DatabaseDetails(props) {
       toast.error(errorText, {
         position: toast.POSITION.BOTTOM_LEFT,
       });
+
       props.setLoading(false);
     }
   };

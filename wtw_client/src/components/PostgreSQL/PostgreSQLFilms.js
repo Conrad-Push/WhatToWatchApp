@@ -16,6 +16,7 @@ function PostgreSQLFilms() {
 
   useEffect(() => {
     const abortController = new AbortController();
+    setLoading(true);
 
     const fetchFilms = async () => {
       try {
@@ -61,6 +62,11 @@ function PostgreSQLFilms() {
         }
       } catch (error) {
         console.log(error);
+
+        let errorText = "Error while fetching data";
+        toast.error(errorText, {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
       }
     };
 
@@ -125,9 +131,10 @@ function PostgreSQLFilms() {
           totalPages={totalPages}
           setFilms={setFilms}
           setPage={setPage}
+          setLoading={setLoading}
         />
 
-        <AddFilmPanel setFilms={setFilms} />
+        <AddFilmPanel setFilms={setFilms} setLoading={setLoading} />
       </div>
       <ToastContainer />
     </div>
