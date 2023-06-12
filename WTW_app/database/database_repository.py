@@ -161,6 +161,18 @@ class DatabaseRepository(IDatabaseRepository):
         conn.commit()
 
         cur.close()
+
+        tables = get_table_sizes(conn)
+        tables_details: tp.List[TableDetailsResponse] = []
+
+        for table in tables:
+            name, size = table
+            table_details: TableDetailsResponse = TableDetailsResponse(
+                name=name,
+                size=size,
+            )
+            tables_details.append(table_details)
+
         conn.close()
 
         end_time = time.time()
@@ -169,7 +181,9 @@ class DatabaseRepository(IDatabaseRepository):
         message = f"Data for {data_amount} film(s) has been generated"
 
         response = DataGenerationResponse(
-            message=message, execution_time=execution_time
+            message=message,
+            tables_details=tables_details,
+            execution_time=execution_time,
         )
 
         return response
@@ -321,6 +335,18 @@ class DatabaseRepository(IDatabaseRepository):
         conn.commit()
 
         cur.close()
+
+        tables = get_table_sizes(conn)
+        tables_details: tp.List[TableDetailsResponse] = []
+
+        for table in tables:
+            name, size = table
+            table_details: TableDetailsResponse = TableDetailsResponse(
+                name=name,
+                size=size,
+            )
+            tables_details.append(table_details)
+
         conn.close()
 
         end_time = time.time()
@@ -328,6 +354,10 @@ class DatabaseRepository(IDatabaseRepository):
 
         message = f"Data for {data_amount} film(s) has been scrapped"
 
-        response = DataScrappingResponse(message=message, execution_time=execution_time)
+        response = DataScrappingResponse(
+            message=message,
+            tables_details=tables_details,
+            execution_time=execution_time,
+        )
 
         return response

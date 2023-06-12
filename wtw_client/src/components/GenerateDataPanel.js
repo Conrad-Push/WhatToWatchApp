@@ -36,7 +36,13 @@ function GenerateDataPanel(props) {
         );
 
         if (response.status === 200) {
-          const { message: mess, execution_time: execTime } = response.data;
+          const {
+            message: mess,
+            tables_details: newTablesDetails,
+            execution_time: execTime,
+          } = response.data;
+
+          props.setTablesDetails(newTablesDetails);
 
           if (mess && execTime) {
             let infoText = `${mess} in ${execTime} second(s)`;

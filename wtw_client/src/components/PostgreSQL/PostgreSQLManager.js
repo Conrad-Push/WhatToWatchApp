@@ -10,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 function PostgreSQLManager() {
   const [loading, setLoading] = useState(true);
   const [DBState, setDBState] = useState("Not connected");
-  const [tablesDetails, setTablesDetails] = useState();
+  const [tablesDetails, setTablesDetails] = useState([]);
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -74,8 +74,14 @@ function PostgreSQLManager() {
         <div className="db-manager-container">
           <DatabaseDetails details={tablesDetails} />
           <div className="data-panels-container">
-            <ScrapDataPanel setLoading={setLoading} />
-            <GenerateDataPanel setLoading={setLoading} />
+            <ScrapDataPanel
+              setLoading={setLoading}
+              setTablesDetails={setTablesDetails}
+            />
+            <GenerateDataPanel
+              setLoading={setLoading}
+              setTablesDetails={setTablesDetails}
+            />
           </div>
         </div>
       )}
