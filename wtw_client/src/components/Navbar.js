@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import SlidingPane from "react-sliding-pane";
 import "react-sliding-pane/dist/react-sliding-pane.css";
@@ -10,9 +10,29 @@ function Navbar() {
   });
   const [selectedDatabase, setSelectedDatabase] = useState("");
 
+  useEffect(() => {
+    const storedDatabase = localStorage.getItem("selectedDatabase");
+    if (storedDatabase) {
+      setSelectedDatabase(storedDatabase);
+    }
+  }, []);
+
+  // const handleDatabaseChange = (database) => {
+  //   setSelectedDatabase(database);
+  //   setState({ isPaneOpen: false });
+  // };
+
   const handleDatabaseChange = (database) => {
     setSelectedDatabase(database);
+    localStorage.setItem("selectedDatabase", database);
     setState({ isPaneOpen: false });
+  };
+
+  const handleHomeClick = () => {
+    setSelectedDatabase("");
+    localStorage.removeItem("selectedDatabase");
+    setState({ isPaneOpen: false });
+    navigate("/");
   };
 
   return (
@@ -28,11 +48,12 @@ function Navbar() {
           title={
             <a
               className="navbar-brand logo"
-              onClick={() => {
-                navigate("/");
-                setSelectedDatabase("");
-                setState({ isPaneOpen: false });
-              }}
+              // onClick={() => {
+              //   navigate("/");
+              //   setSelectedDatabase("");
+              //   setState({ isPaneOpen: false });
+              // }}
+              onClick={handleHomeClick}
             >
               What to watch App
             </a>
@@ -104,10 +125,11 @@ function Navbar() {
 
         <a
           className="navbar-brand logo"
-          onClick={() => {
-            navigate("/");
-            setSelectedDatabase("");
-          }}
+          // onClick={() => {
+          //   navigate("/");
+          //   setSelectedDatabase("");
+          // }}
+          onClick={handleHomeClick}
         >
           What to watch App
         </a>

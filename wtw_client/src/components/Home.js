@@ -1,4 +1,5 @@
 import React from "react";
+import homepageLogo from "../homepageLogo.png";
 
 function Home() {
   return (
@@ -9,6 +10,7 @@ function Home() {
         movie enthusiast or looking for something new to watch, our database has
         got you covered.
       </p>
+      <img src={homepageLogo} alt="Film" className="homepage-image" />
     </div>
   );
 }

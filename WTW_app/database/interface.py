@@ -3,7 +3,6 @@ from WTW_app.database.schema import (
     DataGenerationResponse,
     DataScrappingResponse,
     DatabaseInfoResponse,
-    TablesInfoResponse,
 )
 
 
@@ -13,11 +12,7 @@ class IDatabaseRepository(ABC):
         pass
 
     @abstractmethod
-    def get_tables_info(self) -> TablesInfoResponse:
-        pass
-
-    @abstractmethod
-    def restart_tables(self) -> TablesInfoResponse:
+    def restart_tables(self) -> DatabaseInfoResponse:
         pass
 
     @abstractmethod
