@@ -123,7 +123,9 @@ class DatabaseRepository(IDatabaseRepository):
 
             data.append(film)
 
-        logger.info(f"Generating data for {data_amount} film(s) completed")
+        logger.info(
+            f"Establishing connection with database and start inputting data for {data_amount} film(s)"
+        )
 
         conn = set_db_connection()
         cur = conn.cursor()
