@@ -10,7 +10,6 @@ from WTW_app.times.schema import (
 from WTW_app.times.interface import ITimesRepository
 
 from sqlalchemy import func
-from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 logger = logging.getLogger()
@@ -31,7 +30,7 @@ class TimesRepository(ITimesRepository):
         query_times = self.session.query(Times)
 
         if filter_by_val and filter_value is not None:
-            query_times = query_times.filter(filter_by_val.ilike(f"%{filter_value}%"))
+            query_times = query_times.filter(filter_by_val == filter_value)
 
         _times_db: tp.List[Times] = query_times.all()
 
@@ -45,37 +44,3 @@ class TimesRepository(ITimesRepository):
         )
 
         return _times_list
-
-    def add_time(
-        self,
-        database: str,
-        request_type: str,
-        time_value: float,
-    ) -> TimesResponse:
-        _time: TimesResponse
-
-        try:
-            _time_db: Times = Times(
-                database=database,
-                request_type=request_type,
-                time_value=time_value,
-            )
-
-            if _time_db:
-                self.session.add(_time_db)
-                self.session.commit()
-
-                _time = TimesResponse.from_orm(_time_db)
-
-        except IntegrityError as e:
-            logger.error(str(e))
-            return None
-
-        logger.info(
-            f"A time '{time_value}' for the '{request_type}' has been added to the database"
-        )
-
-        if not _time_db:
-            _time = None
-
-        return _time

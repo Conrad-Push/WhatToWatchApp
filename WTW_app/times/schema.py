@@ -57,19 +57,3 @@ class TimesListResponse(BaseModel):
                 "times_mean": 3.245,
             }
         }
-
-
-class TimesRequest(BaseModel):
-    database: str
-    request_type: str
-    time_value: float
-
-    class Config:
-        orm_mode = True
-        schema_extra = {
-            "example": {
-                "database": "postgresql",
-                "request_type": "get",
-                "time_value": 1.456,
-            }
-        }
