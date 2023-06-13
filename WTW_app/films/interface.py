@@ -3,7 +3,7 @@ import typing as tp
 from abc import ABC, abstractmethod
 from WTW_app.films.schema import (
     FilmResponse,
-    FilmPrevResponse,
+    FilmsListResponse,
     AvailableSortParamsFilms,
     AvailableFilterParamsFilms,
 )
@@ -17,7 +17,7 @@ class IFilmsRepository(ABC):
         sort_by: tp.Optional[AvailableSortParamsFilms] = None,
         filter_by: tp.Optional[AvailableFilterParamsFilms] = None,
         filter_value: tp.Optional[str] = None,
-    ) -> tp.List[FilmPrevResponse]:
+    ) -> FilmsListResponse:
         pass
 
     @abstractmethod

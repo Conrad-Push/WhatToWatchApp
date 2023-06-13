@@ -5,7 +5,6 @@ from WTW_app.database.schema import (
     DataScrappingRequest,
     DataScrappingResponse,
     DatabaseInfoResponse,
-    TablesInfoResponse,
 )
 from WTW_app.database.interface import IDatabaseRepository
 from WTW_app.dependencies import get_database_repository
@@ -25,16 +24,7 @@ def check_database_status(
     return _response
 
 
-@database_router.get("/tables/details", response_model=TablesInfoResponse)
-def check_tables_details(
-    database_repository: IDatabaseRepository = Depends(get_database_repository),
-) -> DatabaseInfoResponse:
-    _response = database_repository.get_tables_info()
-
-    return _response
-
-
-@database_router.get("/tables/restart", response_model=TablesInfoResponse)
+@database_router.get("/tables/restart", response_model=DatabaseInfoResponse)
 def restart_tables_data(
     database_repository: IDatabaseRepository = Depends(get_database_repository),
 ) -> DatabaseInfoResponse:

@@ -3,14 +3,64 @@ import typing as tp
 from pydantic import BaseModel
 
 
+class TableDetailsResponse(BaseModel):
+    name: str
+    size: str
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "name": "films",
+                "size": "420 mB",
+            }
+        }
+
+
+class DatabaseInfoResponse(BaseModel):
+    message: str
+    db_state: tp.Optional[str] = None
+    tables_details: tp.List[TableDetailsResponse] = None
+    execution_time: tp.Optional[float] = None
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "message": "Databse exists and 2 table(s) have been founded",
+                "db_state": "Started",
+                "tables": [
+                    {
+                        "name": "films",
+                        "size": "420 mb",
+                    },
+                    {
+                        "name": "details",
+                        "size": "666 mb",
+                    },
+                ],
+                "execution_time": 2.345,
+            }
+        }
+
+
 class DataGenerationResponse(BaseModel):
     message: str
+    tables_details: tp.List[TableDetailsResponse] = None
     execution_time: tp.Optional[float] = None
 
     class Config:
         schema_extra = {
             "example": {
                 "message": "Data for 1000 films has been generated",
+                "tables": [
+                    {
+                        "name": "films",
+                        "size": "420 mb",
+                    },
+                    {
+                        "name": "details",
+                        "size": "666 mb",
+                    },
+                ],
                 "execution_time": 2.345,
             }
         }
@@ -29,12 +79,23 @@ class DataGenerationRequest(BaseModel):
 
 class DataScrappingResponse(BaseModel):
     message: str
+    tables_details: tp.List[TableDetailsResponse] = None
     execution_time: tp.Optional[float] = None
 
     class Config:
         schema_extra = {
             "example": {
                 "message": "Data for 250 films has been scrapped",
+                "tables": [
+                    {
+                        "name": "films",
+                        "size": "420 mb",
+                    },
+                    {
+                        "name": "details",
+                        "size": "666 mb",
+                    },
+                ],
                 "execution_time": 2.345,
             }
         }
@@ -47,57 +108,5 @@ class DataScrappingRequest(BaseModel):
         schema_extra = {
             "example": {
                 "data_amount": 250,
-            }
-        }
-
-
-class DatabaseInfoResponse(BaseModel):
-    message: str
-    db_state: tp.Optional[str] = None
-    execution_time: tp.Optional[float] = None
-
-    class Config:
-        schema_extra = {
-            "example": {
-                "message": "Database created",
-                "db_state": "Created",
-                "execution_time": 2.345,
-            }
-        }
-
-
-class TableDetailsResponse(BaseModel):
-    name: str
-    size: str
-
-    class Config:
-        schema_extra = {
-            "example": {
-                "name": "films",
-                "size": "420 mB",
-            }
-        }
-
-
-class TablesInfoResponse(BaseModel):
-    message: str
-    tables_details: tp.List[TableDetailsResponse] = None
-    execution_time: tp.Optional[float] = None
-
-    class Config:
-        schema_extra = {
-            "example": {
-                "message": "Database restarted",
-                "tables": [
-                    {
-                        "name": "films",
-                        "size": "420 mb",
-                    },
-                    {
-                        "name": "details",
-                        "size": "997 mb",
-                    },
-                ],
-                "execution_time": 2.345,
             }
         }

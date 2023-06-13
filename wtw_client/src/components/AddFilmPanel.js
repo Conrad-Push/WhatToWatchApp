@@ -1,5 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function AddFilmPanel(props) {
   const [newFilm, setNewFilm] = useState({
@@ -13,6 +15,7 @@ function AddFilmPanel(props) {
 
   const handleAddFilm = async (e) => {
     e.preventDefault();
+    props.setLoading(true);
 
     if (newFilm.title && newFilm.year && newFilm.rate && newFilm.details_id) {
       setErrorMessage("");
@@ -29,12 +32,29 @@ function AddFilmPanel(props) {
 
         if (response.status === 201) {
           const addedFilm = response.data;
+          const { execution_time: execTime, ...filmData } = addedFilm;
 
-          props.setFilms((prevFilms) => [...prevFilms, addedFilm]);
+          props.setFilms((prevFilms) => [...prevFilms, filmData]);
+
+          if (filmData && execTime) {
+            let infoText = `The new film (${filmData.title}) has been added in ${execTime} second(s)`;
+
+            toast.success(infoText, {
+              position: toast.POSITION.BOTTOM_RIGHT,
+            });
+          }
         }
+
+        props.setLoading(false);
       } catch (error) {
         console.log(error);
-        setErrorMessage("Error while adding a film");
+
+        let errorText = "Error while adding a film";
+        toast.error(errorText, {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
+
+        props.setLoading(false);
       }
 
       setNewFilm({
@@ -117,6 +137,7 @@ function AddFilmPanel(props) {
           </form>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }
