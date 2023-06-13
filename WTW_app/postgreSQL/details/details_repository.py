@@ -2,10 +2,10 @@ import logging
 import time
 import typing as tp
 
-from WTW_app.models import Details
-from WTW_app.details.schema import DetailsResponse, DetailsListResponse
-from WTW_app.details.interface import IDetailsRepository
-from WTW_app.postgreSQL_db import set_db_connection
+from WTW_app.postgreSQL.models import Details
+from WTW_app.postgreSQL.details.schema import DetailsResponse, DetailsListResponse
+from WTW_app.postgreSQL.details.interface import IDetailsRepository
+from WTW_app.postgreSQL.db_utils import set_db_connection
 
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session

@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from WTW_app.database.schema import (
+from WTW_app.postgreSQL.database.schema import (
     DataGenerationResponse,
     DataScrappingResponse,
     DatabaseInfoResponse,

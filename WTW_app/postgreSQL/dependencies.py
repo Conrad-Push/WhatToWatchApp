@@ -1,15 +1,15 @@
 from fastapi import Depends
 from sqlalchemy.orm import Session
 
-from WTW_app.postgreSQL_db import SessionLocal
-from WTW_app.films.interface import IFilmsRepository
-from WTW_app.films.films_repository import FilmsRepository
-from WTW_app.details.interface import IDetailsRepository
-from WTW_app.details.details_repository import DetailsRepository
-from WTW_app.times.interface import ITimesRepository
-from WTW_app.times.times_repository import TimesRepository
-from WTW_app.database.interface import IDatabaseRepository
-from WTW_app.database.database_repository import DatabaseRepository
+from WTW_app.postgreSQL.db_utils import SessionLocal
+from WTW_app.postgreSQL.films.interface import IFilmsRepository
+from WTW_app.postgreSQL.films.films_repository import FilmsRepository
+from WTW_app.postgreSQL.details.interface import IDetailsRepository
+from WTW_app.postgreSQL.details.details_repository import DetailsRepository
+from WTW_app.postgreSQL.times.interface import ITimesRepository
+from WTW_app.postgreSQL.times.times_repository import TimesRepository
+from WTW_app.postgreSQL.database.interface import IDatabaseRepository
+from WTW_app.postgreSQL.database.database_repository import DatabaseRepository
 
 
 def get_db() -> Session:

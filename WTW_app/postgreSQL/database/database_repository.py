@@ -4,14 +4,19 @@ import time
 import requests
 import typing as tp
 
-from WTW_app.database.schema import (
+from WTW_app.postgreSQL.database.schema import (
     DataGenerationResponse,
     DataScrappingResponse,
     DatabaseInfoResponse,
     TableDetailsResponse,
 )
-from WTW_app.database.interface import IDatabaseRepository
-from WTW_app.postgreSQL_db import Base, engine, set_db_connection, get_table_sizes
+from WTW_app.postgreSQL.database.interface import IDatabaseRepository
+from WTW_app.postgreSQL.db_utils import (
+    Base,
+    engine,
+    set_db_connection,
+    get_table_sizes,
+)
 from WTW_app.settings.data_settings import DATA_SETTINGS
 
 from sqlalchemy_utils.functions import database_exists

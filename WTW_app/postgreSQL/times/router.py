@@ -1,20 +1,20 @@
 import typing as tp
 
 from fastapi import APIRouter, Depends
-from WTW_app.times.schema import (
+from WTW_app.postgreSQL.times.schema import (
     TimesListResponse,
     AvailableFilterParamsTimes,
 )
-from WTW_app.times.interface import ITimesRepository
-from WTW_app.dependencies import get_times_repository
+from WTW_app.postgreSQL.times.interface import ITimesRepository
+from WTW_app.postgreSQL.dependencies import get_times_repository
 
-times_router = APIRouter(
+postgres_times_router = APIRouter(
     prefix="/postgresql/times",
     tags=["Times - PostgreSQL"],
 )
 
 
-@times_router.get(
+@postgres_times_router.get(
     "/",
     response_model=TimesListResponse,
 )

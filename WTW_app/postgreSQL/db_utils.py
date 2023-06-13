@@ -5,7 +5,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-from WTW_app.settings.db_settings import DB_SETTINGS
+from WTW_app.postgreSQL.settings.db_settings import DB_SETTINGS
 
 logger = logging.getLogger()
 
@@ -33,16 +33,16 @@ def set_db_connection():
     return conn
 
 
-def init_db():
+def init_postgres_db():
     conn = set_db_connection()
     tables = get_table_sizes(conn)
 
     if len(tables) == 0:
         Base.metadata.drop_all(bind=engine)
         Base.metadata.create_all(bind=engine)
-        logger.info("Tables created")
+        logger.info("PostgreSQL tables created")
 
-    logger.info("Database started")
+    logger.info("PostgreSQL database started")
 
 
 def get_table_sizes(conn):

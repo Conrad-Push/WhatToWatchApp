@@ -2,16 +2,16 @@ import logging
 import time
 import typing as tp
 
-from WTW_app.models import Films
-from WTW_app.films.schema import (
+from WTW_app.postgreSQL.models import Films
+from WTW_app.postgreSQL.films.schema import (
     FilmResponse,
     FilmPrevResponse,
     FilmsListResponse,
     AvailableSortParamsFilms,
     AvailableFilterParamsFilms,
 )
-from WTW_app.films.interface import IFilmsRepository
-from WTW_app.postgreSQL_db import set_db_connection
+from WTW_app.postgreSQL.films.interface import IFilmsRepository
+from WTW_app.postgreSQL.db_utils import set_db_connection
 
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session

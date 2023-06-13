@@ -1,7 +1,7 @@
 import typing as tp
 
 from abc import ABC, abstractmethod
-from WTW_app.details.schema import DetailsResponse
+from WTW_app.postgreSQL.details.schema import DetailsResponse
 
 
 class IDetailsRepository(ABC):

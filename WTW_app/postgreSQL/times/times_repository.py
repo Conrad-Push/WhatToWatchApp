@@ -1,13 +1,13 @@
 import logging
 import typing as tp
 
-from WTW_app.models import Times
-from WTW_app.times.schema import (
+from WTW_app.postgreSQL.models import Times
+from WTW_app.postgreSQL.times.schema import (
     TimesResponse,
     TimesListResponse,
     AvailableFilterParamsTimes,
 )
-from WTW_app.times.interface import ITimesRepository
+from WTW_app.postgreSQL.times.interface import ITimesRepository
 
 from sqlalchemy import func
 from sqlalchemy.orm import Session

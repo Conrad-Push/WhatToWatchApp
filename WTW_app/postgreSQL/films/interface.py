@@ -1,7 +1,7 @@
 import typing as tp
 
 from abc import ABC, abstractmethod
-from WTW_app.films.schema import (
+from WTW_app.postgreSQL.films.schema import (
     FilmResponse,
     FilmsListResponse,
     AvailableSortParamsFilms,

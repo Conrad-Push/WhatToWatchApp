@@ -1,22 +1,22 @@
 import typing as tp
 
 from fastapi import APIRouter, HTTPException, status, Depends
-from WTW_app.details.schema import (
+from WTW_app.postgreSQL.details.schema import (
     DetailsResponse,
     DetailsListResponse,
     DetailsRequest,
     PatchDetailsRequest,
 )
-from WTW_app.details.interface import IDetailsRepository
-from WTW_app.dependencies import get_details_repository
+from WTW_app.postgreSQL.details.interface import IDetailsRepository
+from WTW_app.postgreSQL.dependencies import get_details_repository
 
-details_router = APIRouter(
+postgres_details_router = APIRouter(
     prefix="/postgresql/details",
     tags=["Details - PostgreSQL"],
 )
 
 
-@details_router.get(
+@postgres_details_router.get(
     "/",
     response_model=DetailsListResponse,
 )
@@ -28,7 +28,7 @@ def get_details_list(
     return _details_list
 
 
-@details_router.get(
+@postgres_details_router.get(
     "/{details_id:int}",
     response_model=DetailsResponse,
 )
@@ -49,7 +49,7 @@ def get_details(
     return _details
 
 
-@details_router.post(
+@postgres_details_router.post(
     "/",
     response_model=DetailsResponse,
     status_code=status.HTTP_201_CREATED,
@@ -72,7 +72,7 @@ def add_details(
     return _details
 
 
-@details_router.patch(
+@postgres_details_router.patch(
     "/{details_id:int}",
     response_model=DetailsResponse,
 )
@@ -96,7 +96,7 @@ def modify_details(
     return _details
 
 
-@details_router.delete(
+@postgres_details_router.delete(
     "/{details_id:int}",
     response_model=DetailsResponse,
     responses={404: {"description": "Details for given details id not found."}},

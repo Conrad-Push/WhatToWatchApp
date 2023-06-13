@@ -2,7 +2,6 @@ import typing as tp
 
 from enum import Enum
 from pydantic import BaseModel, HttpUrl, root_validator
-from WTW_app.details.schema import DetailsResponse
 
 
 class AvailableSortParamsFilms(Enum):
@@ -15,17 +14,29 @@ class AvailableFilterParamsFilms(Enum):
     title = "title"
 
 
+class DetailsSchema(BaseModel):
+    director: str
+    description: str
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "director": "Frank Darabont",
+                "description": "Example description",
+            }
+        }
+
+
 class FilmResponse(BaseModel):
     film_id: int
     title: str
     year: int
     rate: float
     img_url: tp.Optional[HttpUrl] = None
-    details: DetailsResponse
+    details: DetailsSchema
     execution_time: tp.Optional[float] = None
 
     class Config:
-        orm_mode = True
         schema_extra = {
             "example": {
                 "film_id": 1,
@@ -34,9 +45,8 @@ class FilmResponse(BaseModel):
                 "rate": 9.2,
                 "img_url": "https://m.media-amazon.com/images/M/MV5BNDE3ODcxYzMtY2YzZC00NmNlLWJiNDMtZDViZWM2MzIxZDYwXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_UX45_CR0,0,45,67_AL_.jpg",
                 "details": {
-                    "details_id": 1,
                     "director": "Frank Darabont",
-                    "description": "Over the course of several years, two convicts form a friendship, seeking consolation and, eventually, redemption through basic compassion.",
+                    "description": "Example description",
                 },
                 "execution_time": 2.345,
             }
@@ -51,7 +61,6 @@ class FilmPrevResponse(BaseModel):
     img_url: tp.Optional[HttpUrl] = None
 
     class Config:
-        orm_mode = True
         schema_extra = {
             "example": {
                 "film_id": 1,
@@ -69,7 +78,6 @@ class FilmsListResponse(BaseModel):
     execution_time: tp.Optional[float] = None
 
     class Config:
-        orm_mode = True
         schema_extra = {
             "example": {
                 "films": [
@@ -106,7 +114,8 @@ class FilmRequest(BaseModel):
     year: int
     rate: float
     img_url: tp.Optional[HttpUrl] = None
-    details_id: int
+    director: str
+    description: str
 
     class Config:
         schema_extra = {
@@ -115,7 +124,8 @@ class FilmRequest(BaseModel):
                 "year": 1995,
                 "rate": 8.6,
                 "img_url": "https://m.media-amazon.com/images/M/MV5BOTUwODM5MTctZjczMi00OTk4LTg3NWUtNmVhMTAzNTNjYjcyXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_UX67_CR0,0,67,98_AL_.jpg",
-                "details_id": 1,
+                "director": "Frank Darabont",
+                "description": "Example description",
             }
         }
 
@@ -125,7 +135,8 @@ class PatchFilmRequest(BaseModel):
     year: tp.Optional[int] = None
     rate: tp.Optional[float] = None
     img_url: tp.Optional[HttpUrl] = None
-    details_id: tp.Optional[int] = None
+    director: tp.Optional[str] = None
+    description: tp.Optional[str] = None
 
     @root_validator(pre=True)
     def at_least_one_not_empty(cls, values):
@@ -134,7 +145,8 @@ class PatchFilmRequest(BaseModel):
             and not values.get("year")
             and not values.get("rate")
             and not values.get("img_url")
-            and not values.get("details_id")
+            and not values.get("director")
+            and not values.get("description")
         ):
             raise ValueError("At least one of changed properties should not be empty.")
         return values
@@ -146,6 +158,7 @@ class PatchFilmRequest(BaseModel):
                 "year": 2023,
                 "rate": 3.7,
                 "img_url": "https://m.media-amazon.com/images/M/MV5BN2EyZjM3NzUtNWUzMi00MTgxLWI0NTctMzY4M2VlOTdjZWRiXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_UY67_CR0,0,45,67_AL_.jpg",
-                "details_id": 1,
+                "director": "Frank Darabont",
+                "description": "Example description",
             }
         }

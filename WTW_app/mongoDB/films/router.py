@@ -1,7 +1,7 @@
 import typing as tp
 
 from fastapi import APIRouter, HTTPException, status, Depends, Query
-from WTW_app.films.schema import (
+from WTW_app.mongoDB.films.schema import (
     FilmResponse,
     FilmsListResponse,
     FilmRequest,
@@ -9,16 +9,16 @@ from WTW_app.films.schema import (
     AvailableSortParamsFilms,
     AvailableFilterParamsFilms,
 )
-from WTW_app.films.interface import IFilmsRepository
-from WTW_app.dependencies import get_films_repository
+from WTW_app.mongoDB.films.interface import IFilmsRepository
+from WTW_app.mongoDB.dependencies import get_films_repository
 
-films_router = APIRouter(
-    prefix="/postgresql/films",
-    tags=["Films - PostgreSQL"],
+mongodb_films_router = APIRouter(
+    prefix="/mongodb/films",
+    tags=["Films - MongoDB"],
 )
 
 
-@films_router.get(
+@mongodb_films_router.get(
     "/",
     response_model=FilmsListResponse,
 )
@@ -43,7 +43,7 @@ def get_films_list(
     return _films_list
 
 
-@films_router.get(
+@mongodb_films_router.get(
     "/{film_id:int}",
     response_model=FilmResponse,
 )
@@ -62,7 +62,7 @@ def get_film_details(
     return _film_details
 
 
-@films_router.post(
+@mongodb_films_router.post(
     "/",
     response_model=FilmResponse,
     status_code=status.HTTP_201_CREATED,
@@ -76,7 +76,8 @@ def add_film(
         year=film_payload.year,
         rate=film_payload.rate,
         img_url=film_payload.img_url,
-        details_id=film_payload.details_id,
+        director=film_payload.director,
+        description=film_payload.description,
     )
 
     if not _film:
@@ -88,7 +89,7 @@ def add_film(
     return _film
 
 
-@films_router.patch(
+@mongodb_films_router.patch(
     "/{film_id:int}",
     response_model=FilmResponse,
 )
@@ -103,7 +104,8 @@ def modify_film_details(
         year=film_payload.year,
         rate=film_payload.rate,
         img_url=film_payload.img_url,
-        details_id=film_payload.details_id,
+        director=film_payload.director,
+        description=film_payload.description,
     )
 
     if not _film:
@@ -115,7 +117,7 @@ def modify_film_details(
     return _film
 
 
-@films_router.delete(
+@mongodb_films_router.delete(
     "/{film_id:int}",
     response_model=FilmResponse,
     responses={404: {"description": "Film for given film_id not found."}},
