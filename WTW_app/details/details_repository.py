@@ -5,6 +5,7 @@ import typing as tp
 from WTW_app.models import Details
 from WTW_app.details.schema import DetailsResponse, DetailsListResponse
 from WTW_app.details.interface import IDetailsRepository
+from WTW_app.postgreSQL_db import set_db_connection
 
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
@@ -101,6 +102,9 @@ class DetailsRepository(IDetailsRepository):
         director: tp.Optional[str] = None,
         description: tp.Optional[str] = None,
     ) -> DetailsResponse:
+        database = "postgresql"
+        request_type = "PATCH"
+
         _details: DetailsResponse
 
         start_time = time.time()
@@ -123,6 +127,28 @@ class DetailsRepository(IDetailsRepository):
 
         _details = DetailsResponse.from_orm(_details_db)
         _details.execution_time = execution_time
+
+        conn = set_db_connection()
+        cur = conn.cursor()
+
+        times_values = (
+            database,
+            request_type,
+            execution_time,
+        )
+
+        cur.execute(
+            """
+        INSERT INTO times (database, request_type, time_value)
+        VALUES (%s, %s, %s)
+        """,
+            times_values,
+        )
+
+        conn.commit()
+
+        cur.close()
+        conn.close()
 
         return _details
 

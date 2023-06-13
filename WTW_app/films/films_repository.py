@@ -11,6 +11,7 @@ from WTW_app.films.schema import (
     AvailableFilterParamsFilms,
 )
 from WTW_app.films.interface import IFilmsRepository
+from WTW_app.postgreSQL_db import set_db_connection
 
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
@@ -32,6 +33,11 @@ class FilmsRepository(IFilmsRepository):
         filter_value: tp.Optional[str] = None,
         offset: int = 0,
     ) -> FilmsListResponse:
+        database = "postgresql"
+        request_type = "GET"
+        sort = False
+        filter = False
+
         _films: tp.List[FilmPrevResponse] = []
         sort_by_val = getattr(Films, sort_by.value) if sort_by else None
         filter_by_val = getattr(Films, filter_by.value) if filter_by else None
@@ -42,9 +48,12 @@ class FilmsRepository(IFilmsRepository):
 
         if sort_by_val:
             query_films = query_films.order_by(sort_by_val)
+            sort = True
 
         if filter_by_val and filter_value is not None:
             query_films = query_films.filter(filter_by_val.ilike(f"%{filter_value}%"))
+            print(filter_value)
+            filter = True
 
         total_count = query_films.count()
 
@@ -65,9 +74,41 @@ class FilmsRepository(IFilmsRepository):
             execution_time=execution_time,
         )
 
+        conn = set_db_connection()
+        cur = conn.cursor()
+
+        if sort and filter:
+            request_type += "_combined"
+        elif sort:
+            request_type += "_sort"
+        elif filter:
+            request_type += "_filter"
+
+        times_values = (
+            database,
+            request_type,
+            execution_time,
+        )
+
+        cur.execute(
+            """
+        INSERT INTO times (database, request_type, time_value)
+        VALUES (%s, %s, %s)
+        """,
+            times_values,
+        )
+
+        conn.commit()
+
+        cur.close()
+        conn.close()
+
         return _films_list
 
     def get_film_details(self, *, film_id: int) -> FilmResponse:
+        database = "postgresql"
+        request_type = "GET_details"
+
         _film: FilmResponse
 
         start_time = time.time()
@@ -84,6 +125,28 @@ class FilmsRepository(IFilmsRepository):
         else:
             _film = None
 
+        conn = set_db_connection()
+        cur = conn.cursor()
+
+        times_values = (
+            database,
+            request_type,
+            execution_time,
+        )
+
+        cur.execute(
+            """
+        INSERT INTO times (database, request_type, time_value)
+        VALUES (%s, %s, %s)
+        """,
+            times_values,
+        )
+
+        conn.commit()
+
+        cur.close()
+        conn.close()
+
         return _film
 
     def add_film(
@@ -95,6 +158,9 @@ class FilmsRepository(IFilmsRepository):
         img_url: tp.Optional[HttpUrl] = None,
         details_id: int,
     ) -> FilmResponse:
+        database = "postgresql"
+        request_type = "POST"
+
         _film: FilmResponse
 
         try:
@@ -126,6 +192,28 @@ class FilmsRepository(IFilmsRepository):
 
         if not _film_db:
             _film = None
+
+        conn = set_db_connection()
+        cur = conn.cursor()
+
+        times_values = (
+            database,
+            request_type,
+            execution_time,
+        )
+
+        cur.execute(
+            """
+        INSERT INTO times (database, request_type, time_value)
+        VALUES (%s, %s, %s)
+        """,
+            times_values,
+        )
+
+        conn.commit()
+
+        cur.close()
+        conn.close()
 
         return _film
 
@@ -171,6 +259,9 @@ class FilmsRepository(IFilmsRepository):
         return _film
 
     def remove_film(self, *, film_id: int) -> FilmResponse:
+        database = "postgresql"
+        request_type = "DELETE"
+
         _film: FilmResponse
 
         start_time = time.time()
@@ -190,5 +281,27 @@ class FilmsRepository(IFilmsRepository):
             _film.execution_time = execution_time
         else:
             _film = None
+
+        conn = set_db_connection()
+        cur = conn.cursor()
+
+        times_values = (
+            database,
+            request_type,
+            execution_time,
+        )
+
+        cur.execute(
+            """
+        INSERT INTO times (database, request_type, time_value)
+        VALUES (%s, %s, %s)
+        """,
+            times_values,
+        )
+
+        conn.commit()
+
+        cur.close()
+        conn.close()
 
         return _film

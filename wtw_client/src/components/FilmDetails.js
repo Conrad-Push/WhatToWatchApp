@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-function Details() {
+function FilmDetails() {
   const [film, setFilm] = useState(null);
   const [loading, setLoading] = useState(true);
   const [editedDirector, setEditedDirector] = useState("");
@@ -12,21 +14,49 @@ function Details() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const abortController = new AbortController();
+
     const fetchFilmDetails = async () => {
       try {
-        const response = await axios.get(`/postgresql/films/${film_id}`);
+        const response = await axios.get(`/postgresql/films/${film_id}`, {
+          signal: abortController.signal,
+        });
+
         if (response.status !== 200) {
           throw new Error("Network response was not ok");
         }
+
         const data = response.data;
-        setFilm(data);
-        setLoading(false);
+
+        const {
+          film_id: filmID,
+          title: filmTitle,
+          execution_time: execTime,
+        } = response.data;
+
+        if (!abortController.signal.aborted) {
+          setFilm(data);
+
+          if (filmID && filmTitle && execTime) {
+            let infoText = `Details for '${filmTitle}' displayed in ${execTime} second(s)`;
+
+            toast.info(infoText, {
+              position: toast.POSITION.BOTTOM_RIGHT,
+            });
+          }
+
+          setLoading(false);
+        }
       } catch (error) {
         console.log(error);
       }
     };
 
     fetchFilmDetails();
+
+    return () => {
+      abortController.abort();
+    };
   }, [film_id]);
 
   if (loading) {
@@ -45,6 +75,7 @@ function Details() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     if (editedDirector || editedDescription) {
       setErrorMessage("");
@@ -66,6 +97,8 @@ function Details() {
         );
 
         if (response.status === 200) {
+          const { execution_time: execTime } = response.data;
+
           setFilm((prevFilm) => ({
             ...prevFilm,
             details: {
@@ -73,9 +106,26 @@ function Details() {
               ...updatedDetails,
             },
           }));
+
+          if (execTime) {
+            let infoText = `The film (${title}) details have been modified in ${execTime} second(s)`;
+
+            toast.warning(infoText, {
+              position: toast.POSITION.BOTTOM_RIGHT,
+            });
+          }
         }
+
+        setLoading(false);
       } catch (error) {
         console.log(error);
+
+        let errorText = "Error while editing the film's details";
+        toast.error(errorText, {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
+
+        setLoading(false);
       }
 
       setEditedDirector("");
@@ -86,7 +136,7 @@ function Details() {
   };
 
   const handleGoBack = () => {
-    navigate("/postgresql");
+    navigate("/postgresql/films");
   };
 
   return (
@@ -142,8 +192,9 @@ function Details() {
           Back
         </button>
       </div>
+      <ToastContainer />
     </div>
   );
 }
 
-export default Details;
+export default FilmDetails;

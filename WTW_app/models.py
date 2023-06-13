@@ -28,3 +28,14 @@ class Details(Base):
     details_id = Column(Integer, primary_key=True, index=True)
     director = Column(String, nullable=False)
     description = Column(String, nullable=False)
+
+
+class Times(Base):
+    """Class that holds times of requested database operations."""
+
+    __tablename__ = "times"
+
+    time_id = Column(Integer, primary_key=True, index=True)
+    database = Column(String, nullable=False)
+    request_type = Column(String, nullable=False)
+    time_value = Column(Float, nullable=False)
