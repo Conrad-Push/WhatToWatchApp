@@ -62,11 +62,6 @@ function PostgreSQLFilms() {
         }
       } catch (error) {
         console.log(error);
-
-        let errorText = "Error while fetching data";
-        toast.error(errorText, {
-          position: toast.POSITION.BOTTOM_RIGHT,
-        });
       }
     };
 

@@ -52,11 +52,6 @@ function PostgreSQLManager() {
         setLoading(false);
       } catch (error) {
         console.log(error);
-
-        let errorText = "Error while fetching data";
-        toast.error(errorText, {
-          position: toast.POSITION.BOTTOM_LEFT,
-        });
       }
     };
 
