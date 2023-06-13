@@ -8,6 +8,7 @@ import MongoDBFilms from "./components/MongoDB/MongoDBFilms";
 import PostgreSQLFilms from "./components/PostgreSQL/PostgreSQLFilms";
 import PostgreSQLManager from "./components/PostgreSQL/PostgreSQLManager";
 import FilmDetails from "./components/FilmDetails";
+import Statistics from "./components/Statistics";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route exact path="/mongodb/films" element={<MongoDBFilms />} />
         <Route exact path="/mongodb/manager" element={<Home />} />
         <Route exact path="/postgresql/films" element={<PostgreSQLFilms />} />
+        <Route exact path="/statistics" element={<Statistics />} />
         <Route
           exact
           path="/postgresql/manager"
