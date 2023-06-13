@@ -30,7 +30,6 @@ def init_mongo_db():
     client = set_db_connection()
 
     db_names = client.list_database_names()
-    print(db_names)
 
     if DB_SETTINGS.db_name not in db_names:
         logger.info("Creating the MongoDB database")
@@ -48,6 +47,29 @@ def init_mongo_db():
             new_db.create_collection("times")
 
     logger.info("MongoDB database started")
+
+
+def check_db_status():
+    db_state = "Error"
+
+    client = set_db_connection()
+
+    db_names = client.list_database_names()
+
+    if DB_SETTINGS.db_name in db_names:
+        db_state = "Started"
+
+        db = client[f"{DB_SETTINGS.db_name}"]
+
+        collections = db.list_collection_names()
+
+        if "films" not in collections:
+            db_state = "Error"
+
+        if "times" not in collections:
+            db_state = "Error"
+
+    return db_state
 
 
 def get_collections_size():
@@ -76,3 +98,16 @@ def get_collections_size():
         collections_details.append(coll_details)
 
     return collections_details
+
+
+def restart_collections():
+    client = set_db_connection()
+    db = client[f"{DB_SETTINGS.db_name}"]
+
+    collections = db.list_collection_names()
+
+    for collection in collections:
+        db.drop_collection(collection)
+        db.create_collection(collection)
+
+    logger.info("MongoDB database collections restarted")

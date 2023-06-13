@@ -14,6 +14,7 @@ from WTW_app.postgreSQL.database.router import postgres_database_router
 from WTW_app.mongoDB.db_utils import init_mongo_db
 from WTW_app.mongoDB.films.router import mongodb_films_router
 from WTW_app.mongoDB.times.router import mongodb_times_router
+from WTW_app.mongoDB.database.router import mongodb_database_router
 
 FORMAT = "[%(asctime)s][%(levelname)s][%(name)s] %(message)s"
 logging.basicConfig(
@@ -50,3 +51,4 @@ app.include_router(postgres_database_router)
 
 app.include_router(mongodb_films_router)
 app.include_router(mongodb_times_router)
+app.include_router(mongodb_database_router)
