@@ -7,6 +7,7 @@ import RedisFilms from "./components/RedisFilms";
 import MongoDBFilms from "./components/MongoDBFilms";
 import PostgreSQLFilms from "./components/PostgreSQLFilms";
 import Details from "./components/Details";
+import Statistics from "./components/Statistics";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route exact path="/postgresql/films" element={<PostgreSQLFilms />} />
         <Route exact path="/postgresql/manager" element={<Home />} />
         <Route exact path="/details/:film_id" element={<Details />} />
+        <Route exact path="/statistics" element={<Statistics />} />
       </Routes>
     </div>
   );
