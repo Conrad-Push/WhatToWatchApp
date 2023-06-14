@@ -7,8 +7,8 @@ import GenerateDataPanel from "../GenerateDataPanel";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function PostgreSQLManager() {
-  const dbName = "postgresql";
+function MongoDBManager() {
+  const dbName = "mongodb";
   const [loading, setLoading] = useState(true);
   const [DBState, setDBState] = useState("Not connected");
   const [tablesDetails, setTablesDetails] = useState([]);
@@ -69,7 +69,7 @@ function PostgreSQLManager() {
 
   return (
     <div className="App-header">
-      <div className="title">DB Manager - PostgreSQL</div>
+      <div className="title">DB Manager - MongoDB</div>
       {DBState && <DatabaseStatus status={DBState} />}
       {tablesDetails && (
         <div className="db-manager-container">
@@ -99,4 +99,4 @@ function PostgreSQLManager() {
     </div>
   );
 }
-export default PostgreSQLManager;
+export default MongoDBManager;

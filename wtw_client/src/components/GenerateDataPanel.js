@@ -31,7 +31,7 @@ function GenerateDataPanel(props) {
         };
 
         const response = await axios.post(
-          "/postgresql/database/data/generate",
+          `/${props.dbName}/database/data/generate`,
           dataAmount
         );
 

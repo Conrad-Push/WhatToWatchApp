@@ -4,7 +4,8 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function FilmDetails() {
+function PostgreSQLFilmDetails() {
+  const dbName = "postgresql";
   const [film, setFilm] = useState(null);
   const [loading, setLoading] = useState(true);
   const [editedDirector, setEditedDirector] = useState("");
@@ -18,7 +19,7 @@ function FilmDetails() {
 
     const fetchFilmDetails = async () => {
       try {
-        const response = await axios.get(`/postgresql/films/${film_id}`, {
+        const response = await axios.get(`/${dbName}/films/${film_id}`, {
           signal: abortController.signal,
         });
 
@@ -92,7 +93,7 @@ function FilmDetails() {
         }
 
         const response = await axios.patch(
-          `/postgresql/details/${details.details_id}`,
+          `/${dbName}/details/${details.details_id}`,
           updatedDetails
         );
 
@@ -136,7 +137,7 @@ function FilmDetails() {
   };
 
   const handleGoBack = () => {
-    navigate("/postgresql/films");
+    navigate(`/${dbName}/films`);
   };
 
   return (
@@ -197,4 +198,4 @@ function FilmDetails() {
   );
 }
 
-export default FilmDetails;
+export default PostgreSQLFilmDetails;

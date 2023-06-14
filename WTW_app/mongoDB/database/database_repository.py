@@ -59,7 +59,7 @@ class DatabaseRepository(IDatabaseRepository):
         response: DatabaseInfoResponse = DatabaseInfoResponse(
             message=message,
             db_state=db_state,
-            collections_details=collections_details,
+            tables_details=collections_details,
             execution_time=execution_time,
         )
 
@@ -95,7 +95,7 @@ class DatabaseRepository(IDatabaseRepository):
         response: DatabaseInfoResponse = DatabaseInfoResponse(
             message=message,
             db_state=db_state,
-            collections_details=collections_details,
+            tables_details=collections_details,
             execution_time=execution_time,
         )
 
@@ -145,7 +145,7 @@ class DatabaseRepository(IDatabaseRepository):
 
         response = DataGenerationResponse(
             message=message,
-            collections_details=collections_details,
+            tables_details=collections_details,
             execution_time=execution_time,
         )
 
@@ -279,7 +279,7 @@ class DatabaseRepository(IDatabaseRepository):
 
         response = DataScrappingResponse(
             message=message,
-            collections_details=collections_details,
+            tables_details=collections_details,
             execution_time=execution_time,
         )
 

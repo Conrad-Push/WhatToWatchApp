@@ -6,6 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function PostgreSQLFilms() {
+  const dbName = "postgresql";
   const [loading, setLoading] = useState(true);
   const [films, setFilms] = useState([]);
   const [page, setPage] = useState(1);
@@ -20,7 +21,7 @@ function PostgreSQLFilms() {
 
     const fetchFilms = async () => {
       try {
-        let url = `/postgresql/films/?page=${page}`;
+        let url = `/${dbName}/films/?page=${page}`;
 
         if (sortOption !== "None") {
           url += url.includes("?") ? "&" : "?";
@@ -121,6 +122,7 @@ function PostgreSQLFilms() {
       </div>
       <div className="films-container">
         <FilmCard
+          dbName={dbName}
           films={films}
           page={page}
           totalPages={totalPages}
@@ -129,7 +131,11 @@ function PostgreSQLFilms() {
           setLoading={setLoading}
         />
 
-        <AddFilmPanel setFilms={setFilms} setLoading={setLoading} />
+        <AddFilmPanel
+          dbName={dbName}
+          setFilms={setFilms}
+          setLoading={setLoading}
+        />
       </div>
       <ToastContainer />
     </div>

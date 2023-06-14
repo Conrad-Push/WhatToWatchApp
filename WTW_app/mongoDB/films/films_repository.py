@@ -38,21 +38,20 @@ class FilmsRepository(IFilmsRepository):
 
         start_time = time.time()
 
-        query = {}
+        _films_db = Film.objects
 
         if sort_by:
             sort = True
             sort_field = sort_by.value
-            query["$orderby"] = {sort_field: 1}
+            _films_db = _films_db.order_by(f"{sort_field}")
 
         if filter_by and filter_value:
             filter = True
-            filter_field = filter_by.value
-            query[filter_field] = {"$regex": filter_value, "$options": "i"}
+            _films_db = _films_db.filter(title__icontains=filter_value)
 
-        total_count = Film.objects(**query).count()
+        total_count = _films_db.count()
 
-        _films_db = Film.objects(**query).skip(offset).limit(limit)
+        _films_db = _films_db.skip(offset).limit(limit)
 
         end_time = time.time()
         execution_time = end_time - start_time

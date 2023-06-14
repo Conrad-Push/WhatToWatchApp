@@ -19,7 +19,7 @@ class CollectionDetailsResponse(BaseModel):
 class DatabaseInfoResponse(BaseModel):
     message: str
     db_state: tp.Optional[str] = None
-    collections_details: tp.List[CollectionDetailsResponse] = None
+    tables_details: tp.List[CollectionDetailsResponse] = None
     execution_time: tp.Optional[float] = None
 
     class Config:
@@ -27,7 +27,7 @@ class DatabaseInfoResponse(BaseModel):
             "example": {
                 "message": "Databse exists and 2 table(s) have been founded",
                 "db_state": "Started",
-                "tables": [
+                "tables_details": [
                     {
                         "name": "films",
                         "size": "420 mb",
@@ -44,14 +44,14 @@ class DatabaseInfoResponse(BaseModel):
 
 class DataGenerationResponse(BaseModel):
     message: str
-    collections_details: tp.List[CollectionDetailsResponse] = None
+    tables_details: tp.List[CollectionDetailsResponse] = None
     execution_time: tp.Optional[float] = None
 
     class Config:
         schema_extra = {
             "example": {
                 "message": "Data for 1000 films has been generated",
-                "tables": [
+                "tables_details": [
                     {
                         "name": "films",
                         "size": "420 mb",
@@ -79,14 +79,14 @@ class DataGenerationRequest(BaseModel):
 
 class DataScrappingResponse(BaseModel):
     message: str
-    collections_details: tp.List[CollectionDetailsResponse] = None
+    tables_details: tp.List[CollectionDetailsResponse] = None
     execution_time: tp.Optional[float] = None
 
     class Config:
         schema_extra = {
             "example": {
                 "message": "Data for 250 films has been scrapped",
-                "tables": [
+                "tables_details": [
                     {
                         "name": "films",
                         "size": "420 mb",
