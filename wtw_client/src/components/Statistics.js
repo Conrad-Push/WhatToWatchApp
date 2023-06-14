@@ -23,10 +23,13 @@ export default function Statistics() {
   const [requestType, setRequestType] = useState("GET");
 
   useEffect(() => {
-    let url = `/postgresql/times/?filter_by=request_type&filter_value=${requestType}`;
-    const fetchTimes = async () => {
+    let urlPostgres = `/postgresql/times/?filter_by=request_type&filter_value=${requestType}`;
+    let urlMongo = `/mongodb/times/?filter_by=request_type&filter_value=${requestType}`;
+    let urlRedis = `/redis/times/?filter_by=request_type&filter_value=${requestType}`;
+
+    const fetchTimesPostgres = async () => {
       await axios
-        .get(url)
+        .get(urlPostgres)
         .then(function (response) {
           setTimesPostgreSQL(response.data.times);
           setMeanPostgreSQL(response.data.times_mean);
@@ -35,7 +38,33 @@ export default function Statistics() {
           console.log(error);
         });
     };
-    fetchTimes();
+
+    // const fetchTimesMongo = async () => {
+    //   await axios
+    //     .get(urlMongo)
+    //     .then(function (response) {
+    //       setTimesMongo(response.data.times);
+    //       setMeanMongo(response.data.times_mean);
+    //     })
+    //     .catch(function (error) {
+    //       console.log(error);
+    //     });
+    // };
+
+    // const fetchTimesRedis = async () => {
+    //   await axios
+    //     .get(urlRedis)
+    //     .then(function (response) {
+    //       setTimesRedis(response.data.times);
+    //       setMeanRedis(response.data.times_mean);
+    //     })
+    //     .catch(function (error) {
+    //       console.log(error);
+    //     });
+    // };
+    fetchTimesPostgres();
+    // fetchTimesMongo();
+    // fetchTimesRedis();
   }, [requestType]);
 
   const handleRequest = (event) => {
