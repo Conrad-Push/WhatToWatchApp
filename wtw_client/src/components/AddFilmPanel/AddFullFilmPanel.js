@@ -3,13 +3,14 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function AddFilmPanel(props) {
+function AddFullFilmPanel(props) {
   const [newFilm, setNewFilm] = useState({
     title: "",
     year: "",
     rate: "",
     img_url: "",
-    details_id: "",
+    director: "",
+    description: "",
   });
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -17,7 +18,13 @@ function AddFilmPanel(props) {
     e.preventDefault();
     props.setLoading(true);
 
-    if (newFilm.title && newFilm.year && newFilm.rate && newFilm.details_id) {
+    if (
+      newFilm.title &&
+      newFilm.year &&
+      newFilm.rate &&
+      newFilm.director &&
+      newFilm.description
+    ) {
       setErrorMessage("");
 
       try {
@@ -62,7 +69,8 @@ function AddFilmPanel(props) {
         year: "",
         rate: "",
         img_url: "",
-        details_id: "",
+        director: "",
+        description: "",
       });
     } else {
       setErrorMessage("Please fill in all required fields");
@@ -111,14 +119,20 @@ function AddFilmPanel(props) {
               required
             />
             <input
-              type="number"
-              placeholder="Enter details ID..."
-              value={newFilm.details_id}
+              type="text"
+              placeholder="Enter the name of film director..."
+              value={newFilm.director}
               onChange={(e) =>
-                setNewFilm({
-                  ...newFilm,
-                  details_id: parseInt(e.target.value),
-                })
+                setNewFilm({ ...newFilm, director: e.target.value })
+              }
+              required
+            />
+            <input
+              type="text"
+              placeholder="Enter film description..."
+              value={newFilm.description}
+              onChange={(e) =>
+                setNewFilm({ ...newFilm, description: e.target.value })
               }
               required
             />
@@ -141,4 +155,4 @@ function AddFilmPanel(props) {
     </div>
   );
 }
-export default AddFilmPanel;
+export default AddFullFilmPanel;
