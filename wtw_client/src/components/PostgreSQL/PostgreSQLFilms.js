@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import FilmCard from "../FilmCard";
-import AddFilmPanel from "../AddFilmPanel";
+import AddShortFilmPanel from "../AddFilmPanel/AddShortFilmPanel";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -131,7 +131,7 @@ function PostgreSQLFilms() {
           setLoading={setLoading}
         />
 
-        <AddFilmPanel
+        <AddShortFilmPanel
           dbName={dbName}
           setFilms={setFilms}
           setLoading={setLoading}

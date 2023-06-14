@@ -9,7 +9,7 @@ import {
   Legend,
   BarChart,
   Bar,
-  Cell,
+  // Cell,
 } from "recharts";
 import axios from "axios";
 
@@ -25,7 +25,7 @@ export default function Statistics() {
   useEffect(() => {
     let urlPostgres = `/postgresql/times/?filter_by=request_type&filter_value=${requestType}`;
     let urlMongo = `/mongodb/times/?filter_by=request_type&filter_value=${requestType}`;
-    let urlRedis = `/redis/times/?filter_by=request_type&filter_value=${requestType}`;
+    // let urlRedis = `/redis/times/?filter_by=request_type&filter_value=${requestType}`;
 
     const fetchTimesPostgres = async () => {
       await axios
@@ -39,17 +39,17 @@ export default function Statistics() {
         });
     };
 
-    // const fetchTimesMongo = async () => {
-    //   await axios
-    //     .get(urlMongo)
-    //     .then(function (response) {
-    //       setTimesMongo(response.data.times);
-    //       setMeanMongo(response.data.times_mean);
-    //     })
-    //     .catch(function (error) {
-    //       console.log(error);
-    //     });
-    // };
+    const fetchTimesMongo = async () => {
+      await axios
+        .get(urlMongo)
+        .then(function (response) {
+          setTimesMongo(response.data.times);
+          setMeanMongo(response.data.times_mean);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    };
 
     // const fetchTimesRedis = async () => {
     //   await axios
@@ -62,8 +62,11 @@ export default function Statistics() {
     //       console.log(error);
     //     });
     // };
+
     fetchTimesPostgres();
-    // fetchTimesMongo();
+
+    fetchTimesMongo();
+
     // fetchTimesRedis();
   }, [requestType]);
 

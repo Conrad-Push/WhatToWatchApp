@@ -93,7 +93,7 @@ function MongoDBFilmDetails() {
         }
 
         const response = await axios.patch(
-          `/${dbName}/details/${details.details_id}`,
+          `/${dbName}/films/${film_id}`,
           updatedDetails
         );
 
