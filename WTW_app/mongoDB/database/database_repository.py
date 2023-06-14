@@ -31,7 +31,7 @@ class DatabaseRepository(IDatabaseRepository):
         start_time = time.time()
 
         db_state = check_db_status()
-        if db_state:
+        if db_state == "Started":
             message = "Database exists"
         else:
             message = "Database is not created"

@@ -1,7 +1,6 @@
 import logging
 
 from WTW_app.mongoDB.settings.db_settings import DB_SETTINGS
-from WTW_app.mongoDB.models import Film
 
 from pymongo import MongoClient
 from mongoengine import connect
