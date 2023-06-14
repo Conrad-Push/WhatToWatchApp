@@ -141,6 +141,15 @@ function Navbar() {
           >
             Redis
           </a>
+          <a
+            onClick={() => {
+              handleDatabaseChange("");
+              navigate("/statistics");
+              setState({ isPaneOpen: false });
+            }}
+          >
+            Statistics
+          </a>
         </div>
       </nav>
     </div>

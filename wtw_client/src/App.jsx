@@ -14,6 +14,9 @@ import PostgreSQLFilms from "./components/PostgreSQL/PostgreSQLFilms";
 import PostgreSQLFilmDetails from "./components/PostgreSQL/PostgreSQLFilmDetails";
 import PostgreSQLManager from "./components/PostgreSQL/PostgreSQLManager";
 
+import Statistics from "./components/Statistics";
+
+
 function App() {
   return (
     <div className="App">
@@ -35,6 +38,7 @@ function App() {
         <Route exact path="/mongodb/manager" element={<MongoDBManager />} />
 
         <Route exact path="/postgresql/films" element={<PostgreSQLFilms />} />
+        <Route exact path="/statistics" element={<Statistics />} />
         <Route
           exact
           path="/postgresql/details/:film_id"
