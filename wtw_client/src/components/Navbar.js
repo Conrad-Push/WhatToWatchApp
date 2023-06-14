@@ -17,11 +17,6 @@ function Navbar() {
     }
   }, []);
 
-  // const handleDatabaseChange = (database) => {
-  //   setSelectedDatabase(database);
-  //   setState({ isPaneOpen: false });
-  // };
-
   const handleDatabaseChange = (database) => {
     setSelectedDatabase(database);
     localStorage.setItem("selectedDatabase", database);
@@ -46,15 +41,7 @@ function Navbar() {
           overlayClassName="topSlider"
           isOpen={state.isPaneOpen}
           title={
-            <a
-              className="navbar-brand logo"
-              // onClick={() => {
-              //   navigate("/");
-              //   setSelectedDatabase("");
-              //   setState({ isPaneOpen: false });
-              // }}
-              onClick={handleHomeClick}
-            >
+            <a className="navbar-brand logo" onClick={handleHomeClick}>
               What to watch App
             </a>
           }
@@ -123,14 +110,7 @@ function Navbar() {
           )}
         </SlidingPane>
 
-        <a
-          className="navbar-brand logo"
-          // onClick={() => {
-          //   navigate("/");
-          //   setSelectedDatabase("");
-          // }}
-          onClick={handleHomeClick}
-        >
+        <a className="navbar-brand logo" onClick={handleHomeClick}>
           What to watch App
         </a>
         <div className="navv">

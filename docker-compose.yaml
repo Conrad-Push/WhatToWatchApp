@@ -10,29 +10,51 @@ services:
       APP_HOST: "0.0.0.0"
       APP_PORT: 5001
       LOG_LEVEL: "debug"
-      DB_USERNAME: "user"
-      DB_PASSWORD: "Password"
-      DB_HOST: "database"
-      DB_PORT: "5432"
-      DB_NAME: "database"
+
+      POSTGRES_USERNAME: "user"
+      POSTGRES_PASSWORD: "Password"
+      POSTGRES_HOST: "postgres"
+      POSTGRES_PORT: 5432
+      POSTGRES_NAME: "postgres"
+
+      MONGO_USERNAME: "user"
+      MONGO_PASSWORD: "Password"
+      MONGO_HOST: "mongodb"
+      MONGO_PORT: 27017
+      MONGO_NAME: "mongodb"
     tty: true
     depends_on:
-      - database
+      - postgres
+      - mongodb
     ports:
       - "5001:5001"
     volumes:
       - ".:/app"
 
-  database:
+  postgres:
     image: postgres:14-alpine
     restart: always
     environment:
-      POSTGRES_DB: "database"
+      POSTGRES_DB: "postgres"
       POSTGRES_USER: "user"
       POSTGRES_PASSWORD: "Password"
-      PGDATA: "/var/lib/postgresql/data/pgdata"
+    ports:
+      - "5432:5432"
     volumes:
-      - db-vol:/var/lib/postgresql/data/pgdata
+      - postgres-data:/data/postgresData
+
+  mongodb:
+    image: mongo:latest
+    restart: always
+    environment:
+      MONGO_DB: "mongodb"
+      MONGO_USER: "user"
+      MONGO_PASSWORD: "Password"
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/data/mongodbData
 
 volumes:
-  db-vol:
+  postgres-data:
+  mongodb-data:

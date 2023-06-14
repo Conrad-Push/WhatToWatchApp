@@ -31,7 +31,7 @@ function ScrapDataPanel(props) {
         };
 
         const response = await axios.post(
-          "/postgresql/database/data/scrap",
+          `/${props.dbName}/database/data/scrap`,
           dataAmount
         );
 

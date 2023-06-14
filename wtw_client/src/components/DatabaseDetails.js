@@ -13,7 +13,7 @@ function DatabaseDetails(props) {
     props.setLoading(true);
 
     try {
-      const response = await axios.get("/postgresql/database/status");
+      const response = await axios.get(`/${props.dbName}/database/status`);
 
       if (response.status === 200) {
         const {
@@ -52,7 +52,9 @@ function DatabaseDetails(props) {
     props.setLoading(true);
 
     try {
-      const response = await axios.get("/postgresql/database/tables/restart");
+      const response = await axios.get(
+        `/${props.dbName}/database/tables/restart`
+      );
 
       if (response.status === 200) {
         const {

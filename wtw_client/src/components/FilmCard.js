@@ -10,7 +10,7 @@ function FilmCard(props) {
     props.setLoading(true);
 
     try {
-      const response = await axios.delete(`/postgresql/films/${filmId}`);
+      const response = await axios.delete(`/${props.dbName}/films/${filmId}`);
 
       if (response.status === 200) {
         const removedFilm = response.data;
@@ -65,7 +65,7 @@ function FilmCard(props) {
                 <div className="list">
                   <div
                     onClick={() => {
-                      navigate(`/details/${film.film_id}`);
+                      navigate(`/${props.dbName}/details/${film.film_id}`);
                     }}
                   >
                     <div className="card-content">
