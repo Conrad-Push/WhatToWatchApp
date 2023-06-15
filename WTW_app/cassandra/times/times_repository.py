@@ -1,13 +1,13 @@
 import logging
 import typing as tp
 
-from WTW_app.mongoDB.models import Times
-from WTW_app.mongoDB.times.schema import (
+from WTW_app.cassandra.models import Times
+from WTW_app.cassandra.times.schema import (
     TimesResponse,
     TimesListResponse,
     AvailableFilterParamsTimes,
 )
-from WTW_app.mongoDB.times.interface import ITimesRepository
+from WTW_app.cassandra.times.interface import ITimesRepository
 
 
 logger = logging.getLogger()
@@ -21,13 +21,14 @@ class TimesRepository(ITimesRepository):
     ) -> TimesListResponse:
         _times: tp.List[TimesResponse] = []
 
-        query = {}
+        _times_db = Times.objects().limit(None)
 
         if filter_by and filter_value:
-            filter_field = filter_by.value
-            query[filter_field] = {"$regex": filter_value, "$options": "i"}
-
-        _times_db = Times.objects(**query)
+            _times_db = [
+                time
+                for time in _times_db
+                if str(getattr(time, filter_by.value)).lower() == filter_value.lower()
+            ]
 
         time_values = [time.time_value for time in _times_db]
         times_mean = sum(time_values) / len(time_values) if time_values else None

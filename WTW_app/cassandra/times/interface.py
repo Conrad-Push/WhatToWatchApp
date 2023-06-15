@@ -1,7 +1,7 @@
 import typing as tp
 
 from abc import ABC, abstractmethod
-from WTW_app.mongoDB.times.schema import (
+from WTW_app.cassandra.times.schema import (
     TimesListResponse,
     AvailableFilterParamsTimes,
 )

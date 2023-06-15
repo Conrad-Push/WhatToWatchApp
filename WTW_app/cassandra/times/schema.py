@@ -18,7 +18,7 @@ class TimesResponse(BaseModel):
         schema_extra = {
             "example": {
                 "time_id": 1,
-                "database": "mongodb",
+                "database": "cassandra",
                 "request_type": "get_sort",
                 "time_value": 1.456,
             }
@@ -35,19 +35,19 @@ class TimesListResponse(BaseModel):
                 "times": [
                     {
                         "time_id": 1,
-                        "database": "mongodb",
+                        "database": "cassandra",
                         "request_type": "get_sort",
                         "time_value": 1.456,
                     },
                     {
                         "time_id": 2,
-                        "database": "mongodb",
+                        "database": "cassandra",
                         "request_type": "get_filter",
                         "time_value": 2.346,
                     },
                     {
                         "time_id": 3,
-                        "database": "mongodb",
+                        "database": "cassandra",
                         "request_type": "get_combined",
                         "time_value": 4.679,
                     },

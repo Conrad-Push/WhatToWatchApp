@@ -18,6 +18,7 @@ from WTW_app.mongoDB.database.router import mongodb_database_router
 
 from WTW_app.cassandra.db_utils import init_cassandra_db, cleanup_cassandra_db
 from WTW_app.cassandra.films.router import cassandra_films_router
+from WTW_app.cassandra.times.router import cassandra_times_router
 
 FORMAT = "[%(asctime)s][%(levelname)s][%(name)s] %(message)s"
 logging.basicConfig(
@@ -63,3 +64,4 @@ app.include_router(mongodb_times_router)
 app.include_router(mongodb_database_router)
 
 app.include_router(cassandra_films_router)
+app.include_router(cassandra_times_router)

@@ -1,20 +1,20 @@
 import typing as tp
 
 from fastapi import APIRouter, Depends
-from WTW_app.mongoDB.times.schema import (
+from WTW_app.cassandra.times.schema import (
     TimesListResponse,
     AvailableFilterParamsTimes,
 )
-from WTW_app.mongoDB.times.interface import ITimesRepository
-from WTW_app.mongoDB.dependencies import get_times_repository
+from WTW_app.cassandra.times.interface import ITimesRepository
+from WTW_app.cassandra.dependencies import get_times_repository
 
-mongodb_times_router = APIRouter(
-    prefix="/mongodb/times",
-    tags=["Times - MongoDB"],
+cassandra_times_router = APIRouter(
+    prefix="/cassandra/times",
+    tags=["Times - Cassandra"],
 )
 
 
-@mongodb_times_router.get(
+@cassandra_times_router.get(
     "/",
     response_model=TimesListResponse,
 )
