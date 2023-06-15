@@ -4,7 +4,9 @@ import "./App.css";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 
-import RedisFilms from "./components/Redis/RedisFilms";
+import CassandraFilms from "./components/Cassandra/CassandraFilms";
+import CassandraFilmDetails from "./components/Cassandra/CassandraFilmDetails";
+import CassandraManager from "./components/Cassandra/CassandraManager";
 
 import MongoDBFilms from "./components/MongoDB/MongoDBFilms";
 import MongoDBFilmDetails from "./components/MongoDB/MongoDBFilmDetails";
@@ -25,8 +27,13 @@ function App() {
         <Route exact path="/technologies" element={<Home />} />
         <Route exact path="/authors" element={<Home />} />
 
-        <Route exact path="/redis/films" element={<RedisFilms />} />
-        <Route exact path="/redis/manager" element={<Home />} />
+        <Route exact path="/cassandra/films" element={<CassandraFilms />} />
+        <Route
+          exact
+          path="/cassandra/details/:film_id"
+          element={<CassandraFilmDetails />}
+        />
+        <Route exact path="/cassandra/manager" element={<CassandraManager />} />
 
         <Route exact path="/mongodb/films" element={<MongoDBFilms />} />
         <Route
