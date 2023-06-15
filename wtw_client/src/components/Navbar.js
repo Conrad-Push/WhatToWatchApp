@@ -134,12 +134,12 @@ function Navbar() {
           </a>
           <a
             onClick={() => {
-              handleDatabaseChange("redis");
-              navigate("/redis/films");
+              handleDatabaseChange("cassandra");
+              navigate("/cassandra/films");
               setState({ isPaneOpen: false });
             }}
           >
-            Redis
+            Cassandra
           </a>
           <a
             onClick={() => {
