@@ -9,7 +9,6 @@ import {
   Legend,
   BarChart,
   Bar,
-  // Cell,
 } from "recharts";
 import axios from "axios";
 
@@ -25,7 +24,7 @@ export default function Statistics() {
   useEffect(() => {
     let urlPostgres = `/postgresql/times/?filter_by=request_type&filter_value=${requestType}`;
     let urlMongo = `/mongodb/times/?filter_by=request_type&filter_value=${requestType}`;
-    // let urlCassandra = `/cassandra/times/?filter_by=request_type&filter_value=${requestType}`;
+    let urlCassandra = `/cassandra/times/?filter_by=request_type&filter_value=${requestType}`;
 
     const fetchTimesPostgres = async () => {
       await axios
@@ -51,23 +50,23 @@ export default function Statistics() {
         });
     };
 
-    // const fetchTimesRedis = async () => {
-    //   await axios
-    //     .get(urlCassandra)
-    //     .then(function (response) {
-    //       setTimesCassandra(response.data.times);
-    //       setMeanCassandra(response.data.times_mean);
-    //     })
-    //     .catch(function (error) {
-    //       console.log(error);
-    //     });
-    // };
+    const fetchTimesCassandra = async () => {
+      await axios
+        .get(urlCassandra)
+        .then(function (response) {
+          setTimesCassandra(response.data.times);
+          setMeanCassandra(response.data.times_mean);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    };
 
     fetchTimesPostgres();
 
     fetchTimesMongo();
 
-    // fetchTimesCassandra();
+    fetchTimesCassandra();
   }, [requestType]);
 
   const handleRequest = (event) => {
@@ -78,7 +77,7 @@ export default function Statistics() {
     {
       postgres: `${meanPostgreSQL}`,
       mongo: `${meanMongo}`,
-      redis: `${meanCassandra}`,
+      cassandra: `${meanCassandra}`,
     },
   ];
 
@@ -146,7 +145,7 @@ export default function Statistics() {
               type="monotone"
               dataKey="time_value"
               name="MongoDB"
-              stroke="yellow"
+              stroke="#e09620"
               activeDot={{ r: 8 }}
             />
           </LineChart>
@@ -198,7 +197,7 @@ export default function Statistics() {
           <Tooltip />
           <Legend />
           <Bar dataKey="postgres" name="PostgreSQL" fill="#8884d8" />
-          <Bar dataKey="mongo" name="MongoDB" fill="yellow" />
+          <Bar dataKey="mongo" name="MongoDB" fill="#e09620" />
           <Bar dataKey="cassandra" name="Cassandra" fill="red" />
         </BarChart>
       </div>
