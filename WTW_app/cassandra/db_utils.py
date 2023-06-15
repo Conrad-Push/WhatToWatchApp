@@ -3,9 +3,6 @@ import logging
 from WTW_app.cassandra.settings.db_settings import DB_SETTINGS
 
 from cassandra.cluster import Cluster
-from cassandra.auth import PlainTextAuthProvider
-from cassandra.query import SimpleStatement
-from cassandra.policies import RetryPolicy
 
 
 logger = logging.getLogger()
@@ -31,21 +28,14 @@ def create_keyspace(session):
 
 def create_tables(session):
     session.execute(
-        f"CREATE TYPE IF NOT EXISTS {DB_SETTINGS.db_name}.udt_details ("
-        "director text,"
-        "description text"
-        ")"
-    )
-    logger.info(f"Details data type has been created in Cassandra database")
-
-    session.execute(
         f"CREATE TABLE IF NOT EXISTS {DB_SETTINGS.db_name}.{DB_SETTINGS.db_table_names[0]} ("
-        "film_id UUID PRIMARY KEY,"
+        "film_id int,"
         "title text,"
         "year int,"
         "rate float,"
         "img_url text,"
-        "details FROZEN<udt_details>"
+        "details map<text, text>,"
+        "PRIMARY KEY (film_id),"
         ")",
     )
 
@@ -55,7 +45,7 @@ def create_tables(session):
 
     session.execute(
         f"CREATE TABLE IF NOT EXISTS {DB_SETTINGS.db_name}.{DB_SETTINGS.db_table_names[1]} ("
-        "time_id UUID PRIMARY KEY,"
+        "time_id int PRIMARY KEY,"
         "database text,"
         "request_type text,"
         "time_value float,"
@@ -64,6 +54,63 @@ def create_tables(session):
 
     logger.info(
         f"Table '{DB_SETTINGS.db_table_names[1]}' created in Cassandra database"
+    )
+
+    session.execute(
+        f"CREATE TABLE IF NOT EXISTS {DB_SETTINGS.db_name}.{DB_SETTINGS.db_table_names[2]} ("
+        "film_id int,"
+        "id_name text PRIMARY KEY,"
+        ")"
+    )
+
+    logger.info(
+        f"Table '{DB_SETTINGS.db_table_names[2]}' created in Cassandra database"
+    )
+
+    session.execute(
+        f"CREATE TABLE IF NOT EXISTS {DB_SETTINGS.db_name}.{DB_SETTINGS.db_table_names[3]} ("
+        "time_id int,"
+        "id_name text PRIMARY KEY,"
+        ")"
+    )
+
+    logger.info(
+        f"Table '{DB_SETTINGS.db_table_names[3]}' created in Cassandra database"
+    )
+
+
+def drop_keyspace(session):
+    session.execute(f"DROP KEYSPACE IF EXISTS {DB_SETTINGS.db_name}")
+    logger.info(f"Keyspace '{DB_SETTINGS.db_name}' in Cassandra database dropped")
+
+
+def drop_tables(session):
+    session.execute(
+        f"DROP TABLE IF EXISTS {DB_SETTINGS.db_name}.{DB_SETTINGS.db_table_names[0]}"
+    )
+    logger.info(
+        f"Table '{DB_SETTINGS.db_table_names[0]}' in Cassandra database dropped"
+    )
+
+    session.execute(
+        f"DROP TABLE IF EXISTS {DB_SETTINGS.db_name}.{DB_SETTINGS.db_table_names[1]}"
+    )
+    logger.info(
+        f"Table '{DB_SETTINGS.db_table_names[1]}' in Cassandra database dropped"
+    )
+
+    session.execute(
+        f"DROP TABLE IF EXISTS {DB_SETTINGS.db_name}.{DB_SETTINGS.db_table_names[2]}"
+    )
+    logger.info(
+        f"Table '{DB_SETTINGS.db_table_names[2]}' in Cassandra database dropped"
+    )
+
+    session.execute(
+        f"DROP TABLE IF EXISTS {DB_SETTINGS.db_name}.{DB_SETTINGS.db_table_names[3]}"
+    )
+    logger.info(
+        f"Table '{DB_SETTINGS.db_table_names[3]}' in Cassandra database dropped"
     )
 
 
@@ -85,6 +132,17 @@ def init_cassandra_db():
     session.shutdown()
 
     logger.info("Cassandra database started")
+
+
+def cleanup_cassandra_db():
+    session = set_db_connection()
+
+    drop_tables(session)
+    drop_keyspace(session)
+
+    session.shutdown()
+
+    logger.info("Cassandra database cleaned up")
 
 
 def check_db_status():

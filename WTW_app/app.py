@@ -16,7 +16,8 @@ from WTW_app.mongoDB.films.router import mongodb_films_router
 from WTW_app.mongoDB.times.router import mongodb_times_router
 from WTW_app.mongoDB.database.router import mongodb_database_router
 
-from WTW_app.cassandra.db_utils import init_cassandra_db
+from WTW_app.cassandra.db_utils import init_cassandra_db, cleanup_cassandra_db
+from WTW_app.cassandra.films.router import cassandra_films_router
 
 FORMAT = "[%(asctime)s][%(levelname)s][%(name)s] %(message)s"
 logging.basicConfig(
@@ -44,7 +45,12 @@ def start_db():
     init_cassandra_db()
 
 
+def stop_db():
+    cleanup_cassandra_db()
+
+
 app.add_event_handler("startup", start_db)
+app.add_event_handler("shutdown", stop_db)
 
 
 app.include_router(postgres_films_router)
@@ -55,3 +61,5 @@ app.include_router(postgres_database_router)
 app.include_router(mongodb_films_router)
 app.include_router(mongodb_times_router)
 app.include_router(mongodb_database_router)
+
+app.include_router(cassandra_films_router)

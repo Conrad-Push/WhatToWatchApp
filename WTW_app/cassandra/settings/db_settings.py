@@ -8,7 +8,7 @@ class Settings(BaseSettings):
     db_port: str = Field(9042, env="CASSANDRA_PORT")
     db_name: str = Field("cassandra", env="CASSANDRA_NAME")
 
-    db_table_names = ["films", "times"]
+    db_table_names = ["films", "times", "film_id", "time_id"]
 
 
 DB_SETTINGS = Settings()

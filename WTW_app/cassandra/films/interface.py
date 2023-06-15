@@ -1,7 +1,7 @@
 import typing as tp
 
 from abc import ABC, abstractmethod
-from WTW_app.mongoDB.films.schema import (
+from WTW_app.cassandra.films.schema import (
     FilmResponse,
     FilmsListResponse,
     AvailableSortParamsFilms,
