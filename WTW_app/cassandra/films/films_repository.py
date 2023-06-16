@@ -42,6 +42,7 @@ class FilmsRepository(IFilmsRepository):
         _films_db = Films.objects().limit(None)
 
         if filter_by and filter_value:
+            filter = True
             _films_db = [
                 film
                 for film in _films_db
@@ -49,6 +50,7 @@ class FilmsRepository(IFilmsRepository):
             ]
 
         if sort_by:
+            sort = True
             sort_field = sort_by.value
             _films_db = sorted(_films_db, key=lambda film: getattr(film, sort_field))
 

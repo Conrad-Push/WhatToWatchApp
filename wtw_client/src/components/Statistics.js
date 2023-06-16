@@ -73,11 +73,11 @@ export default function Statistics() {
     setRequestType(event.target.value);
   };
 
-  const data = [
+  const barData = [
     {
-      postgres: `${meanPostgreSQL}`,
-      mongo: `${meanMongo}`,
-      cassandra: `${meanCassandra}`,
+      postgres: `${meanPostgreSQL ? meanPostgreSQL : "No data"}`,
+      mongo: `${meanMongo ? meanMongo : "No data"}`,
+      cassandra: `${meanCassandra ? meanCassandra : "No data"}`,
     },
   ];
 
@@ -122,7 +122,7 @@ export default function Statistics() {
               activeDot={{ r: 8 }}
             />
           </LineChart>
-          Mean time: {meanPostgreSQL}
+          Mean time: {meanPostgreSQL ? meanPostgreSQL : "No data"}
         </div>
         <div>
           <LineChart
@@ -149,7 +149,7 @@ export default function Statistics() {
               activeDot={{ r: 8 }}
             />
           </LineChart>
-          Mean time: {meanMongo}
+          Mean time: {meanMongo ? meanMongo : "No data"}
         </div>
         <div>
           <LineChart
@@ -176,14 +176,14 @@ export default function Statistics() {
               activeDot={{ r: 8 }}
             />
           </LineChart>
-          Mean time: {meanCassandra}
+          Mean time: {meanCassandra ? meanCassandra : "No data"}
         </div>
       </div>
       <div className="box">
         <BarChart
           width={500}
           height={300}
-          data={data}
+          data={barData}
           margin={{
             top: 5,
             right: 30,
