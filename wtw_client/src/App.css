@@ -1,0 +1,411 @@
+.App {
+  text-align: center;
+}
+
+body {
+  background-color: #475785;
+}
+
+.navBox {
+  background-color: white;
+}
+
+.App-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: white;
+}
+
+.homepage-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px;
+  gap: 50px;
+  color: white;
+  width: 100%;
+  height: 100%;
+}
+
+.homepage-content {
+  max-width: 60%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+}
+
+.homepage-image {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+}
+
+.title {
+  padding-bottom: 20px;
+  font-size: xx-large;
+  font-weight: bold;
+}
+
+.navv {
+  padding-left: 5%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 70%;
+  font-size: large;
+  font-weight: bold;
+}
+
+a {
+  cursor: pointer;
+}
+
+.filters {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 35px;
+}
+
+.sort-dropdown {
+  margin-bottom: 10px;
+}
+
+.sort-dropdown label {
+  font-size: large;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.sort-dropdown select {
+  padding: 5px;
+  font-size: large;
+}
+
+.search-bar {
+  margin-top: 20px;
+}
+
+.search-bar input {
+  padding: 5px;
+  font-size: large;
+  margin-right: 5px;
+}
+
+.search-bar button {
+  padding: 5px 10px;
+  font-size: large;
+}
+
+.films-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.add-film-card {
+  width: 500px;
+  box-shadow: 0 0 30px rgba(8, 7, 16, 0.6);
+  border-radius: 20px;
+  padding: 30px;
+}
+
+.add-film-card h2 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.add-button {
+  background-color: #bb8e10;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 4px;
+  margin-top: 10px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.add-button:hover {
+  background-color: #d1a428;
+}
+
+.films-list-frame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+ul {
+  margin: 0px;
+  padding: 0px;
+}
+
+.box {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  gap: 30px;
+}
+
+.list {
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(8, 7, 16, 0.6);
+  width: 400px;
+  word-wrap: break-word;
+}
+
+.no-films {
+  margin-top: 20px;
+  font-size: x-large;
+  font-weight: bold;
+  color: white;
+}
+
+.card-content {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.card-content img {
+  width: 70px;
+}
+
+.card-content input {
+  margin: 5px;
+  padding: 5px;
+  width: 300px;
+}
+
+.card-title {
+  font-size: medium;
+  font-weight: bold;
+  padding: 5px;
+}
+
+.movie-info {
+  font-size: medium;
+  text-align: left;
+  padding-left: 10px;
+}
+
+.remove-button {
+  background-color: #9e2424;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 4px;
+  margin-top: 10px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.remove-button:hover {
+  background-color: #b13636;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  font-size: 100px;
+  color: #333;
+}
+
+.film-details {
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(8, 7, 16, 0.6);
+  width: 600px;
+  word-wrap: break-word;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.photo-details {
+  width: 200px;
+  display: flex;
+  justify-content: left;
+}
+
+.photo-frame {
+  padding: 30px;
+}
+
+.details-frame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#film-title {
+  padding-bottom: 30px;
+  font-weight: 700;
+  font-size: xx-large;
+}
+
+.details-content {
+  display: flex;
+  flex: 0 1;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.description {
+  word-wrap: break-word;
+  padding-top: 15px;
+}
+
+.back-button-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0px 50px 0px;
+  gap: 20px;
+}
+
+.back-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #0e1e4e;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  width: 100px;
+}
+
+.back-button:hover {
+  background-color: #3b466f;
+}
+
+.edit-button {
+  background-color: #6a7f0a;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 4px;
+  margin-top: 10px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.edit-button:hover {
+  background-color: #7a930a;
+}
+
+.page-button {
+  background-color: #6110be;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 4px;
+  margin-top: 10px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.page-button:hover {
+  background-color: #6b21bf;
+}
+
+.db-manager-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.db-details-card {
+  width: 500px;
+  box-shadow: 0 0 30px rgba(8, 7, 16, 0.6);
+  border-radius: 20px;
+  padding: 30px;
+}
+
+.db-details-card h2 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.table-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.table-info {
+  margin-bottom: 5px;
+}
+
+.table-name {
+  font-weight: bold;
+  color: #05c3e9;
+}
+
+.table-size {
+  color: #fdbe00;
+}
+
+.reload-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #1481b9;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  width: 100px;
+}
+
+.reload-button:hover {
+  background-color: #1e8fc7;
+}
+
+.restart-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #85002e;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  width: 100px;
+}
+
+.restart-button:hover {
+  background-color: #9e0b3e;
+}
+
+.data-panels-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.scrapData-button {
+  background-color: #339d5a;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 4px;
+  margin-top: 10px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.scrapData-button:hover {
+  background-color: #0baf5c;
+}
+
+.generateData-button {
+  background-color: #339d5a;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 4px;
+  margin-top: 10px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.generateData-button:hover {
+  background-color: #0baf5c;
+}
