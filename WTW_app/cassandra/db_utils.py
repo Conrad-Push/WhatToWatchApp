@@ -165,28 +165,47 @@ def check_db_status():
     return db_state
 
 
-# def get_tables_size():
-#     session = set_db_connection()
+def get_table_sizes(keyspace):
+    session = set_db_connection()
 
-#     # Replace 'table_name' with your actual table name
-#     query = f"SELECT COUNT(*) FROM {DB_SETTINGS.table_name}"
-#     result = session.execute(query)
-#     count = result.one()[0]
+    table_sizes = {}
 
-#     session.shutdown()
+    # Retrieve a list of all tables in the keyspace
+    tables = session.execute(
+        f"SELECT table_name FROM system_schema.tables WHERE keyspace_name = '{keyspace}'",
+    )
 
-#     table_details = [{"name": DB_SETTINGS.table_name, "size": count}]
+    for table in tables:
+        table_name = table.table_name
+        # Execute a query to retrieve the size of data in the table
+        result = session.execute(
+            f"SELECT sum(partitions_count) as size FROM system.size_estimates WHERE keyspace_name = '{keyspace}' AND table_name = '{table_name}'"
+        )
+        size = result.one().size
+        table_sizes[table_name] = size
 
-#     return table_details
+    session.shutdown()
+
+    return table_sizes
 
 
-# def restart_collections():
-#     session = set_db_connection()
+def check_table_sizes():
+    keyspace = DB_SETTINGS.db_name
 
-#     # Replace 'table_name' with your actual table name
-#     query = f"TRUNCATE {DB_SETTINGS.table_name}"
-#     session.execute(query)
+    tables_details = []
 
-#     session.shutdown()
+    sizes = get_table_sizes(keyspace)
+    for table, size in sizes.items():
+        tab_details = {"name": table, "size": size}
+        tables_details.append(tab_details)
 
-#     logger.info("Cassandra database tables restarted")
+    logger.info("Table sizes checked")
+
+    return tables_details
+
+
+def restart_tables():
+    cleanup_cassandra_db()
+    init_cassandra_db()
+
+    logger.info("Cassandra database tables restarted")
