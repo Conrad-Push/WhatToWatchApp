@@ -62,3 +62,4 @@ SQLAlchemy-Utils==0.38.3
 faker
 pymongo
 mongoengine
+cassandra-driver

@@ -9,23 +9,22 @@ import {
   Legend,
   BarChart,
   Bar,
-  // Cell,
 } from "recharts";
 import axios from "axios";
 
 export default function Statistics() {
   const [timesPostgreSQL, setTimesPostgreSQL] = useState();
   const [timesMongo, setTimesMongo] = useState();
-  const [timesRedis, setTimesRedis] = useState();
+  const [timesCassandra, setTimesCassandra] = useState();
   const [meanPostgreSQL, setMeanPostgreSQL] = useState();
   const [meanMongo, setMeanMongo] = useState();
-  const [meanRedis, setMeanRedis] = useState();
+  const [meanCassandra, setMeanCassandra] = useState();
   const [requestType, setRequestType] = useState("GET");
 
   useEffect(() => {
     let urlPostgres = `/postgresql/times/?filter_by=request_type&filter_value=${requestType}`;
     let urlMongo = `/mongodb/times/?filter_by=request_type&filter_value=${requestType}`;
-    // let urlRedis = `/redis/times/?filter_by=request_type&filter_value=${requestType}`;
+    let urlCassandra = `/cassandra/times/?filter_by=request_type&filter_value=${requestType}`;
 
     const fetchTimesPostgres = async () => {
       await axios
@@ -51,34 +50,34 @@ export default function Statistics() {
         });
     };
 
-    // const fetchTimesRedis = async () => {
-    //   await axios
-    //     .get(urlRedis)
-    //     .then(function (response) {
-    //       setTimesRedis(response.data.times);
-    //       setMeanRedis(response.data.times_mean);
-    //     })
-    //     .catch(function (error) {
-    //       console.log(error);
-    //     });
-    // };
+    const fetchTimesCassandra = async () => {
+      await axios
+        .get(urlCassandra)
+        .then(function (response) {
+          setTimesCassandra(response.data.times);
+          setMeanCassandra(response.data.times_mean);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    };
 
     fetchTimesPostgres();
 
     fetchTimesMongo();
 
-    // fetchTimesRedis();
+    fetchTimesCassandra();
   }, [requestType]);
 
   const handleRequest = (event) => {
     setRequestType(event.target.value);
   };
 
-  const data = [
+  const barData = [
     {
-      postgres: `${meanPostgreSQL}`,
-      mongo: `${meanMongo}`,
-      redis: `${meanRedis}`,
+      postgres: `${meanPostgreSQL ? meanPostgreSQL : "No data"}`,
+      mongo: `${meanMongo ? meanMongo : "No data"}`,
+      cassandra: `${meanCassandra ? meanCassandra : "No data"}`,
     },
   ];
 
@@ -123,7 +122,7 @@ export default function Statistics() {
               activeDot={{ r: 8 }}
             />
           </LineChart>
-          Mean time: {meanPostgreSQL}
+          Mean time: {meanPostgreSQL ? meanPostgreSQL : "No data"}
         </div>
         <div>
           <LineChart
@@ -146,17 +145,17 @@ export default function Statistics() {
               type="monotone"
               dataKey="time_value"
               name="MongoDB"
-              stroke="yellow"
+              stroke="#e09620"
               activeDot={{ r: 8 }}
             />
           </LineChart>
-          Mean time: {meanMongo}
+          Mean time: {meanMongo ? meanMongo : "No data"}
         </div>
         <div>
           <LineChart
             width={450}
             height={300}
-            data={timesRedis}
+            data={timesCassandra}
             margin={{
               top: 5,
               right: 30,
@@ -172,19 +171,19 @@ export default function Statistics() {
             <Line
               type="monotone"
               dataKey="time_value"
-              name="Redis"
+              name="Cassandra"
               stroke="red"
               activeDot={{ r: 8 }}
             />
           </LineChart>
-          Mean time: {meanRedis}
+          Mean time: {meanCassandra ? meanCassandra : "No data"}
         </div>
       </div>
       <div className="box">
         <BarChart
           width={500}
           height={300}
-          data={data}
+          data={barData}
           margin={{
             top: 5,
             right: 30,
@@ -198,8 +197,8 @@ export default function Statistics() {
           <Tooltip />
           <Legend />
           <Bar dataKey="postgres" name="PostgreSQL" fill="#8884d8" />
-          <Bar dataKey="mongo" name="MongoDB" fill="yellow" />
-          <Bar dataKey="redis" name="Redis" fill="red" />
+          <Bar dataKey="mongo" name="MongoDB" fill="#e09620" />
+          <Bar dataKey="cassandra" name="Cassandra" fill="red" />
         </BarChart>
       </div>
     </div>

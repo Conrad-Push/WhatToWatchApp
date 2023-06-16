@@ -4,23 +4,24 @@ import time
 import requests
 import typing as tp
 
-from WTW_app.mongoDB.models import Film, Details
-from WTW_app.mongoDB.database.schema import (
+from WTW_app.cassandra.models import Films, Film_Id
+from WTW_app.cassandra.database.schema import (
     DataGenerationResponse,
     DataScrappingResponse,
     DatabaseInfoResponse,
-    CollectionDetailsResponse,
+    TableDetailsResponse,
 )
-from WTW_app.mongoDB.database.interface import IDatabaseRepository
-from WTW_app.mongoDB.db_utils import (
+from WTW_app.cassandra.database.interface import IDatabaseRepository
+from WTW_app.cassandra.db_utils import (
     check_db_status,
-    get_collections_size,
-    restart_collections,
+    check_table_sizes,
+    restart_tables,
 )
 from WTW_app.settings.data_settings import DATA_SETTINGS
 
 from faker import Faker
 from bs4 import BeautifulSoup
+from cassandra.util import OrderedMap
 
 logger = logging.getLogger()
 logging.getLogger("faker").setLevel(logging.WARNING)
@@ -36,22 +37,24 @@ class DatabaseRepository(IDatabaseRepository):
         else:
             message = "Database is not created"
 
-        collections = get_collections_size()
-        num_of_collections = len(collections)
+        tables = check_table_sizes()
+        num_of_collections = len(tables)
 
         if num_of_collections > 0:
-            message = f"Database exists and {num_of_collections} collection(s) have been founded"
+            message = (
+                f"Database exists and {num_of_collections} table(s) have been founded"
+            )
 
-        collections_details: tp.List[CollectionDetailsResponse] = []
+        tables_details: tp.List[TableDetailsResponse] = []
 
-        for collection in collections:
-            name = collection["name"]
-            size = collection["size"]
-            collection_details: CollectionDetailsResponse = CollectionDetailsResponse(
+        for table in tables:
+            name = table["name"]
+            size = table["size"]
+            collection_details: TableDetailsResponse = TableDetailsResponse(
                 name=name,
                 size=size,
             )
-            collections_details.append(collection_details)
+            tables_details.append(collection_details)
 
         end_time = time.time()
         execution_time = end_time - start_time
@@ -59,7 +62,7 @@ class DatabaseRepository(IDatabaseRepository):
         response: DatabaseInfoResponse = DatabaseInfoResponse(
             message=message,
             db_state=db_state,
-            tables_details=collections_details,
+            tables_details=tables_details,
             execution_time=execution_time,
         )
 
@@ -70,24 +73,24 @@ class DatabaseRepository(IDatabaseRepository):
 
         db_state = check_db_status()
         if db_state:
-            restart_collections()
-            message = "Collection(s) have been cleared and restarted"
+            restart_tables()
+            message = "Table(s) have been cleared and restarted"
             db_state = "Started"
         else:
             message = "Database error while clearing the collections"
             db_state = "Error"
 
-        collections = get_collections_size()
-        collections_details: tp.List[CollectionDetailsResponse] = []
+        tables = check_table_sizes()
+        tables_details: tp.List[TableDetailsResponse] = []
 
-        for collection in collections:
-            name = collection["name"]
-            size = collection["size"]
-            collection_details: CollectionDetailsResponse = CollectionDetailsResponse(
+        for table in tables:
+            name = table["name"]
+            size = table["size"]
+            collection_details: TableDetailsResponse = TableDetailsResponse(
                 name=name,
                 size=size,
             )
-            collections_details.append(collection_details)
+            tables_details.append(collection_details)
 
         end_time = time.time()
         execution_time = end_time - start_time
@@ -95,7 +98,7 @@ class DatabaseRepository(IDatabaseRepository):
         response: DatabaseInfoResponse = DatabaseInfoResponse(
             message=message,
             db_state=db_state,
-            tables_details=collections_details,
+            tables_details=tables_details,
             execution_time=execution_time,
         )
 
@@ -113,30 +116,45 @@ class DatabaseRepository(IDatabaseRepository):
         start_time = time.time()
 
         for _ in range(data_amount):
-            details = Details(director=faker.name(), description=faker.paragraph())
+            _film_id = Film_Id.objects().filter(Film_Id.id_name == "film_id")
+            if not _film_id:
+                film_id = 1
+                id_name = "film_id"
+                Film_Id.create(
+                    film_id=film_id,
+                    id_name=id_name,
+                )
+            else:
+                _f_id = _film_id[0]
+                film_id = _f_id.film_id + 1
+                _f_id.film_id = film_id
+                _f_id.save()
 
-            film = Film(
+            film_details = OrderedMap(
+                [("director", faker.name()), ("description", faker.paragraph())]
+            )
+
+            Films.create(
+                film_id=film_id,
                 title=faker.text(max_nb_chars=50)[:-1],
                 year=faker.random_int(min=1900, max=2023),
                 rate=faker.pyfloat(left_digits=1, right_digits=1, positive=True),
                 img_url=random.choice(DATA_SETTINGS.img_urls),
-                details=details,
+                details=film_details,
             )
 
-            if film:
-                film.save()
+        tables_details: tp.List[TableDetailsResponse] = []
 
-        collections = get_collections_size()
-        collections_details: tp.List[CollectionDetailsResponse] = []
+        tables = check_table_sizes()
 
-        for collection in collections:
-            name = collection["name"]
-            size = collection["size"]
-            collection_details: CollectionDetailsResponse = CollectionDetailsResponse(
+        for table in tables:
+            name = table["name"]
+            size = table["size"]
+            collection_details: TableDetailsResponse = TableDetailsResponse(
                 name=name,
                 size=size,
             )
-            collections_details.append(collection_details)
+            tables_details.append(collection_details)
 
         end_time = time.time()
         execution_time = end_time - start_time
@@ -145,7 +163,7 @@ class DatabaseRepository(IDatabaseRepository):
 
         response = DataGenerationResponse(
             message=message,
-            tables_details=collections_details,
+            tables_details=tables_details,
             execution_time=execution_time,
         )
 
@@ -247,30 +265,45 @@ class DatabaseRepository(IDatabaseRepository):
             else:
                 img_url = None
 
-            details = Details(director=director, description=description)
+            _film_id = Film_Id.objects().filter(Film_Id.id_name == "film_id")
+            if not _film_id:
+                film_id = 1
+                id_name = "film_id"
+                Film_Id.create(
+                    film_id=film_id,
+                    id_name=id_name,
+                )
+            else:
+                _f_id = _film_id[0]
+                film_id = _f_id.film_id + 1
+                _f_id.film_id = film_id
+                _f_id.save()
 
-            film = Film(
+            film_details = OrderedMap(
+                [("director", director), ("description", description)]
+            )
+
+            Films.create(
+                film_id=film_id,
                 title=title,
                 year=year,
                 rate=rate,
                 img_url=img_url,
-                details=details,
+                details=film_details,
             )
 
-            if film:
-                film.save()
+        tables_details: tp.List[TableDetailsResponse] = []
 
-        collections = get_collections_size()
-        collections_details: tp.List[CollectionDetailsResponse] = []
+        tables = check_table_sizes()
 
-        for collection in collections:
-            name = collection["name"]
-            size = collection["size"]
-            collection_details: CollectionDetailsResponse = CollectionDetailsResponse(
+        for table in tables:
+            name = table["name"]
+            size = table["size"]
+            collection_details: TableDetailsResponse = TableDetailsResponse(
                 name=name,
                 size=size,
             )
-            collections_details.append(collection_details)
+            tables_details.append(collection_details)
 
         end_time = time.time()
         execution_time = end_time - start_time
@@ -279,7 +312,7 @@ class DatabaseRepository(IDatabaseRepository):
 
         response = DataScrappingResponse(
             message=message,
-            tables_details=collections_details,
+            tables_details=tables_details,
             execution_time=execution_time,
         )
 
