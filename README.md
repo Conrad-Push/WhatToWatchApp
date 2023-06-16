@@ -17,4 +17,4 @@ Current progress:
 - PostgreSQL - 100%
 - MongoDB - 100%
 - Cassandra - 100%
-- app's UI in React - 95%
+- app's UI in React - 100%
