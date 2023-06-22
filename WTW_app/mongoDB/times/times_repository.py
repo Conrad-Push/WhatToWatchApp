@@ -25,7 +25,7 @@ class TimesRepository(ITimesRepository):
 
         if filter_by and filter_value:
             filter_field = filter_by.value
-            query[filter_field] = {"$regex": filter_value, "$options": "i"}
+            query[filter_field] = filter_value
 
         _times_db = Times.objects(**query)
 

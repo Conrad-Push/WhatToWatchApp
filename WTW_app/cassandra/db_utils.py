@@ -196,7 +196,16 @@ def check_table_sizes():
 
     sizes = get_table_sizes(keyspace)
     for table, size in sizes.items():
-        tab_details = {"name": table, "size": size}
+        size_units = ["kB", "mB", "gB"]
+        unit_index = 0
+
+        while size >= 1024 and unit_index < len(size_units) - 1:
+            size /= 1024
+            unit_index += 1
+
+        size = f"{size} {size_units[unit_index]}"
+
+        tab_details = {"name": str(table), "size": size}
         tables_details.append(tab_details)
 
     logger.info("Table sizes checked")

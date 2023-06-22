@@ -39,7 +39,7 @@ class FilmsRepository(IFilmsRepository):
 
         start_time = time.time()
 
-        _films_db = Films.objects().limit(None)
+        _films_db = Films.objects.limit(None)
 
         if filter_by and filter_value:
             filter = True
