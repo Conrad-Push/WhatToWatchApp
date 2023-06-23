@@ -196,7 +196,7 @@ def check_table_sizes():
 
     sizes = get_table_sizes(keyspace)
     for table, size in sizes.items():
-        size_units = ["kB", "mB", "gB"]
+        size_units = ["bytes", "kB", "mB", "gB"]
         unit_index = 0
 
         while size >= 1024 and unit_index < len(size_units) - 1:

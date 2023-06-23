@@ -111,6 +111,7 @@ class DatabaseRepository(IDatabaseRepository):
         logger.info(f"Start generating data for {data_amount} film(s)")
 
         start_time = time.time()
+        counter = 0
 
         for _ in range(data_amount):
             details = Details(director=faker.name(), description=faker.paragraph())
@@ -125,6 +126,9 @@ class DatabaseRepository(IDatabaseRepository):
 
             if film:
                 film.save()
+
+            counter += 1
+            logger.info(f"{counter}/{data_amount} films generated and saved")
 
         collections = get_collections_size()
         collections_details: tp.List[CollectionDetailsResponse] = []
@@ -185,6 +189,7 @@ class DatabaseRepository(IDatabaseRepository):
         limitted_random_movies = random.sample(movies_list, data_amount)
 
         logger.info("Scrapping movies' data:")
+        counter = 0
 
         for movie in limitted_random_movies:
             # Get the movie's title
@@ -259,6 +264,9 @@ class DatabaseRepository(IDatabaseRepository):
 
             if film:
                 film.save()
+
+            counter += 1
+            logger.info(f"{counter}/{data_amount} films scrapped and saved")
 
         collections = get_collections_size()
         collections_details: tp.List[CollectionDetailsResponse] = []
