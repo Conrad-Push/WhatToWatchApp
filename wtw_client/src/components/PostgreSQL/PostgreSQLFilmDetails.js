@@ -132,6 +132,7 @@ function PostgreSQLFilmDetails() {
       setEditedDirector("");
       setEditedDescription("");
     } else {
+      setLoading(false);
       setErrorMessage("Please fill at least one field");
     }
   };

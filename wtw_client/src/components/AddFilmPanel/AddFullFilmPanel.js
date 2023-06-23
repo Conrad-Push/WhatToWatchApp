@@ -73,6 +73,7 @@ function AddFullFilmPanel(props) {
         description: "",
       });
     } else {
+      props.setLoading(false);
       setErrorMessage("Please fill in all required fields");
     }
   };

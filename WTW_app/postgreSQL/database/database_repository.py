@@ -113,6 +113,7 @@ class DatabaseRepository(IDatabaseRepository):
         logger.info(f"Start generating data for {data_amount} film(s)")
 
         start_time = time.time()
+        counter = 0
 
         for _ in range(data_amount):
             film = {
@@ -128,9 +129,13 @@ class DatabaseRepository(IDatabaseRepository):
 
             data.append(film)
 
+            counter += 1
+            logger.info(f"{counter}/{data_amount} films generated")
+
         logger.info(
             f"Establishing connection with database and start inputting data for {data_amount} film(s)"
         )
+        counter = 0
 
         conn = set_db_connection()
         cur = conn.cursor()
@@ -164,6 +169,9 @@ class DatabaseRepository(IDatabaseRepository):
             """,
                 film_values,
             )
+
+            counter += 1
+            logger.info(f"{counter}/{data_amount} films saved")
 
         conn.commit()
 
@@ -306,6 +314,7 @@ class DatabaseRepository(IDatabaseRepository):
 
             data.append(film)
 
+        counter = 0
         conn = set_db_connection()
         cur = conn.cursor()
 
@@ -338,6 +347,9 @@ class DatabaseRepository(IDatabaseRepository):
             """,
                 film_values,
             )
+
+            counter += 1
+            logger.info(f"{counter}/{data_amount} films scrapped and saved")
 
         conn.commit()
 

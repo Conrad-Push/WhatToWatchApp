@@ -65,6 +65,7 @@ function AddShortFilmPanel(props) {
         details_id: "",
       });
     } else {
+      props.setLoading(false);
       setErrorMessage("Please fill in all required fields");
     }
   };
